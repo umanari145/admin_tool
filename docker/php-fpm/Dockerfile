@@ -1,13 +1,14 @@
 FROM php:7.3-fpm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+  zlib1g-dev mariadb-client \
   libpq-dev \
   libzip-dev \
   postgresql \
   python3 \
   unzip \
   && docker-php-ext-install \
-    pdo_pgsql \
+    pdo_mysql \
     sockets \
     zip \
   && apt-get clean \
