@@ -1,4 +1,4 @@
-- name: csv_field
+- name: csv_category
   valid_rule: 
     - required
     - numeric

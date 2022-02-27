@@ -35,7 +35,7 @@ class CsvController extends Controller
         }
 
         $csvService = new CsvService();
-        $res = $csvService->getCsvField($params);
+        $res = $csvService->getCsvFieldList($csvCategory);
 
         if ($res['result'] === ConfigConst::SERVICE_SUCCESS) {
             $httpResponse->httpStatusCode = Response::HTTP_OK;

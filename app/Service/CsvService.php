@@ -2,14 +2,20 @@
 
 namespace App\Service;
 
-use App\Model\Maddress;
+use App\Model\CsvField;
 use Cache;
 use App\Constant\ConfigConst;
 
 class CsvService
 {
 
-    public function getCscField(string $zip)
+    /**
+     * CSVリストの取得
+     *
+     * @param string $csvCategory CSVカテゴリー
+     * @return レスポンス
+     */
+    public function getCsvFieldList(string $csvCategory)
     {
         $res = [
             'result' => '',
@@ -17,8 +23,10 @@ class CsvService
         ];
 
         try {
+            $csvFieldData = CsvField::getCsvFieldData($csvCategory);
+
             $res = [
-                'data' => null,
+                'data' => $csvFieldData,
                 'result' => ConfigConst::SERVICE_SUCCESS
             ];
 

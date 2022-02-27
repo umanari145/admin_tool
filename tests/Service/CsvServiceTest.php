@@ -14,8 +14,15 @@ class CsvServiceTest extends TestCase
      *
      * @return void
      */
-    public function testGetAddressTest()
+    public function testGetCsvListTest()
     {
+        $csvService = new CsvService();
+        $res = $csvService->getCsvFieldList(10);
+        //デバッグ
+        // dd($res);
+        $this->assertEquals($res['data'][0]['field_name'], 'attribute1_code');
+        $this->assertEquals($res['result'], '1');
     }
+
 
 }
