@@ -45,3 +45,8 @@ Use the built-in continuous integration in GitLab.
 ```
 ./vendor/bin/phpunit
 ```
+
+vueの開発
+```
+npm run watch
+```
