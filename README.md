@@ -50,3 +50,8 @@ vueの開発
 ```
 npm run watch
 ```
+
+
+### デプロイ時
+cp .env.dev .env
+php artisan key:generate
