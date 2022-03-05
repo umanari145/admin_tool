@@ -51,6 +51,18 @@ vueの開発
 npm run watch
 ```
 
+### migration
+```
+#migration実行
+docker exec kad_php php artisan migrate 
+docker exec kad_php php artisan db:seed
+
+#テンプレートファイル作成
+#新規
+php artisan make:migration [migrationファイル名] --create=[新規テーブル作成]
+＃既存変更
+php artisan make:migration [migrationファイル名] --table=[既存テーブル作成]
+```
 
 ### デプロイ時
 cp .env.dev .env
