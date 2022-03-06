@@ -24,5 +24,38 @@ class CsvServiceTest extends TestCase
         $this->assertEquals($res['result'], '1');
     }
 
+        /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testUpdateCsvField()
+    {
+        $data = [
+            'key' => 'field_name',
+            'data' => 'test'
+        ];
+        $csvService = new CsvService();
+        $res = $csvService->updateCsvField('1', $data);
+        $this->assertEquals($res['data']['field_name'], 'test');
+        $this->assertEquals($res['result'], '1');
+    }
+
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testUpdateCsvFieldError()
+    {
+        // 存在しない項目でエラーを起こす
+        $data = [
+            'key' => 'field_na',
+            'data' => 'test'
+        ];
+        $csvService = new CsvService();
+        $res = $csvService->updateCsvField('1', $data);
+        $this->assertEquals($res['result'], '99');
+    }
 
 }

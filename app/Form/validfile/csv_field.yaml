@@ -1,4 +1,7 @@
-- name: csv_category
+- name: key
   valid_rule: 
     - required
-    - numeric
+
+- name: data
+  valid_rule: 
+    - present

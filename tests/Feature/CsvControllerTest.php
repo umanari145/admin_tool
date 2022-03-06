@@ -31,15 +31,53 @@ class CsvControllerTest extends TestCase
     }
 
     /**
-     * error
+     * CSVフィールドの更新
      *
      * @return void
      */
-    public function testCsvError400Test()
+    public function testCsvField()
     {
-        $response = $this->get('/api/csv/hogehoge');
-        //dd((array)$response['data']);
-        //Log::debug((array)$response['data']);
+        $data = [
+            'key' => 'field_name',
+            'data' => 'test'
+        ];
+        $response = $this->put('/api/csv_field/1', $data);
+        $response->assertStatus(200);
+
+        $data = [
+            'key' => 'field_name',
+            'data' => null
+        ];
+        $response = $this->put('/api/csv_field/1', $data);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * CSVフィールドの更新(validation error)
+     *
+     * @return void
+     */
+    public function testCsvFieldError400()
+    {
+        $data = [
+            'key' => 'field_name'
+        ];
+        $response = $this->put('/api/csv_field/1', $data);
         $response->assertStatus(400);
+    }
+
+    /**
+     * CSVフィールドの更新(500error)
+     *
+     * @return void
+     */
+    public function testCsvFieldError500()
+    {
+        $data = [
+            'key' => 'field_n',
+            'data' => 'aaaa'
+        ];
+        $response = $this->put('/api/csv_field/1', $data);
+        $response->assertStatus(500);
     }
 }
