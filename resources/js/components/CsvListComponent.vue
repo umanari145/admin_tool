@@ -7,6 +7,7 @@
 
                     <label for="">CSVカテゴリー</label>
                     <select class="form-select" v-model = "csvCategory" @change = "getCsvList">
+                        <option value = "" >未選択</option>
                         <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category">
                             {{categoryName}}
                         </option>
@@ -24,10 +25,10 @@
                             <tbody>
                                 <tr v-for = "(eachCsv, index) in csvList">
                                     <td>
-                                        <span @click = "updateField" v-show = "isView">
+                                        <span @click = "inputField(index)" v-show = "eachCsv.isView">
                                             {{eachCsv.field_name}}
                                         </span>
-                                        <input v-model = "currentField" v-show = "isView == false">
+                                        <input @blur = "updateField(index, eachCsv.id, 'field_name', eachCsv.field_name)" v-model = "eachCsv.field_name" v-show = "eachCsv.isEdit">
                                     </td>
                                     <td>{{eachCsv.field_disp_name}} </td>
                                     <td style="text-align:right;">{{eachCsv.is_required}} </td>
@@ -60,7 +61,12 @@ export default {
             axios.get(url)
                 .then((res) => {
                     if (res['status'] === 200) {
-                        this.csvList = res['data']['data'];
+                        let csvData = res['data']['data'];
+                        this.csvList = csvData.map((v) => {
+                            v.isView = 1;
+                            v.isEdit = 0;
+                            return v
+                        })
                     } else {
                         alert("データの読み込みに失敗しました。");
                     }
@@ -69,12 +75,38 @@ export default {
                     this.$refs.child.loadingOff();
                 });
         },
-        updateField() {
-            
+        inputField(index) {
+            let targetData = this.csvList[index];
+            targetData['isEdit'] = 1;
+            targetData['isView'] = 0;
+        },
+        updateField(index,id, key, data) {
+            this.$refs.child.loadingOn();
+            let url = '/api/csvField/' + this.csvCategory;
+            let updateData = {
+                'id':id,
+                'key':key,
+                'updateData':data,
+            };
+            let targetData = this.csvList[index];
+
+            axios.put(url, updateData)
+                .then((res) => {
+                    targetData['isEdit'] = 0;
+                    targetData['isView'] = 1;
+                })
+                .catch((error) =>{
+                    console.log("error----");
+                    console.log(error);
+                })
+                .finally(() => {
+                    this.$refs.child.loadingOff();
+
+                });
         }
     },
     created() {
-        this.masterConfig = masterJson;
+        this.masterConfig = masterJson;       
     },
     data() {
         return {
@@ -82,7 +114,7 @@ export default {
             csvList:{},
             masterConfig:{},
             currentField:"",
-            csvCategory:null,
+            csvCategory:"",
             isView:true
         }
     }

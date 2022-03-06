@@ -1955,6 +1955,7 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1971,7 +1972,12 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
       this.$refs.child.loadingOn();
       axios.get(url).then(function (res) {
         if (res['status'] === 200) {
-          _this.csvList = res['data']['data'];
+          var csvData = res['data']['data'];
+          _this.csvList = csvData.map(function (v) {
+            v.isView = 1;
+            v.isEdit = 0;
+            return v;
+          });
         } else {
           alert("データの読み込みに失敗しました。");
         }
@@ -1979,7 +1985,32 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
         _this.$refs.child.loadingOff();
       });
     },
-    updateField: function updateField() {}
+    inputField: function inputField(index) {
+      var targetData = this.csvList[index];
+      targetData['isEdit'] = 1;
+      targetData['isView'] = 0;
+    },
+    updateField: function updateField(index, id, key, data) {
+      var _this2 = this;
+
+      this.$refs.child.loadingOn();
+      var url = '/api/csvField/' + this.csvCategory;
+      var updateData = {
+        'id': id,
+        'key': key,
+        'updateData': data
+      };
+      var targetData = this.csvList[index];
+      axios.put(url, updateData).then(function (res) {
+        targetData['isEdit'] = 0;
+        targetData['isView'] = 1;
+      })["catch"](function (error) {
+        console.log("error----");
+        console.log(error);
+      })["finally"](function () {
+        _this2.$refs.child.loadingOff();
+      });
+    }
   },
   created: function created() {
     this.masterConfig = _config_master_json__WEBPACK_IMPORTED_MODULE_0__;
@@ -1990,7 +2021,7 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
       csvList: {},
       masterConfig: {},
       currentField: "",
-      csvCategory: null,
+      csvCategory: "",
       isView: true
     };
   }
@@ -38306,19 +38337,23 @@ var render = function () {
                   ],
                 },
               },
-              _vm._l(
-                _vm.masterConfig.csv_category,
-                function (categoryName, categoryVal) {
-                  return _c("option", { domProps: { value: categoryVal } }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(categoryName) +
-                        "\n                    "
-                    ),
-                  ])
-                }
-              ),
-              0
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("未選択")]),
+                _vm._v(" "),
+                _vm._l(
+                  _vm.masterConfig.csv_category,
+                  function (categoryName, categoryVal) {
+                    return _c("option", { domProps: { value: categoryVal } }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(categoryName) +
+                          "\n                    "
+                      ),
+                    ])
+                  }
+                ),
+              ],
+              2
             ),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
@@ -38337,11 +38372,15 @@ var render = function () {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.isView,
-                                expression: "isView",
+                                value: eachCsv.isView,
+                                expression: "eachCsv.isView",
                               },
                             ],
-                            on: { click: _vm.updateField },
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
                           },
                           [
                             _vm._v(
@@ -38357,23 +38396,35 @@ var render = function () {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.currentField,
-                              expression: "currentField",
+                              value: eachCsv.field_name,
+                              expression: "eachCsv.field_name",
                             },
                             {
                               name: "show",
                               rawName: "v-show",
-                              value: _vm.isView == false,
-                              expression: "isView == false",
+                              value: eachCsv.isEdit,
+                              expression: "eachCsv.isEdit",
                             },
                           ],
-                          domProps: { value: _vm.currentField },
+                          domProps: { value: eachCsv.field_name },
                           on: {
+                            blur: function ($event) {
+                              return _vm.updateField(
+                                index,
+                                eachCsv.id,
+                                "field_name",
+                                eachCsv.field_name
+                              )
+                            },
                             input: function ($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.currentField = $event.target.value
+                              _vm.$set(
+                                eachCsv,
+                                "field_name",
+                                $event.target.value
+                              )
                             },
                           },
                         }),
