@@ -20,6 +20,7 @@
                                     <th>物理名</th>
                                     <th>論理名</th>
                                     <th>必須</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,10 +29,28 @@
                                         <span @click = "inputField(index)" v-show = "eachCsv.isView">
                                             {{eachCsv.field_name}}
                                         </span>
-                                        <input @blur = "updateField(index, eachCsv.id, 'field_name', eachCsv.field_name)" v-model = "eachCsv.field_name" v-show = "eachCsv.isEdit">
+                                        <input v-model = "eachCsv.field_name" v-show = "eachCsv.isEdit">
                                     </td>
-                                    <td>{{eachCsv.field_disp_name}} </td>
-                                    <td style="text-align:right;">{{eachCsv.is_required}} </td>
+                                    <td>
+                                        <span @click = "inputField(index)" v-show = "eachCsv.isView">
+                                            {{eachCsv.field_disp_name}}
+                                        </span>
+                                        <input v-model = "eachCsv.field_disp_name" v-show = "eachCsv.isEdit">
+                                    </td>
+                                    <td>
+                                        <span v-show = "eachCsv.isView" @click = "inputField(index)">
+                                            {{masterConfig['is_required'][eachCsv.is_required]}} 
+                                        </span>
+                                        <div v-show = "eachCsv.isEdit">
+                                            <input type="radio" v-model = "eachCsv.is_required" value="0" id="req_0"><label for="req_0">必須でない</label>
+                                            <input type="radio" v-model = "eachCsv.is_required" value="1" id="req_1"><label for="req_1">必須</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span @click = "updateField(index)" v-show = "eachCsv.isEdit">
+                                            保存ボタン
+                                        </span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -77,31 +96,37 @@ export default {
         },
         inputField(index) {
             let targetData = this.csvList[index];
+            // 参照になっているのでここで値を変えるとcsvListもかわる
             targetData['isEdit'] = 1;
             targetData['isView'] = 0;
         },
-        updateField(index,id, key, data) {
+        updateField(index) {
             this.$refs.child.loadingOn();
-            let url = '/api/csvField/' + this.csvCategory;
-            let updateData = {
-                'id':id,
-                'key':key,
-                'updateData':data,
-            };
             let targetData = this.csvList[index];
 
-            axios.put(url, updateData)
+            let url = '/api/csv_field/' + targetData['id'];
+            let updateData = {
+                'field_name':targetData['field_name'], 
+                'field_disp_name':targetData['field_disp_name'], 
+                'is_required':targetData['is_required']
+            };
+
+            let postData = {
+                'updateData':updateData,
+            };
+
+            axios.put(url, postData)
                 .then((res) => {
+                    // 参照になっているのでここで値を変えるとcsvListもかわる
                     targetData['isEdit'] = 0;
                     targetData['isView'] = 1;
+                    targetData= res['data']['data'];
                 })
                 .catch((error) =>{
-                    console.log("error----");
                     console.log(error);
                 })
                 .finally(() => {
                     this.$refs.child.loadingOff();
-
                 });
         }
     },

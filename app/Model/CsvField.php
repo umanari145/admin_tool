@@ -12,6 +12,12 @@ class CsvField extends Model
     // timestampの自動更新をfalseにする
     public $timestamps = false;
 
+    protected $fillable = [
+        'field_name',
+        'field_disp_name',
+        'is_required'
+    ];
+
     /**
      * @param string $csv_category CSVカテゴリー
      * @return CSVリスト

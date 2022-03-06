@@ -14,7 +14,7 @@ class CsvServiceTest extends TestCase
      *
      * @return void
      */
-    public function tesGetCsvListTest()
+    public function testGetCsvListTest()
     {
         $csvService = new CsvService();
         $res = $csvService->getCsvFieldList(10);
@@ -32,7 +32,6 @@ class CsvServiceTest extends TestCase
     public function testUpdateCsvField()
     {
         $data = [
-            'id' => '1',
             'field_name' => "aaaa",
             'field_disp_name' => "ddddd",
             'is_required' => 0
@@ -52,7 +51,6 @@ class CsvServiceTest extends TestCase
     {
         // 存在しない項目でエラーを起こす
         $data = [
-            'id' => '1',
             'field_na' => null,
             'field_disp_name' => null,
             'is_required' => 0

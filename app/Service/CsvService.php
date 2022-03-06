@@ -57,13 +57,8 @@ class CsvService
         ];
 
         try {
-            unset($data['id']);
             $dbRes = CsvField::where('id', $id)
                 ->update($data);
-
-            if (!$dbRes) {
-                throw new \Exception('DB更新に失敗しました。');
-            }
 
             $dbData = CsvField::find($id);
 

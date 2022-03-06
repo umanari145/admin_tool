@@ -1956,6 +1956,25 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1986,26 +2005,31 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
       });
     },
     inputField: function inputField(index) {
-      var targetData = this.csvList[index];
+      var targetData = this.csvList[index]; // 参照になっているのでここで値を変えるとcsvListもかわる
+
       targetData['isEdit'] = 1;
       targetData['isView'] = 0;
     },
-    updateField: function updateField(index, id, key, data) {
+    updateField: function updateField(index) {
       var _this2 = this;
 
       this.$refs.child.loadingOn();
-      var url = '/api/csvField/' + this.csvCategory;
-      var updateData = {
-        'id': id,
-        'key': key,
-        'updateData': data
-      };
       var targetData = this.csvList[index];
-      axios.put(url, updateData).then(function (res) {
+      var url = '/api/csv_field/' + targetData['id'];
+      var updateData = {
+        'field_name': targetData['field_name'],
+        'field_disp_name': targetData['field_disp_name'],
+        'is_required': targetData['is_required']
+      };
+      var postData = {
+        'updateData': updateData
+      };
+      axios.put(url, postData).then(function (res) {
+        // 参照になっているのでここで値を変えるとcsvListもかわる
         targetData['isEdit'] = 0;
         targetData['isView'] = 1;
+        targetData = res['data']['data'];
       })["catch"](function (error) {
-        console.log("error----");
         console.log(error);
       })["finally"](function () {
         _this2.$refs.child.loadingOff();
@@ -38408,14 +38432,6 @@ var render = function () {
                           ],
                           domProps: { value: eachCsv.field_name },
                           on: {
-                            blur: function ($event) {
-                              return _vm.updateField(
-                                index,
-                                eachCsv.id,
-                                "field_name",
-                                eachCsv.field_name
-                              )
-                            },
                             input: function ($event) {
                               if ($event.target.composing) {
                                 return
@@ -38430,10 +38446,181 @@ var render = function () {
                         }),
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(eachCsv.field_disp_name) + " ")]),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isView,
+                                expression: "eachCsv.isView",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(eachCsv.field_disp_name) +
+                                "\n                                    "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: eachCsv.field_disp_name,
+                              expression: "eachCsv.field_disp_name",
+                            },
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: eachCsv.isEdit,
+                              expression: "eachCsv.isEdit",
+                            },
+                          ],
+                          domProps: { value: eachCsv.field_disp_name },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                eachCsv,
+                                "field_disp_name",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                      ]),
                       _vm._v(" "),
-                      _c("td", { staticStyle: { "text-align": "right" } }, [
-                        _vm._v(_vm._s(eachCsv.is_required) + " "),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isView,
+                                expression: "eachCsv.isView",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(
+                                  _vm.masterConfig["is_required"][
+                                    eachCsv.is_required
+                                  ]
+                                ) +
+                                " \n                                    "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isEdit,
+                                expression: "eachCsv.isEdit",
+                              },
+                            ],
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: eachCsv.is_required,
+                                  expression: "eachCsv.is_required",
+                                },
+                              ],
+                              attrs: { type: "radio", value: "0", id: "req_0" },
+                              domProps: {
+                                checked: _vm._q(eachCsv.is_required, "0"),
+                              },
+                              on: {
+                                change: function ($event) {
+                                  return _vm.$set(eachCsv, "is_required", "0")
+                                },
+                              },
+                            }),
+                            _c("label", { attrs: { for: "req_0" } }, [
+                              _vm._v("必須でない"),
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: eachCsv.is_required,
+                                  expression: "eachCsv.is_required",
+                                },
+                              ],
+                              attrs: { type: "radio", value: "1", id: "req_1" },
+                              domProps: {
+                                checked: _vm._q(eachCsv.is_required, "1"),
+                              },
+                              on: {
+                                change: function ($event) {
+                                  return _vm.$set(eachCsv, "is_required", "1")
+                                },
+                              },
+                            }),
+                            _c("label", { attrs: { for: "req_1" } }, [
+                              _vm._v("必須"),
+                            ]),
+                          ]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isEdit,
+                                expression: "eachCsv.isEdit",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.updateField(index)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        保存ボタン\n                                    "
+                            ),
+                          ]
+                        ),
                       ]),
                     ])
                   }),
@@ -38462,6 +38649,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("論理名")]),
         _vm._v(" "),
         _c("th", [_vm._v("必須")]),
+        _vm._v(" "),
+        _c("th"),
       ]),
     ])
   },
@@ -50946,10 +51135,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************!*\
   !*** ./resources/js/config/master.json ***!
   \*****************************************/
-/*! exports provided: csv_category, default */
+/*! exports provided: is_required, csv_category, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"csv_category\":{\"8\":\"商品マスタ:アップロード\",\"9\":\"商品マスタ:ダウンロード\",\"10\":\"商品SKUマスタ:アップロード\",\"11\":\"商品SKUマスタ:ダウンロード\",\"12\":\"SKU/SKU2:アップロード\",\"13\":\"品番SKU変更:アップロード\",\"20\":\"商品SKUマスタ一括:アップロード\",\"21\":\"商品SKUマスタ一括:ダウンロード\",\"30\":\"セット商品マスタ：アップロード\",\"31\":\"セット商品マスタ：ダウンロード\",\"40\":\"得意先マスタ：アップロード\",\"41\":\"得意先マスタ：ダウンロード\",\"45\":\"仕入先マスタ：アップロード\",\"46\":\"仕入先マスタ：ダウンロード\",\"47\":\"梱包マスタ：アップロード\",\"48\":\"梱包マスタ：ダウンロード\",\"50\":\"入荷伝票：アップロード\",\"51\":\"入荷伝票：ダウンロード\",\"52\":\"入荷商品タグCSV発行：ダウンロード\",\"54\":\"入荷実績：ダウンロード\",\"55\":\"入荷実績(CrossMall)：ダウンロード\",\"56\":\"返品伝票登録：アップロード\",\"59\":\"返品実績：ダウンロード\",\"60\":\"受注伝票登録：アップロード パターン1\",\"61\":\"受注伝票登録：アップロード パターン2\",\"62\":\"受注伝票登録：アップロード パターン3\",\"63\":\"受注伝票登録：アップロード パターン4\",\"64\":\"受注伝票登録：アップロード パターン5\",\"65\":\"受注伝票：ダウンロード\",\"71\":\"出荷伝票:ダウンロード\",\"75\":\"出荷実績:ダウンロード\",\"82\":\"在庫一覧：ダウンロード\",\"83\":\"在庫一覧：ダウンロード(集計)\",\"85\":\"在庫ロケ：ダウンロード\",\"87\":\"在庫管理番号：アップロード\",\"90\":\"ピッキング：ダウンロード\",\"100\":\"発注書：アップロード\",\"101\":\"発注書：ダウンロード\",\"102\":\"発注入庫実績：アップロード\",\"103\":\"発注入庫実績(受注連携システム向け)：ダウンロード\"}}");
+module.exports = JSON.parse("{\"is_required\":[\"必須でない\",\"必須\"],\"csv_category\":{\"8\":\"商品マスタ:アップロード\",\"9\":\"商品マスタ:ダウンロード\",\"10\":\"商品SKUマスタ:アップロード\",\"11\":\"商品SKUマスタ:ダウンロード\",\"12\":\"SKU/SKU2:アップロード\",\"13\":\"品番SKU変更:アップロード\",\"20\":\"商品SKUマスタ一括:アップロード\",\"21\":\"商品SKUマスタ一括:ダウンロード\",\"30\":\"セット商品マスタ：アップロード\",\"31\":\"セット商品マスタ：ダウンロード\",\"40\":\"得意先マスタ：アップロード\",\"41\":\"得意先マスタ：ダウンロード\",\"45\":\"仕入先マスタ：アップロード\",\"46\":\"仕入先マスタ：ダウンロード\",\"47\":\"梱包マスタ：アップロード\",\"48\":\"梱包マスタ：ダウンロード\",\"50\":\"入荷伝票：アップロード\",\"51\":\"入荷伝票：ダウンロード\",\"52\":\"入荷商品タグCSV発行：ダウンロード\",\"54\":\"入荷実績：ダウンロード\",\"55\":\"入荷実績(CrossMall)：ダウンロード\",\"56\":\"返品伝票登録：アップロード\",\"59\":\"返品実績：ダウンロード\",\"60\":\"受注伝票登録：アップロード パターン1\",\"61\":\"受注伝票登録：アップロード パターン2\",\"62\":\"受注伝票登録：アップロード パターン3\",\"63\":\"受注伝票登録：アップロード パターン4\",\"64\":\"受注伝票登録：アップロード パターン5\",\"65\":\"受注伝票：ダウンロード\",\"71\":\"出荷伝票:ダウンロード\",\"75\":\"出荷実績:ダウンロード\",\"82\":\"在庫一覧：ダウンロード\",\"83\":\"在庫一覧：ダウンロード(集計)\",\"85\":\"在庫ロケ：ダウンロード\",\"87\":\"在庫管理番号：アップロード\",\"90\":\"ピッキング：ダウンロード\",\"100\":\"発注書：アップロード\",\"101\":\"発注書：ダウンロード\",\"102\":\"発注入庫実績：アップロード\",\"103\":\"発注入庫実績(受注連携システム向け)：ダウンロード\"}}");
 
 /***/ }),
 

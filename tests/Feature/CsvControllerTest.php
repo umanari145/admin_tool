@@ -38,7 +38,6 @@ class CsvControllerTest extends TestCase
     public function testCsvField()
     {
         $updateData = [
-            'id' => '1',
             'field_name' => 'testtest',
             'field_disp_name' => 'aaaaa',
             'is_required' => 1
@@ -50,7 +49,6 @@ class CsvControllerTest extends TestCase
         $response->assertStatus(200);
 
         $updateData = [
-            'id' => '1',
             'field_name' => null,
             'field_disp_name' => null,
             'is_required' => 0
@@ -71,7 +69,6 @@ class CsvControllerTest extends TestCase
     public function testCsvFieldError400()
     {
         $updateData = [
-            'id' => '1',
             'field_name' => null,
             'is_required' => 0
         ];
