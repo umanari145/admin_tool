@@ -56,15 +56,19 @@ class CsvService
             'data' => ''
         ];
 
-        $fieldName = $data['key'];
-        $value = $data['data'];
-
         try {
-            $csvField = CsvField::find($id);
-            $csvField->{$fieldName} = $value;
-            $csvField->save();
+            unset($data['id']);
+            $dbRes = CsvField::where('id', $id)
+                ->update($data);
+
+            if (!$dbRes) {
+                throw new \Exception('DB更新に失敗しました。');
+            }
+
+            $dbData = CsvField::find($id);
+
             $res = [
-                'data' => $csvField,
+                'data' => $dbData,
                 'result' => ConfigConst::SERVICE_SUCCESS
             ];
         } catch (\Exception $e) {

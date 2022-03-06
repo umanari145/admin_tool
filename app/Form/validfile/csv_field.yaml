@@ -1,7 +1,11 @@
-- name: key
-  valid_rule: 
-    - required
-
-- name: data
+- name: field_name
   valid_rule: 
     - present
+
+- name: field_disp_name
+  valid_rule: 
+    - present
+       
+- name: is_required
+  valid_rule: 
+    - boolean

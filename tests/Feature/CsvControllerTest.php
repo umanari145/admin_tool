@@ -37,16 +37,27 @@ class CsvControllerTest extends TestCase
      */
     public function testCsvField()
     {
+        $updateData = [
+            'id' => '1',
+            'field_name' => 'testtest',
+            'field_disp_name' => 'aaaaa',
+            'is_required' => 1
+        ];
         $data = [
-            'key' => 'field_name',
-            'data' => 'test'
+            'updateData' => $updateData
         ];
         $response = $this->put('/api/csv_field/1', $data);
         $response->assertStatus(200);
 
+        $updateData = [
+            'id' => '1',
+            'field_name' => null,
+            'field_disp_name' => null,
+            'is_required' => 0
+        ];
+
         $data = [
-            'key' => 'field_name',
-            'data' => null
+            'updateData' => $updateData
         ];
         $response = $this->put('/api/csv_field/1', $data);
         $response->assertStatus(200);
@@ -59,25 +70,16 @@ class CsvControllerTest extends TestCase
      */
     public function testCsvFieldError400()
     {
+        $updateData = [
+            'id' => '1',
+            'field_name' => null,
+            'is_required' => 0
+        ];
+        
         $data = [
-            'key' => 'field_name'
+            'updateData' => $updateData
         ];
         $response = $this->put('/api/csv_field/1', $data);
         $response->assertStatus(400);
-    }
-
-    /**
-     * CSVフィールドの更新(500error)
-     *
-     * @return void
-     */
-    public function testCsvFieldError500()
-    {
-        $data = [
-            'key' => 'field_n',
-            'data' => 'aaaa'
-        ];
-        $response = $this->put('/api/csv_field/1', $data);
-        $response->assertStatus(500);
     }
 }

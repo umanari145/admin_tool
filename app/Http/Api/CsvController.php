@@ -51,9 +51,10 @@ class CsvController extends Controller
     public function updateCsvField(string $id, Request $request)
     {
         $requestData = $request->all();
+
         $httpResponse = new HTTPResponse();
         $formValid = new FormValid('csv_field.yaml');
-        $validateResult =  Validator::make($requestData, $formValid->getValidRule());
+        $validateResult =  Validator::make($requestData['updateData'], $formValid->getValidRule());
 
         if ($validateResult->fails()) {
             $httpResponse->httpStatusCode = Response::HTTP_BAD_REQUEST;
@@ -69,7 +70,7 @@ class CsvController extends Controller
         }
 
         $csvService = new CsvService();
-        $res = $csvService->updateCsvField($id, $requestData);
+        $res = $csvService->updateCsvField($id, $requestData['updateData']);
 
         if ($res['result'] === ConfigConst::SERVICE_SUCCESS) {
             $httpResponse->httpStatusCode = Response::HTTP_OK;
