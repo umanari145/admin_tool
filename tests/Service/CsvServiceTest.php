@@ -5,7 +5,6 @@ namespace Tests\Service;
 use Tests\TestCase;
 use App\Service\CsvService;
 
-
 class CsvServiceTest extends TestCase
 {
 
@@ -59,5 +58,25 @@ class CsvServiceTest extends TestCase
         $res = $csvService->updateCsvField('1', $data);
         $this->assertEquals($res['result'], '99');
     }
+
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testDeleteCsvField()
+    {
+        $data = [
+            '10', '11'
+        ];
+        $csvService = new CsvService();
+        $res = $csvService->deleteCsvField($data);
+        $this->assertEquals($res['result'], '1');
+
+        $res = $csvService->deleteCsvField($data);
+        $this->assertEquals($res['result'], '99');
+    }
+
+
 
 }

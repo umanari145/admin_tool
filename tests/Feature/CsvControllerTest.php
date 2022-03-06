@@ -79,4 +79,42 @@ class CsvControllerTest extends TestCase
         $response = $this->put('/api/csv_field/1', $data);
         $response->assertStatus(400);
     }
+
+    /**
+     * CSVフィールドの削除(validation error)
+     *
+     * @return void
+     */
+    public function testDeleteField400()
+    {
+        $data = [
+            'delete_ids' => '1'
+        ];
+
+        $response = $this->delete('/api/csv_field', $data);
+        $response->assertStatus(400);
+
+        $data = [
+            'delete_ids' => ['aaaa', 'bbbb']
+        ];
+
+        $response = $this->delete('/api/csv_field', $data);
+        $response->assertStatus(400);
+    }
+
+    /**
+     * CSVフィールドの削除
+     *
+     * @return void
+     */
+    public function testDeleteField()
+    {
+        $data = [
+            'delete_ids' => ['30', '31']
+        ];
+
+        $response = $this->delete('/api/csv_field', $data);
+        $response->assertStatus(200);
+    }
+
 }

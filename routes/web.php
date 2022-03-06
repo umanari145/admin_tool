@@ -20,4 +20,5 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api'], function () {
     Route::get('csv/{csv_category}', "Api\CsvController@getCsvField")->name('getCsvField');
     Route::put('csv_field/{csv_id}', "Api\CsvController@updateCsvField")->name('updateCsvField');
+    Route::delete('csv_field', "Api\CsvController@deleteCsvField")->name('deleteCsvField');
 });
