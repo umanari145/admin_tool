@@ -13,10 +13,15 @@
                         </option>
                     </select>
 
+
+                    <button type="button" class="btn btn-danger" @click="deleteCsvList">削除</button>
+                    <button type="button" class="btn btn-primary">追加</button>
+                    <button type="button" class="btn btn-success">一括追加</button>
                     <div class="card-body">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th><input type="checkbox" value="1" v-model="allDel" @change="allCheck"></th>
                                     <th>物理名</th>
                                     <th>論理名</th>
                                     <th>必須</th>
@@ -25,6 +30,9 @@
                             </thead>
                             <tbody>
                                 <tr v-for = "(eachCsv, index) in csvList">
+                                    <td>
+                                        <input type="checkbox" v-model="eachCsv.isDelete" value="1">
+                                    </td>
                                     <td>
                                         <span @click = "inputField(index)" v-show = "eachCsv.isView">
                                             {{eachCsv.field_name}}
@@ -47,8 +55,11 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span @click = "updateField(index)" v-show = "eachCsv.isEdit">
-                                            保存ボタン
+                                        <span @click = "updateField(index)" v-show = "eachCsv.isEdit" style="margin-right:10px;">
+                                            <img src="/img/save.png">
+                                        </span>
+                                        <span @click = "closeField(index)" v-show = "eachCsv.isEdit">
+                                            <img src="/img/close.png">
                                         </span>
                                     </td>
                                 </tr>
@@ -85,9 +96,9 @@ export default {
                             v.isView = 1;
                             v.isEdit = 0;
                             return v
-                        })
+                        });
                     } else {
-                        alert("データの読み込みに失敗しました。");
+                        alert("データの更新に失敗しました。");
                     }
                 })
                 .finally(()=>{
@@ -128,6 +139,52 @@ export default {
                 .finally(() => {
                     this.$refs.child.loadingOff();
                 });
+        },
+        closeField(index) {
+            let targetData = this.csvList[index];
+            targetData['isEdit'] = 0;
+            targetData['isView'] = 1;
+        },
+        allCheck() {
+            this.csvList.forEach((element) => {
+                element.isDelete = this.allDel;
+            });
+        },
+        deleteCsvList() {
+            let url = '/api/csv_field';
+
+            let deleteIds = this.csvList.filter((v)=> v.isDelete)
+                .map((v)=> v.id);
+
+            if (deleteIds.length == 0) {
+                alert('選択されているフィールドが存在しません。')
+                return null;
+            }
+
+            if (!window.confirm("削除してよろしいでしょうか?")) {
+                return null;
+            }
+            
+            let deleteIdData = {
+                'delete_ids':deleteIds
+            };
+            this.$refs.child.loadingOn();
+
+            axios.delete(url, {
+                'data': deleteIdData
+            })
+                .then((res) => {
+                    if (res['status'] === 200) {
+                        alert("無事削除を行いました。");
+                        let targetData = this.csvList.filter((v)=> !v.isDelete);
+                        this.csvList = targetData;
+                    } else {
+                        alert("データの削除に失敗しました。");
+                    }
+                })
+                .finally(()=>{
+                    this.$refs.child.loadingOff();
+                });
         }
     },
     created() {
@@ -140,7 +197,8 @@ export default {
             masterConfig:{},
             currentField:"",
             csvCategory:"",
-            isView:true
+            isView:true,
+            allDel:0
         }
     }
 }

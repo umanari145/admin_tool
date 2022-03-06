@@ -1975,6 +1975,17 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1998,7 +2009,7 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
             return v;
           });
         } else {
-          alert("データの読み込みに失敗しました。");
+          alert("データの更新に失敗しました。");
         }
       })["finally"](function () {
         _this.$refs.child.loadingOff();
@@ -2034,6 +2045,59 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
       })["finally"](function () {
         _this2.$refs.child.loadingOff();
       });
+    },
+    closeField: function closeField(index) {
+      var targetData = this.csvList[index];
+      targetData['isEdit'] = 0;
+      targetData['isView'] = 1;
+    },
+    allCheck: function allCheck() {
+      var _this3 = this;
+
+      this.csvList.forEach(function (element) {
+        element.isDelete = _this3.allDel;
+      });
+    },
+    deleteCsvList: function deleteCsvList() {
+      var _this4 = this;
+
+      var url = '/api/csv_field';
+      var deleteIds = this.csvList.filter(function (v) {
+        return v.isDelete;
+      }).map(function (v) {
+        return v.id;
+      });
+
+      if (deleteIds.length == 0) {
+        alert('選択されているフィールドが存在しません。');
+        return null;
+      }
+
+      if (!window.confirm("削除してよろしいでしょうか?")) {
+        return null;
+      }
+
+      var deleteIdData = {
+        'delete_ids': deleteIds
+      };
+      this.$refs.child.loadingOn();
+      axios["delete"](url, {
+        'data': deleteIdData
+      }).then(function (res) {
+        if (res['status'] === 200) {
+          alert("無事削除を行いました。");
+
+          var targetData = _this4.csvList.filter(function (v) {
+            return !v.isDelete;
+          });
+
+          _this4.csvList = targetData;
+        } else {
+          alert("データの削除に失敗しました。");
+        }
+      })["finally"](function () {
+        _this4.$refs.child.loadingOff();
+      });
     }
   },
   created: function created() {
@@ -2046,7 +2110,8 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
       masterConfig: {},
       currentField: "",
       csvCategory: "",
-      isView: true
+      isView: true,
+      allDel: 0
     };
   }
 });
@@ -38380,14 +38445,138 @@ var render = function () {
               2
             ),
             _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "button" },
+                on: { click: _vm.deleteCsvList },
+              },
+              [_vm._v("削除")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "button" } },
+              [_vm._v("追加")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-success", attrs: { type: "button" } },
+              [_vm._v("一括追加")]
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("table", { staticClass: "table table-hover" }, [
-                _vm._m(0),
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.allDel,
+                            expression: "allDel",
+                          },
+                        ],
+                        attrs: { type: "checkbox", value: "1" },
+                        domProps: {
+                          checked: Array.isArray(_vm.allDel)
+                            ? _vm._i(_vm.allDel, "1") > -1
+                            : _vm.allDel,
+                        },
+                        on: {
+                          change: [
+                            function ($event) {
+                              var $$a = _vm.allDel,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = "1",
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 && (_vm.allDel = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.allDel = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.allDel = $$c
+                              }
+                            },
+                            _vm.allCheck,
+                          ],
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("物理名")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("論理名")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("必須")]),
+                    _vm._v(" "),
+                    _c("th"),
+                  ]),
+                ]),
                 _vm._v(" "),
                 _c(
                   "tbody",
                   _vm._l(_vm.csvList, function (eachCsv, index) {
                     return _c("tr", [
+                      _c("td", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: eachCsv.isDelete,
+                              expression: "eachCsv.isDelete",
+                            },
+                          ],
+                          attrs: { type: "checkbox", value: "1" },
+                          domProps: {
+                            checked: Array.isArray(eachCsv.isDelete)
+                              ? _vm._i(eachCsv.isDelete, "1") > -1
+                              : eachCsv.isDelete,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = eachCsv.isDelete,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = "1",
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      eachCsv,
+                                      "isDelete",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      eachCsv,
+                                      "isDelete",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(eachCsv, "isDelete", $$c)
+                              }
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
                       _c("td", [
                         _c(
                           "span",
@@ -38609,17 +38798,34 @@ var render = function () {
                                 expression: "eachCsv.isEdit",
                               },
                             ],
+                            staticStyle: { "margin-right": "10px" },
                             on: {
                               click: function ($event) {
                                 return _vm.updateField(index)
                               },
                             },
                           },
-                          [
-                            _vm._v(
-                              "\n                                        保存ボタン\n                                    "
-                            ),
-                          ]
+                          [_c("img", { attrs: { src: "/img/save.png" } })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isEdit,
+                                expression: "eachCsv.isEdit",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.closeField(index)
+                              },
+                            },
+                          },
+                          [_c("img", { attrs: { src: "/img/close.png" } })]
                         ),
                       ]),
                     ])
@@ -38637,24 +38843,7 @@ var render = function () {
     1
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("物理名")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("論理名")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("必須")]),
-        _vm._v(" "),
-        _c("th"),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
