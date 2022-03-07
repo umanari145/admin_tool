@@ -13,10 +13,13 @@
                         </option>
                     </select>
 
+                    <div v-show = "csvCategory">
+                        <div class="d-flex justify-content-end" style="margin-top:10px;">
+                            <button type="button" class="btn btn-danger" @click="deleteCsvList" style="margin-right:10px;">削除</button>
+                            <button type="button" class="btn btn-success" @click="bootModal">一括追加</button>
+                        </div>
+                    </div>
 
-                    <button type="button" class="btn btn-danger" @click="deleteCsvList">削除</button>
-                    <button type="button" class="btn btn-primary">追加</button>
-                    <button type="button" class="btn btn-success">一括追加</button>
                     <div class="card-body">
                         <table class="table table-hover">
                             <thead>
@@ -69,21 +72,27 @@
                 </div>
             </div>
         </div>
+        <Modal></Modal>
         <Loading ref="child"></Loading>
     </div>
 </template>
 
 <script>
 
+import Modal from "../components/ModalComponent";
 import masterJson from "../config/master.json";
 import Loading from "../components/LoadingComponent";
 
 export default {
     name:'csvlist-component',
     components:{
-        Loading
+        Loading,
+        Modal
     },
     methods:{
+        bootModal() {
+            this.$modal.show('csv-add');
+        },
         getCsvList() {
             let url = '/api/csv/' + this.csvCategory;
             // 単純なメソッドの呼び出しはこれ
@@ -195,9 +204,7 @@ export default {
             // CSVリスト
             csvList:{},
             masterConfig:{},
-            currentField:"",
             csvCategory:"",
-            isView:true,
             allDel:0
         }
     }
