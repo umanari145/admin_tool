@@ -13,9 +13,9 @@
                         </option>
                     </select>
 
-                    <div v-show = "csvCategory">
+                    <div>
                         <div class="d-flex justify-content-end" style="margin-top:10px;">
-                            <button type="button" class="btn btn-danger" @click="deleteCsvList" style="margin-right:10px;">削除</button>
+                            <button v-show = "csvCategory" type="button" class="btn btn-danger" @click="deleteCsvList" style="margin-right:10px;">削除</button>
                             <button type="button" class="btn btn-success" @click="bootModal">一括追加</button>
                         </div>
                     </div>

@@ -2223,6 +2223,29 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2232,18 +2255,46 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
   },
   methods: {
     confirmCsvList: function confirmCsvList() {
-      if (this.csvTextArea == "") {
-        this.errorMessage.csvTextArea = "CSV項目が未入力です。";
-      }
+      this.errorMessage.csvCategory = "";
+      this.errorMessage.csvTextArea = "";
+      this.confirmCsvData = [];
 
       if (this.csvCategory == "") {
         this.errorMessage.csvCategory = "CSVカテゴリーが未入力です。";
+        return null;
+      }
+
+      if (this.csvTextArea == "") {
+        this.errorMessage.csvTextArea = "CSV項目が未入力です。";
+        return null;
+      }
+
+      var lineArr = this.csvTextArea.split("\n");
+
+      for (var i = 0; i < lineArr.length; i++) {
+        var eachData = lineArr[i].split(",");
+
+        if (eachData.length !== 5) {
+          this.errorMessage.csvTextArea = "項目数が会っていません。";
+          return null;
+        }
+
+        this.confirmCsvData.push({
+          'field_name': eachData[0],
+          'field_disp_name': eachData[1],
+          'is_required': parseInt(eachData[2]),
+          'output_type': eachData[3],
+          'param': eachData[4]
+        });
       }
 
       this.viewStatus = 2;
       var csvCategory = parseInt(this.csvCategory);
       var masterStr = this.masterConfig['csv_category'][csvCategory];
       this.viewMasterConfig = masterStr;
+    },
+    backStatus: function backStatus() {
+      this.viewStatus = 1;
     },
     saveCsvList: function saveCsvList() {
       var _this = this;
@@ -2283,7 +2334,8 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
         'csvTextArea': ''
       },
       viewMasterConfig: '',
-      viewStatus: 1
+      viewStatus: 1,
+      confirmCsvData: []
     };
   }
 });
@@ -38594,50 +38646,45 @@ var render = function () {
               2
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.csvCategory,
-                    expression: "csvCategory",
-                  },
-                ],
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "d-flex justify-content-end",
-                    staticStyle: { "margin-top": "10px" },
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        staticStyle: { "margin-right": "10px" },
-                        attrs: { type: "button" },
-                        on: { click: _vm.deleteCsvList },
-                      },
-                      [_vm._v("削除")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success",
-                        attrs: { type: "button" },
-                        on: { click: _vm.bootModal },
-                      },
-                      [_vm._v("一括追加")]
-                    ),
-                  ]
-                ),
-              ]
-            ),
+            _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass: "d-flex justify-content-end",
+                  staticStyle: { "margin-top": "10px" },
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.csvCategory,
+                          expression: "csvCategory",
+                        },
+                      ],
+                      staticClass: "btn btn-danger",
+                      staticStyle: { "margin-right": "10px" },
+                      attrs: { type: "button" },
+                      on: { click: _vm.deleteCsvList },
+                    },
+                    [_vm._v("削除")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
+                      on: { click: _vm.bootModal },
+                    },
+                    [_vm._v("一括追加")]
+                  ),
+                ]
+              ),
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("table", { staticClass: "table table-hover" }, [
@@ -39194,7 +39241,7 @@ var render = function () {
                     },
                   ],
                   staticStyle: { display: "block", width: "100%" },
-                  attrs: { placeholder: "10,code,品番,0,DATE" },
+                  attrs: { placeholder: "code,品番,0,DATE" },
                   domProps: { value: _vm.csvTextArea },
                   on: {
                     input: function ($event) {
@@ -39259,6 +39306,52 @@ var render = function () {
                 _c("div", [_vm._v(_vm._s(_vm.viewMasterConfig))]),
               ]),
               _vm._v(" "),
+              _c("div", [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [_vm._v("物理名")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("論理名")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("必須")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("データ型")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("パラメータ")]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.confirmCsvData, function (confirmEachCsv) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(_vm._s(confirmEachCsv.field_name))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(confirmEachCsv.field_disp_name)),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              _vm.masterConfig["is_required"][
+                                confirmEachCsv.is_required
+                              ]
+                            )
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(confirmEachCsv.output_type))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(confirmEachCsv.param))]),
+                      ])
+                    }),
+                    0
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
               _c("div", { staticStyle: { "margin-top": "10px" } }, [
                 _c(
                   "div",
@@ -39269,6 +39362,17 @@ var render = function () {
                     },
                   },
                   [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        staticStyle: { "margin-right": "10px" },
+                        attrs: { type: "button" },
+                        on: { click: _vm.backStatus },
+                      },
+                      [_vm._v("戻る")]
+                    ),
+                    _vm._v(" "),
                     _c(
                       "button",
                       {
