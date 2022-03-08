@@ -24,8 +24,7 @@
                     <textarea v-model="csvTextArea" placeholder="code,品番,0,DATE" style="display:block;width:100%;">
                     </textarea>
 
-                    <span class="text-danger">
-                        {{errorMessage.csvTextArea}}
+                    <span class="text-danger" v-html="errorMessage.csvTextArea">
                     </span>
                     <div style="text-align:right;margin-top:15px;">
                         <button type="button" class="btn btn-primary" @click="confirmCsvList" style="margin-right:10px;">追加</button>
@@ -75,6 +74,7 @@
 
 import masterJson from "../config/master.json";
 import Loading from "../components/LoadingComponent";
+import Validator from 'validatorjs';
 
 export default {
     name:'modal-component',
@@ -89,33 +89,57 @@ export default {
 
             if (this.csvCategory == "") {
                 this.errorMessage.csvCategory = "CSVカテゴリーが未入力です。";
-                return null;
+                return false;
             }
 
             if (this.csvTextArea =="") {
                 this.errorMessage.csvTextArea = "CSV項目が未入力です。";
-                return null;
+                return false;
             }
 
             let lineArr = this.csvTextArea.split("\n");
 
             for (let i = 0; i < lineArr.length; i++) {
+                let lineNumber = i + 1;
                 let eachData = lineArr[i].split(",");
 
                 if (eachData.length !== 5) {
-                    this.errorMessage.csvTextArea = "項目数が会っていません。";
-                    return null;
+                    this.errorMessage.csvTextArea =  `${lineNumber}行目 項目数があっていません。`;
+                    return false;
                 }
 
-                this.confirmCsvData.push({
+                let data = {
                     'field_name':eachData[0],
                     'field_disp_name':eachData[1],
                     'is_required':parseInt(eachData[2]),
                     'output_type':eachData[3],
                     'param':eachData[4]
-                });
-            }
+                };
 
+                let rules = {
+                    'field_name': 'required',
+                    'field_disp_name': 'required',
+                    'is_required': 'integer|boolean',
+                };
+
+                let error_msg = {
+                    "required.field_name": `${lineNumber}行目 物理名が未入力です。`,
+                    "required.field_disp_name": `${lineNumber}行目 論理名が未入力です。`,
+                    "required.is_required": `${lineNumber}行目 物理名が未入力です。`,
+                    "boolean.is_required": `${lineNumber}行目 必須は0か1か(またはtrue or false)で入力してください`
+                };
+
+                let validation = new Validator(data, rules, error_msg);
+                validation.check();
+                if (validation.fails()) {
+                    let errorMessage = validation.errors.all();
+                    let errorValues = Object.values(errorMessage);
+                    this.errorMessage.csvTextArea = errorValues.join("<br>");
+                    return false;
+                }
+
+                this.confirmCsvData.push(data);
+            }
             this.viewStatus = 2;
             let csvCategory = parseInt(this.csvCategory);
             let masterStr = this.masterConfig['csv_category'][csvCategory];
