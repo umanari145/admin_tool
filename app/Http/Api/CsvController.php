@@ -30,6 +30,24 @@ class CsvController extends ApiBasicController
         return $this->retServiceResponse($res);
     }
 
+    public function registCsvField(string $csvCategory, Request $request)
+    {
+        $requestData = $request->all();
+        $formValid = new FormValid('csv_category_regist.yaml');
+
+        $dataForValid = array_merge($requestData, ['csv_category' => $csvCategory]);
+        $validateResult =  Validator::make($dataForValid, $formValid->getValidRule());
+        dd($validateResult->errors());
+        if ($validateResult->fails()) {
+            return $this->retValidResponse($validateResult);
+        }
+
+        $csvService = new CsvService();
+        $res = $csvService->registCsvField($csvCategory, $requestData);
+
+        return $this->retServiceResponse($res);
+    }
+
 
     public function updateCsvField(string $id, Request $request)
     {

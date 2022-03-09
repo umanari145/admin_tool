@@ -94,7 +94,7 @@ export default {
             this.$modal.show('csv-add');
         },
         getCsvList() {
-            let url = '/api/csv/' + this.csvCategory;
+            let url = '/api/csv_category/' + this.csvCategory;
             // 単純なメソッドの呼び出しはこれ
             this.$refs.child.loadingOn();
             axios.get(url)

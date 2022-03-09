@@ -14,7 +14,7 @@ class CsvControllerTest extends TestCase
      */
     public function testCsvTest()
     {
-        $response = $this->get('/api/csv/10');
+        $response = $this->get('/api/csv_category/10');
         //Log::debug((array)$response['data']);
         $response->assertStatus(200);
     }
@@ -26,8 +26,39 @@ class CsvControllerTest extends TestCase
      */
     public function testCsvError404Test()
     {
-        $response = $this->get('/api/csv/');
+        $response = $this->get('/api/csv_cateroy/');
         $response->assertStatus(404);
+    }
+
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testRegistCsvFieldTest()
+    {
+        $data = [];
+
+        $updateData = [
+            'field_name' => 'testtest',
+            'field_disp_name' => 'aaaaa',
+            'is_required' => 1
+        ];
+
+        $data[] = $updateData;
+
+        $updateData = [
+            'field_name' => 'testtest2',
+            'field_disp_name' => 'aaaaa2',
+            'is_required' => 0
+        ];
+
+        $data[] = $updateData;
+
+
+        $response = $this->post('/api/csv_category/10', $data);
+        //Log::debug((array)$response['data']);
+        //$response->assertStatus(200);
     }
 
     /**

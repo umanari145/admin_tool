@@ -150,19 +150,12 @@ export default {
         },
         saveCsvList() {
             this.$refs.child.loadingOn();
-            let targetData = this.csvList[index];
 
-            let url = '/api/csv_field/' + targetData['id'];
-            let postData = {
-                'updateData':updateData,
-            };
+            let url = '/api/csv_category/' + this.csvCategory;
 
-            axios.put(url, postData)
+            axios.post(url, this.confirmCsvData)
             .then((res) => {
-                // 参照になっているのでここで値を変えるとcsvListもかわる
-                targetData['isEdit'] = 0;
-                targetData['isView'] = 1;
-                targetData= res['data']['data'];
+
             })
             .catch((error) =>{
                 console.log(error);

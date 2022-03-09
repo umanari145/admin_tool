@@ -2007,7 +2007,7 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__
     getCsvList: function getCsvList() {
       var _this = this;
 
-      var url = '/api/csv/' + this.csvCategory; // 単純なメソッドの呼び出しはこれ
+      var url = '/api/csv_category/' + this.csvCategory; // 単純なメソッドの呼び出しはこれ
 
       this.$refs.child.loadingOn();
       axios.get(url).then(function (res) {
@@ -2325,17 +2325,8 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
       var _this = this;
 
       this.$refs.child.loadingOn();
-      var targetData = this.csvList[index];
-      var url = '/api/csv_field/' + targetData['id'];
-      var postData = {
-        'updateData': updateData
-      };
-      axios.put(url, postData).then(function (res) {
-        // 参照になっているのでここで値を変えるとcsvListもかわる
-        targetData['isEdit'] = 0;
-        targetData['isView'] = 1;
-        targetData = res['data']['data'];
-      })["catch"](function (error) {
+      var url = '/api/csv_category/' + this.csvCategory;
+      axios.post(url, this.confirmCsvData).then(function (res) {})["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         _this.$refs.child.loadingOff();
