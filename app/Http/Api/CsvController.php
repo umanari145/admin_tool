@@ -35,11 +35,22 @@ class CsvController extends ApiBasicController
         $requestData = $request->all();
         $formValid = new FormValid('csv_category_regist.yaml');
 
-        $dataForValid = array_merge($requestData, ['csv_category' => $csvCategory]);
-        $validateResult =  Validator::make($dataForValid, $formValid->getValidRule());
-        dd($validateResult->errors());
-        if ($validateResult->fails()) {
-            return $this->retValidResponse($validateResult);
+        $csvCategory = (int)$csvCategory;
+
+        if (empty($requestData)) {
+            $httpResponse = new HTTPResponse();
+            $httpResponse->httpStatusCode = Response::HTTP_BAD_REQUEST;
+            $errorMessage = 'データが入力されていません。';
+            $httpResponse->errorMessage = $errorMessage;
+            return response()->json($httpResponse->retResponse(), $httpResponse->httpStatusCode, [], JSON_UNESCAPED_UNICODE);
+        }
+
+        foreach ($requestData as $eachData) {
+            $eachData2 = array_merge(['csv_category' => $csvCategory], $eachData);
+            $validateResult =  Validator::make($eachData2, $formValid->getValidRule());
+            if ($validateResult->fails()) {
+                return $this->retValidResponse($validateResult);
+            }
         }
 
         $csvService = new CsvService();

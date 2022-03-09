@@ -40,25 +40,50 @@ class CsvControllerTest extends TestCase
         $data = [];
 
         $updateData = [
-            'field_name' => 'testtest',
-            'field_disp_name' => 'aaaaa',
+            'field_name' => 'code',
+            'field_disp_name' => '品番',
             'is_required' => 1
         ];
 
         $data[] = $updateData;
 
         $updateData = [
-            'field_name' => 'testtest2',
-            'field_disp_name' => 'aaaaa2',
+            'field_name' => 'code2',
+            'field_disp_name' => '元品番',
             'is_required' => 0
         ];
 
         $data[] = $updateData;
 
+        $response = $this->post('/api/csv_category/10', $data);
+        Log::debug((array)$response['data']);
+        $response->assertStatus(200);
+    }
+
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testRegistCsvFieldError400()
+    {
+        $data = [];
+
+        $updateData = [
+        ];
 
         $response = $this->post('/api/csv_category/10', $data);
-        //Log::debug((array)$response['data']);
-        //$response->assertStatus(200);
+        $response->assertStatus(400);
+
+        $data[] = $updateData;
+
+        $updateData = [
+            'field_name' => 'testtest',
+            'field_disp_name' => 'aaaaa',
+            'is_required' => 'aaaaa'
+        ];
+        $response = $this->post('/api/csv_category/10', $data);
+        $response->assertStatus(400);
     }
 
     /**

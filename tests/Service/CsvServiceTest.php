@@ -77,6 +77,35 @@ class CsvServiceTest extends TestCase
         $this->assertEquals($res['result'], '99');
     }
 
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testRegistCsvField()
+    {
+        $data = [];
 
+        $updateData = [
+            'field_name' => 'code2',
+            'field_disp_name' => '元品番',
+            'is_required' => 0
+        ];
+
+        $data[] = $updateData;
+
+        $updateData = [
+            'field_name' => 'code',
+            'field_disp_name' => '品番',
+            'is_required' => 1
+        ];
+
+        $data[] = $updateData;
+
+        $csvService = new CsvService();
+        $res = $csvService->registCsvField(10, $data);
+        $this->assertEquals($res['result'], '1');
+
+    }
 
 }

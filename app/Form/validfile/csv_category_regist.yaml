@@ -3,15 +3,15 @@
     - required
     - numeric
 
-- name: field_name.*
+- name: field_name
   valid_rule: 
     - required
 
-- name: field_disp_name.*
+- name: field_disp_name
   valid_rule:
     - required
 
-- name: is_required.*
+- name: is_required
   valid_rule:
     - required
     - boolean    
