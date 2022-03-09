@@ -15,7 +15,6 @@ class StartTest extends TestCase
      */
     public function testSetUp()
     {
-        $this->artisan('migrate');
-        $this->artisan('db:seed');
+        $this->artisan('migrate:refresh --seed');
     }
 }
