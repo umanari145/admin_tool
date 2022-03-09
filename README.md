@@ -5,6 +5,7 @@
 セットアップ用(ローカル開発時テストDB構築)
 ```
 ./vendor/bin/phpunit ./tests/Start/StartTest.php 
+#内部でphp artisan migrate:refresh --seedを実行
 ```
 
 個別テスト(個別ファイル)
@@ -27,6 +28,10 @@ npm run watch
 #migration実行
 docker exec kad_php php artisan migrate 
 docker exec kad_php php artisan db:seed
+
+#下記コマンドで一気に初期化(全drop)&migrationデータ入力
+#docker exec kad_php php artisan migrate:refresh --seed
+
 
 #テンプレートファイル作成
 #新規
