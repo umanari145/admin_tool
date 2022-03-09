@@ -155,7 +155,12 @@ export default {
 
             axios.post(url, this.confirmCsvData)
             .then((res) => {
-
+                if (res['data']['http_status_code'] === 200) {
+                    alert('CSVの登録に成功しました。');
+                    this.hide();
+                } else {
+                    alert('CSVの登録に失敗しました。');
+                }
             })
             .catch((error) =>{
                 console.log(error);

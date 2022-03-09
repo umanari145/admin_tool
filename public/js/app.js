@@ -2326,7 +2326,15 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
 
       this.$refs.child.loadingOn();
       var url = '/api/csv_category/' + this.csvCategory;
-      axios.post(url, this.confirmCsvData).then(function (res) {})["catch"](function (error) {
+      axios.post(url, this.confirmCsvData).then(function (res) {
+        if (res['data']['http_status_code'] === 200) {
+          alert('CSVの登録に成功しました。');
+
+          _this.hide();
+        } else {
+          alert('CSVの登録に失敗しました。');
+        }
+      })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
         _this.$refs.child.loadingOff();
