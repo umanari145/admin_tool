@@ -40,21 +40,21 @@
                                         <span @click = "inputField(index)" v-show = "eachCsv.isView">
                                             {{eachCsv.field_name}}
                                         </span>
-                                        <input v-model = "eachCsv.field_name" v-show = "eachCsv.isEdit">
+                                        <input v-model = "tmpVal.field_name" v-if = "eachCsv.isEdit">
                                     </td>
                                     <td>
                                         <span @click = "inputField(index)" v-show = "eachCsv.isView">
                                             {{eachCsv.field_disp_name}}
                                         </span>
-                                        <input v-model = "eachCsv.field_disp_name" v-show = "eachCsv.isEdit">
+                                        <input v-model = "tmpVal.field_disp_name" v-if = "eachCsv.isEdit">
                                     </td>
                                     <td>
                                         <span v-show = "eachCsv.isView" @click = "inputField(index)">
                                             {{masterConfig['is_required'][eachCsv.is_required]}} 
                                         </span>
-                                        <div v-show = "eachCsv.isEdit">
-                                            <input type="radio" v-model = "eachCsv.is_required" value="0" id="req_0"><label for="req_0">必須でない</label>
-                                            <input type="radio" v-model = "eachCsv.is_required" value="1" id="req_1"><label for="req_1">必須</label>
+                                        <div v-if = "eachCsv.isEdit">
+                                            <input type="radio" v-model = "tmpVal.is_required" value="0" :id="`req_${index}_0`"><label :for="`req_${index}_0`">必須でない</label>
+                                            <input type="radio" v-model = "tmpVal.is_required" value="1" :id="`req_${index}_1`"><label :for="`req_${index}_1`">必須</label>
                                         </div>
                                     </td>
                                     <td>
@@ -84,7 +84,7 @@ import masterJson from "../config/master.json";
 import Loading from "../components/LoadingComponent";
 
 export default {
-    name:'csvlist-component',
+    name:'csvlist',
     components:{
         Loading,
         Modal
@@ -119,6 +119,10 @@ export default {
             // 参照になっているのでここで値を変えるとcsvListもかわる
             targetData['isEdit'] = 1;
             targetData['isView'] = 0;
+            // 最初に表示された後でvueの監視下におきたい場合はsetメソッド this.tmpVal.field_name = targetData['field_name']とやっても画面が変わらない
+            this.$set(this.tmpVal, 'field_name', targetData['field_name']);
+            this.$set(this.tmpVal, 'field_disp_name', targetData['field_disp_name']);
+            this.$set(this.tmpVal, 'is_required', targetData['is_required']);
         },
         updateField(index) {
             this.$refs.child.loadingOn();
@@ -126,9 +130,9 @@ export default {
 
             let url = '/api/csv_field/' + targetData['id'];
             let updateData = {
-                'field_name':targetData['field_name'], 
-                'field_disp_name':targetData['field_disp_name'], 
-                'is_required':targetData['is_required']
+                'field_name':this.tmpVal['field_name'], 
+                'field_disp_name':this.tmpVal['field_disp_name'], 
+                'is_required':this.tmpVal['is_required']
             };
 
             let postData = {
@@ -138,9 +142,12 @@ export default {
             axios.put(url, postData)
                 .then((res) => {
                     // 参照になっているのでここで値を変えるとcsvListもかわる
-                    targetData['isEdit'] = 0;
-                    targetData['isView'] = 1;
-                    targetData= res['data']['data'];
+                    let data = res['data']['data']
+                    this.csvList[index]['field_name'] = data['field_name'];
+                    this.csvList[index]['field_disp_name'] = data['field_disp_name'];
+                    this.csvList[index]['is_required'] = data['is_required'];
+                    this.csvList[index]['isEdit'] = 0;
+                    this.csvList[index]['isView'] = 1;
                 })
                 .catch((error) =>{
                     console.log(error);
@@ -205,7 +212,8 @@ export default {
             csvList:{},
             masterConfig:{},
             csvCategory:"",
-            allDel:0
+            allDel:0,
+            tmpVal:{}
         }
     }
 }

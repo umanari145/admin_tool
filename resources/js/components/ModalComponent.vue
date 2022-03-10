@@ -1,6 +1,12 @@
 <template>
     <div class="container">
-        <modal name="csv-add" :draggable="true" :resizable="true" width = "60%" height = "80%">
+        <modal name="csv-add" 
+            :draggable="true" 
+            :resizable="true" 
+            width = "60%" 
+            height = "80%"
+            @before-open="dataInit"
+            @before-close="dataInit">
             <div class="modal-header">
                 <h2>項目追加</h2>
                 <button @click="hide"><img src="/img/close.png"></button>
@@ -82,6 +88,17 @@ export default {
         Loading
     },
     methods:{
+        dataInit() {
+           this.csvTextArea = "",
+           this.csvCategory = "",
+           this.errorMessage = {
+                'csvCategory':'',
+                'csvTextArea':''
+            };
+            this.viewMasterConfig = '',
+            this.viewStatus = 1,
+            this.confirmCsvData = []
+        },
         confirmCsvList() {
             this.errorMessage.csvCategory = "";
             this.errorMessage.csvTextArea = "";
