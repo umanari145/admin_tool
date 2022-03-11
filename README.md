@@ -1,4 +1,4 @@
-# kantan_wms_admin
+# admin_admin
 管理ツール
 
 ### テスト対策
@@ -41,5 +41,7 @@ php artisan make:migration [migrationファイル名] --table=[既存テーブ�
 ```
 
 ### デプロイ時
+```
 cp .env.dev .env
 php artisan key:generate
+```

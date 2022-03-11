@@ -9,7 +9,6 @@
     </head>
     <body>
         <div id="app">
-            <router-view></router-view>
             <!-- 直で/csvlistにアクセスしても表示されない laravelのrouteになる -->
             <router-link to="/csvlist">CSV</router-link>
         </div>
