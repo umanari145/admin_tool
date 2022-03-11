@@ -9,8 +9,7 @@
     </head>
     <body>
         <div id="app">
-            <!-- 直で/csvlistにアクセスしても表示されない laravelのrouteになる -->
-            <router-link to="/csvlist">CSV</router-link>
+            <router-view></router-view>
         </div>
         <script src="{{ mix('js/app.js') }}"></script>
     </body>
