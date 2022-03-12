@@ -29,3 +29,10 @@ jobs:
           key: node-v1-{{ checksum "package.json" }}
           paths: 
             - node_modules
+      - run: cp .env.example .env
+      - run:
+          name: touch database.sqlite
+          command: touch database.sqlite
+      - run:
+          name: php sqlite test
+          command: vendor/bin/phpunit

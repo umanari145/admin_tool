@@ -20,17 +20,6 @@ class CsvControllerTest extends TestCase
     }
 
     /**
-     * error
-     *
-     * @return void
-     */
-    public function testCsvError404Test()
-    {
-        $response = $this->get('/api/csv_cateroy/');
-        $response->assertStatus(404);
-    }
-
-    /**
      * A basic test example.
      *
      * @return void

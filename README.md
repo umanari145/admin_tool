@@ -45,3 +45,45 @@ php artisan make:migration [migrationファイル名] --table=[既存テーブ�
 cp .env.dev .env
 php artisan key:generate
 ```
+
+
+### CDパイプラインに関する記載
+
+circleci\config.ymlに関して<br>
+トリガーがpush時というのはおそらくdefaultの設定
+```
+version: 2.1
+
+jobs:
+  // jobs名はbuildだとpush時に動くがそうでないと動かないので注意
+  build:
+    // 仮想環境上で動くdocker-image
+    docker:
+      - image: circleci/php:7.3-node-browsers
+    // 具体的な処理の記載  
+    steps:
+      // githubからソースをとってくる(ほぼ全ての処理で書く)
+      - checkout
+      // composer updateを行う
+      - run: sudo composer self-update --1
+      // 時間かかるのでcacheを使用 {{ checksum "composer.lock" }}はハッシュ値にする関数 circleCIから正常にキャッシュがダウンロードされていることを確認
+      - restore_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+      // -nはyes no のやりとりを発生させない --prefer-distは高速化対応(zip?)
+      - run: composer install -n --prefer-dist 
+      // 先程のcache対応
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths: 
+            - vendor
+      // npmもcomposerと全く同様      
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}
+          paths: 
+            - node_modules
+
+
+```

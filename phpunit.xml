@@ -6,6 +6,9 @@
     </include>
   </coverage>
   <testsuites>
+    <testsuite name="start">
+      <directory suffix="Test.php">./tests/Start</directory>
+    </testsuite>
     <testsuite name="Unit">
       <directory suffix="Test.php">./tests/Unit</directory>
     </testsuite>
@@ -24,8 +27,6 @@
     <server name="BCRYPT_ROUNDS" value="4"/>
     <server name="CACHE_DRIVER" value="array"/>
     <server name="DB_CONNECTION" value="sqlite"/>
-    <!-- memoryで使いたい場合は以下のコメントアウトを外す データ少しだが高速-->
-    <!--<server name="DB_DATABASE" value=":memory:"/>-->
     <!-- fileで使いたい場合は以下のコメントアウトを外す やや遅め-->
     <server name="DB_DATABASE" value="database.sqlite" />
     <server name="MAIL_MAILER" value="array"/>
