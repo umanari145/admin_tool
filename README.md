@@ -87,3 +87,28 @@ jobs:
 
 
 ```
+
+### azureコマンド
+
+
+
+
+ディレクトリ切り替え
+```
+az account set --subscription "{{ディレクトリ}}"
+```
+
+アカウントリスト表示
+```
+az account list --output table
+```
+
+リソース一覧
+```
+az resource list
+```
+
+デプロイ(ストレージからでないと弾かれる)
+```
+az webapp deploy --type zip --resource-group {{リソースグループ}} --name {{サービス名}} --src-path {{ファイル名}}
+```
