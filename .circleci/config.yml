@@ -38,4 +38,4 @@ jobs:
           command: vendor/bin/phpunit
       - run:
           name: archive zip
-          command: zip -r laravel.zip ./* | ls -la
+          command: zip -r laravel.zip ./*
