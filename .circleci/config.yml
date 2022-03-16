@@ -36,3 +36,6 @@ jobs:
       - run:
           name: php sqlite test
           command: vendor/bin/phpunit
+      - run:
+          name: archive zip
+          command: zip -r laravel.zip ./* | ls -la
