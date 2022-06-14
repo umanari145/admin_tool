@@ -6,9 +6,6 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="start">
-      <directory suffix="Test.php">./tests/Start</directory>
-    </testsuite>
     <testsuite name="Unit">
       <directory suffix="Test.php">./tests/Unit</directory>
     </testsuite>

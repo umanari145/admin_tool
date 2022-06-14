@@ -2,11 +2,6 @@
 管理ツール
 
 ### テスト対策
-セットアップ用(ローカル開発時テストDB構築)
-```
-./vendor/bin/phpunit ./tests/Start/StartTest.php 
-#内部でphp artisan migrate:refresh --seedを実行
-```
 
 個別テスト(個別ファイル)
 ```
