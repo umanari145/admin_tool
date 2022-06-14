@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Model\CsvField;
 use Log;
 
 class CsvControllerTest extends TestCase
 {
+
     /**
      * A basic test example.
      *
@@ -82,6 +84,12 @@ class CsvControllerTest extends TestCase
      */
     public function testCsvField()
     {
+        $csv_field = factory(CsvField::class)->create([
+            'field_name' => "aaaa",
+            'field_disp_name' => "ddddd",
+            'is_required' => 0
+        ])->toArray();
+
         $updateData = [
             'field_name' => 'testtest',
             'field_disp_name' => 'aaaaa',
@@ -90,7 +98,8 @@ class CsvControllerTest extends TestCase
         $data = [
             'updateData' => $updateData
         ];
-        $response = $this->put('/api/csv_field/1', $data);
+
+        $response = $this->put('/api/csv_field/' . $csv_field['id'], $data);
         $response->assertStatus(200);
 
         $updateData = [
@@ -102,7 +111,8 @@ class CsvControllerTest extends TestCase
         $data = [
             'updateData' => $updateData
         ];
-        $response = $this->put('/api/csv_field/1', $data);
+
+        $response = $this->put('/api/csv_field/' . $csv_field['id'], $data);
         $response->assertStatus(200);
     }
 
@@ -113,15 +123,22 @@ class CsvControllerTest extends TestCase
      */
     public function testCsvFieldError400()
     {
+
+        $csv_field = factory(CsvField::class)->create([
+            'field_name' => "aaaa",
+            'field_disp_name' => "ddddd",
+            'is_required' => 0
+        ])->toArray();
+
         $updateData = [
             'field_name' => null,
             'is_required' => 0
         ];
-        
+
         $data = [
             'updateData' => $updateData
         ];
-        $response = $this->put('/api/csv_field/1', $data);
+        $response = $this->put('/api/csv_field/' . $csv_field['id'], $data);
         $response->assertStatus(400);
     }
 
@@ -154,8 +171,14 @@ class CsvControllerTest extends TestCase
      */
     public function testDeleteField()
     {
+        $csv_field_ids = factory(CsvField::class, 2)->create([
+            'field_name' => "aaaa",
+            'field_disp_name' => "ddddd",
+            'is_required' => 0
+        ])->pluck('id')->toArray();
+
         $data = [
-            'delete_ids' => ['30', '31']
+            'delete_ids' => $csv_field_ids
         ];
 
         $response = $this->delete('/api/csv_field', $data);

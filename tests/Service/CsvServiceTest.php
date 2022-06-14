@@ -2,12 +2,12 @@
 
 namespace Tests\Service;
 
+use App\Model\CsvField;
 use Tests\TestCase;
 use App\Service\CsvService;
 
 class CsvServiceTest extends TestCase
 {
-
     /**
      * A basic test example.
      *
@@ -15,27 +15,36 @@ class CsvServiceTest extends TestCase
      */
     public function testGetCsvListTest()
     {
+        factory(CsvField::class)->create()->toArray();
+
         $csvService = new CsvService();
         $res = $csvService->getCsvFieldList(10);
         //デバッグ
         $this->assertEquals($res['result'], '1');
     }
 
-        /**
+    /**
      * A basic test example.
      *
      * @return void
      */
     public function testUpdateCsvField()
     {
-        $data = [
+        $csv_field = factory(CsvField::class)->create([
             'field_name' => "aaaa",
             'field_disp_name' => "ddddd",
             'is_required' => 0
+        ])->toArray();
+
+        $data = [
+            'field_name' => "bbbb",
+            'field_disp_name' => "ccccc",
+            'is_required' => 0
         ];
+
         $csvService = new CsvService();
-        $res = $csvService->updateCsvField('1', $data);
-        $this->assertEquals($res['data']['field_name'], 'aaaa');
+        $res = $csvService->updateCsvField($csv_field['id'], $data);
+        $this->assertEquals($res['data']['field_name'], 'bbbb');
         $this->assertEquals($res['result'], '1');
     }
 
@@ -46,6 +55,12 @@ class CsvServiceTest extends TestCase
      */
     public function testUpdateCsvFieldError()
     {
+        $csv_field = factory(CsvField::class)->create([
+            'field_name' => "aaaa",
+            'field_disp_name' => "ddddd",
+            'is_required' => 0
+        ])->toArray();
+
         // 存在しない項目でエラーを起こす
         $data = [
             'field_na' => null,
@@ -64,15 +79,11 @@ class CsvServiceTest extends TestCase
      */
     public function testDeleteCsvField()
     {
-        $data = [
-            '10', '11'
-        ];
-        $csvService = new CsvService();
-        $res = $csvService->deleteCsvField($data);
-        $this->assertEquals($res['result'], '1');
+        $csv_field_ids = factory(CsvField::class, 2)->create()->pluck('id')->toArray();
 
-        $res = $csvService->deleteCsvField($data);
-        $this->assertEquals($res['result'], '99');
+        $csvService = new CsvService();
+        $res = $csvService->deleteCsvField($csv_field_ids);
+        $this->assertEquals($res['result'], '1');
     }
 
     /**
@@ -103,7 +114,5 @@ class CsvServiceTest extends TestCase
         $csvService = new CsvService();
         $res = $csvService->registCsvField(10, $data);
         $this->assertEquals($res['result'], '1');
-
     }
-
 }
