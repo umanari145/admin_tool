@@ -1,15 +1,19 @@
 workflows:
   version: 2
-  sample_workflow:
-    jobs:
-      - test
-      - deploy:
-          filters:
-            branches:
-              only:
-                - main
-          requires:
-            - test
+orbs: 
+  heroku: circleci/heroku@1.2.6
+
+sample_workflow:
+  jobs:
+    - test
+    - deploy:
+        filters:
+          branches:
+            only:
+              - main
+        requires:
+          - test
+
 jobs:
   test:
     docker:
@@ -44,7 +48,10 @@ jobs:
       - image: cimg/php:8.1.7-browsers
     steps:
       - checkout
-      - run:
-          name: deploy heroku
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APPNAME.git
+      - heroku/install
+      - heroku/deploy-via-git:
+          app-name: $HEROKU_APPNAME
+      # 現在は使わなそう
+      #- run:
+      #    name: DB migration
+      #    command: heroku run php artisan migrate --app $HEROKU_APPNAME
