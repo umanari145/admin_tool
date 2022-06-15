@@ -27,7 +27,6 @@ docker exec kad_php php artisan db:seed
 #下記コマンドで一気に初期化(全drop)&migrationデータ入力
 #docker exec kad_php php artisan migrate:refresh --seed
 
-
 #テンプレートファイル作成
 #新規
 php artisan make:migration [migrationファイル名] --create=[新規テーブル作成]
