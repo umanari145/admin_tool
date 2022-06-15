@@ -3,12 +3,11 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Model\CsvField;
+use App\Models\CsvField;
 use Log;
 
 class CsvControllerTest extends TestCase
 {
-
     /**
      * A basic test example.
      *
@@ -84,7 +83,7 @@ class CsvControllerTest extends TestCase
      */
     public function testCsvField()
     {
-        $csv_field = factory(CsvField::class)->create([
+        $csv_field = CsvField::factory()->create([
             'field_name' => "aaaa",
             'field_disp_name' => "ddddd",
             'is_required' => 0
@@ -124,7 +123,7 @@ class CsvControllerTest extends TestCase
     public function testCsvFieldError400()
     {
 
-        $csv_field = factory(CsvField::class)->create([
+        $csv_field = CsvField::factory()->create([
             'field_name' => "aaaa",
             'field_disp_name' => "ddddd",
             'is_required' => 0
@@ -171,7 +170,7 @@ class CsvControllerTest extends TestCase
      */
     public function testDeleteField()
     {
-        $csv_field_ids = factory(CsvField::class, 2)->create([
+        $csv_field_ids = CsvField::factory(2)->create([
             'field_name' => "aaaa",
             'field_disp_name' => "ddddd",
             'is_required' => 0

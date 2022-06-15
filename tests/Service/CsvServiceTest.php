@@ -2,7 +2,7 @@
 
 namespace Tests\Service;
 
-use App\Model\CsvField;
+use App\Models\CsvField;
 use Tests\TestCase;
 use App\Service\CsvService;
 
@@ -15,7 +15,7 @@ class CsvServiceTest extends TestCase
      */
     public function testGetCsvListTest()
     {
-        factory(CsvField::class)->create()->toArray();
+        CsvField::factory()->create()->toArray();
 
         $csvService = new CsvService();
         $res = $csvService->getCsvFieldList(10);
@@ -30,7 +30,7 @@ class CsvServiceTest extends TestCase
      */
     public function testUpdateCsvField()
     {
-        $csv_field = factory(CsvField::class)->create([
+        $csv_field = CsvField::factory()->create([
             'field_name' => "aaaa",
             'field_disp_name' => "ddddd",
             'is_required' => 0
@@ -55,7 +55,7 @@ class CsvServiceTest extends TestCase
      */
     public function testUpdateCsvFieldError()
     {
-        $csv_field = factory(CsvField::class)->create([
+        $csv_field = CsvField::factory()->create([
             'field_name' => "aaaa",
             'field_disp_name' => "ddddd",
             'is_required' => 0
@@ -79,7 +79,7 @@ class CsvServiceTest extends TestCase
      */
     public function testDeleteCsvField()
     {
-        $csv_field_ids = factory(CsvField::class, 2)->create()->pluck('id')->toArray();
+        $csv_field_ids = CsvField::factory(2)->create()->pluck('id')->toArray();
 
         $csvService = new CsvService();
         $res = $csvService->deleteCsvField($csv_field_ids);

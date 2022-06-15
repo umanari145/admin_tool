@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
 class CsvField extends Model
 {
+    use HasFactory;
+
     protected $table = 'csv_field';
 
     // timestampの自動更新をfalseにする
