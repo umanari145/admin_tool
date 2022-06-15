@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Model\CsvField;
+use App\Models\CsvField;
 use Cache;
 use App\Constant\ConfigConst;
 

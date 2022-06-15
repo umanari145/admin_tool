@@ -13,7 +13,6 @@ use Validator;
 
 class ApiBasicController extends Controller
 {
-    
     protected function retValidResponse($validateResult)
     {
         $httpResponse = new HTTPResponse();
