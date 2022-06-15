@@ -1,18 +1,18 @@
 workflows:
   version: 2
+  sample_workflow:
+    jobs:
+      - test
+      - deploy:
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - test
+
 orbs: 
   heroku: circleci/heroku@1.2.6
-
-sample_workflow:
-  jobs:
-    - test
-    - deploy:
-        filters:
-          branches:
-            only:
-              - main
-        requires:
-          - test
 
 jobs:
   test:
