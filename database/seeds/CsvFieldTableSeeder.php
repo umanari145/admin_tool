@@ -23,7 +23,7 @@ class CsvFieldTableSeeder extends Seeder
                 'field_disp_name' => $line[2],
                 'is_required' => (!empty($line[3]) ? 1 : 0),
                 'output_type' => $line[4],
-                'param' => ($line[5] == "NULL") ? null:$line[5],
+                'param' => ($line[5] == "NULL") ? null : $line[5],
                 'meta_deleted' => 0,
             ];
             $dataList[] = $data;
