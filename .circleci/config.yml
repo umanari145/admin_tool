@@ -44,9 +44,10 @@ jobs:
           command: vendor/bin/phpunit
 
   deploy:
-    docker:
-      - image: cimg/php:8.1.7-browsers
+    executor: heroku/default
     steps:
+      - checkout
+      - heroku/install
       - heroku/deploy-via-git:
           app-name: $HEROKU_APPNAME
       # 現在は使わなそう
