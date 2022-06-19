@@ -25,6 +25,8 @@
     },
     "dependencies": {
         "@coreui/coreui": "^4.1.6",
+        "@coreui/icons": "^3.0.0-alpha.0",
+        "@coreui/icons-vue": "^2.0.0",
         "validatorjs": "^3.22.1",
         "vue-js-modal": "^2.0.1",
         "vue-router": "^3.5.3",

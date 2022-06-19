@@ -2194,72 +2194,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'home',
   methods: {
@@ -2320,8 +2254,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_LoginComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/LoginComponent */ "./resources/js/components/LoginComponent.vue");
-/* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
+/* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
 //
 //
 //
@@ -2358,14 +2291,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'login',
   components: {
-    Loading: _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Loading: _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
     doLogin: function doLogin() {
@@ -45773,33 +45703,7 @@ var render = function () {
         attrs: { id: "sidebar" },
       },
       [
-        _c("div", { staticClass: "sidebar-brand d-none d-md-flex" }, [
-          _c(
-            "svg",
-            {
-              staticClass: "sidebar-brand-full",
-              attrs: { width: "118", height: "46", alt: "CoreUI Logo" },
-            },
-            [
-              _c("use", {
-                attrs: { "xlink:href": "assets/brand/coreui.svg#full" },
-              }),
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "svg",
-            {
-              staticClass: "sidebar-brand-narrow",
-              attrs: { width: "46", height: "46", alt: "CoreUI Logo" },
-            },
-            [
-              _c("use", {
-                attrs: { "xlink:href": "assets/brand/coreui.svg#signet" },
-              }),
-            ]
-          ),
-        ]),
+        _c("div", { staticClass: "sidebar-brand d-none d-md-flex" }),
         _vm._v(" "),
         _c(
           "ul",
@@ -45810,23 +45714,7 @@ var render = function () {
           [
             _c("li", { staticClass: "nav-title pt-0" }, [_vm._v("Menu")]),
             _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
-              _c(
-                "a",
-                { staticClass: "nav-link", attrs: { href: "colors.html" } },
-                [
-                  _c("svg", { staticClass: "nav-icon" }, [
-                    _c("use", {
-                      attrs: {
-                        "xlink:href":
-                          "vendors/@coreui/icons/svg/free.svg#cil-drop",
-                      },
-                    }),
-                  ]),
-                  _vm._v(" Companies"),
-                ]
-              ),
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c(
               "li",
@@ -45836,15 +45724,14 @@ var render = function () {
                   "router-link",
                   { staticClass: "nav-link", attrs: { to: "/csvlist" } },
                   [
-                    _c("svg", { staticClass: "nav-icon" }, [
-                      _c("use", {
-                        attrs: {
-                          "xlink:href":
-                            "vendors/@coreui/icons/svg/free.svg#cil-pencil",
-                        },
-                      }),
-                    ]),
-                    _vm._v(" CsvList"),
+                    _c("img", {
+                      staticClass: "nav-icon",
+                      attrs: {
+                        src: "icons/svg/free/cil-list.svg",
+                        alt: "list",
+                      },
+                    }),
+                    _vm._v("\n                CsvList"),
                   ]
                 ),
               ],
@@ -45869,27 +45756,30 @@ var render = function () {
       [
         _c("header", { staticClass: "header header-sticky mb-4" }, [
           _c("div", { staticClass: "container-fluid" }, [
-            _c(
-              "button",
-              {
-                staticClass: "header-toggler px-md-0 me-md-3",
-                attrs: {
-                  type: "button",
-                  onclick:
-                    "coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()",
-                },
-              },
-              [
-                _c("svg", { staticClass: "icon icon-lg" }, [
-                  _c("use", {
-                    attrs: {
-                      "xlink:href":
-                        "vendors/@coreui/icons/svg/free.svg#cil-menu",
-                    },
-                  }),
-                ]),
-              ]
-            ),
+            _c("div", { staticClass: "d-flex" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("ul", { staticClass: "header-nav d-none d-md-flex" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "nav-link",
+                        attrs: { to: "csvList", href: "#" },
+                      },
+                      [_vm._v("CsvList")]
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+            ]),
+            _vm._v(" "),
             _c(
               "a",
               { staticClass: "header-brand d-md-none", attrs: { href: "#" } },
@@ -45906,268 +45796,23 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _c("ul", { staticClass: "header-nav d-none d-md-flex" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "li",
-                { staticClass: "nav-item" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { to: "csvList", href: "#" },
-                    },
-                    [_vm._v("CsvList")]
-                  ),
-                ],
-                1
-              ),
-            ]),
-            _vm._v(" "),
-            _c("ul", { staticClass: "header-nav ms-auto" }, [
-              _c("li", { staticClass: "nav-item" }, [
-                _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                  _c("svg", { staticClass: "icon icon-lg" }, [
-                    _c("use", {
-                      attrs: {
-                        "xlink:href":
-                          "vendors/@coreui/icons/svg/free.svg#cil-bell",
-                      },
-                    }),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "nav-item" }, [
-                _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                  _c("svg", { staticClass: "icon icon-lg" }, [
-                    _c("use", {
-                      attrs: {
-                        "xlink:href":
-                          "vendors/@coreui/icons/svg/free.svg#cil-list-rich",
-                      },
-                    }),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "nav-item" }, [
-                _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-                  _c("svg", { staticClass: "icon icon-lg" }, [
-                    _c("use", {
-                      attrs: {
-                        "xlink:href":
-                          "vendors/@coreui/icons/svg/free.svg#cil-envelope-open",
-                      },
-                    }),
-                  ]),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
             _c("ul", { staticClass: "header-nav ms-3" }, [
-              _c("li", { staticClass: "nav-item dropdown" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "dropdown-menu dropdown-menu-end pt-0" },
-                  [
-                    _vm._m(2),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-bell",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Updates"),
-                        _c(
-                          "span",
-                          { staticClass: "badge badge-sm bg-info ms-2" },
-                          [_vm._v("42")]
-                        ),
-                      ]
-                    ),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-envelope-open",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Messages"),
-                        _c(
-                          "span",
-                          { staticClass: "badge badge-sm bg-success ms-2" },
-                          [_vm._v("42")]
-                        ),
-                      ]
-                    ),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-task",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Tasks"),
-                        _c(
-                          "span",
-                          { staticClass: "badge badge-sm bg-danger ms-2" },
-                          [_vm._v("42")]
-                        ),
-                      ]
-                    ),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-comment-square",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Comments"),
-                        _c(
-                          "span",
-                          { staticClass: "badge badge-sm bg-warning ms-2" },
-                          [_vm._v("42")]
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(3),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-user",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Profile"),
-                      ]
-                    ),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-settings",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Settings"),
-                      ]
-                    ),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-credit-card",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Payments"),
-                        _c(
-                          "span",
-                          { staticClass: "badge badge-sm bg-secondary ms-2" },
-                          [_vm._v("42")]
-                        ),
-                      ]
-                    ),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-file",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Projects"),
-                        _c(
-                          "span",
-                          { staticClass: "badge badge-sm bg-primary ms-2" },
-                          [_vm._v("42")]
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "dropdown-divider" }),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-lock-locked",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Lock Account"),
-                      ]
-                    ),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("svg", { staticClass: "icon me-2" }, [
-                          _c("use", {
-                            attrs: {
-                              "xlink:href":
-                                "vendors/@coreui/icons/svg/free.svg#cil-account-logout",
-                            },
-                          }),
-                        ]),
-                        _vm._v(" Logout"),
-                      ]
-                    ),
-                  ]
-                ),
+              _c("li", { staticClass: "nav-item" }, [
+                _c("img", {
+                  staticClass: "icon-lg icon",
+                  staticStyle: { cursor: "pointer" },
+                  attrs: {
+                    src: "icons/svg/free/cil-account-logout.svg",
+                    alt: "logout",
+                  },
+                  on: { click: _vm.logout },
+                }),
               ]),
             ]),
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(4),
+        _vm._m(3),
         _vm._v(" "),
         _c("footer", { staticClass: "footer" }),
       ]
@@ -46180,8 +45825,12 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-        _vm._v("Companies"),
+      _c("a", { staticClass: "nav-link", attrs: { href: "colors.html" } }, [
+        _c("img", {
+          staticClass: "nav-icon",
+          attrs: { src: "icons/svg/free/cil-home.svg", alt: "home" },
+        }),
+        _vm._v("\n                Companies"),
       ]),
     ])
   },
@@ -46190,24 +45839,20 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "a",
+      "button",
       {
-        staticClass: "nav-link py-0",
+        staticClass: "header-toggler px-md-0 me-md-3",
         attrs: {
-          "data-coreui-toggle": "dropdown",
-          href: "#",
-          role: "button",
-          "aria-haspopup": "true",
-          "aria-expanded": "false",
+          type: "button",
+          onclick:
+            "coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()",
         },
       },
       [
-        _c("div", { staticClass: "avatar avatar-md" }, [
-          _c("img", {
-            staticClass: "avatar-img",
-            attrs: { src: "assets/img/avatars/8.jpg", alt: "user@email.com" },
-          }),
-        ]),
+        _c("img", {
+          staticClass: "icon icon-lg",
+          attrs: { src: "icons/svg/free/cil-menu.svg", alt: "menu" },
+        }),
       ]
     )
   },
@@ -46215,16 +45860,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown-header bg-light py-2" }, [
-      _c("div", { staticClass: "fw-semibold" }, [_vm._v("Account")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown-header bg-light py-2" }, [
-      _c("div", { staticClass: "fw-semibold" }, [_vm._v("Settings")]),
+    return _c("li", { staticClass: "nav-item" }, [
+      _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+        _vm._v("Companies"),
+      ]),
     ])
   },
   function () {
@@ -46310,16 +45949,7 @@ var render = function () {
                   _c("h1", [_vm._v("Login")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "input-group mb-3" }, [
-                    _c("span", { staticClass: "input-group-text" }, [
-                      _c("svg", { staticClass: "icon" }, [
-                        _c("use", {
-                          attrs: {
-                            "xlink:href":
-                              "vendors/@coreui/icons/svg/free.svg#cil-user",
-                          },
-                        }),
-                      ]),
-                    ]),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -46345,16 +45975,7 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "input-group mb-4" }, [
-                    _c("span", { staticClass: "input-group-text" }, [
-                      _c("svg", { staticClass: "icon" }, [
-                        _c("use", {
-                          attrs: {
-                            "xlink:href":
-                              "vendors/@coreui/icons/svg/free.svg#cil-lock-locked",
-                          },
-                        }),
-                      ]),
-                    ]),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -46423,7 +46044,30 @@ var render = function () {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-text" }, [
+      _c("img", {
+        staticClass: "icon",
+        attrs: { src: "icons/svg/free/cil-3d.svg" },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-text" }, [
+      _c("img", {
+        staticClass: "icon",
+        attrs: { src: "icons/svg/free/cil-lock-locked.svg" },
+      }),
+    ])
+  },
+]
 render._withStripped = true
 
 

@@ -8,15 +8,13 @@
                 <div class="card-body">
                   <h1>Login</h1>
                   <div class="input-group mb-3"><span class="input-group-text">
-                      <svg class="icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-                      </svg></span>
+                      <img class="icon" src="icons/svg/free/cil-3d.svg">
+                    </span>
                     <input class="form-control" type="text" v-model="user.user_code" placeholder="ユーザーコード">
                   </div>
                   <div class="input-group mb-4"><span class="input-group-text">
-                      <svg class="icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
-                      </svg></span>
+                      <img class="icon" src="icons/svg/free/cil-lock-locked.svg" >
+                    </span>
                     <input class="form-control" type="password" v-model="user.password" placeholder="パスワード">
                   </div>
                   <div class="text-danger mb-4" v-show="errorMessage !='' ">
@@ -38,7 +36,6 @@
 
 <script>
 
-import Modal from "../components/LoginComponent";
 import Loading from "../components/LoadingComponent";
 
 export default {
