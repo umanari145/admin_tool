@@ -1,0 +1,30 @@
+name: workflow_dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      email:
+        description: 送信先
+        required: true
+
+jobs:
+  build:
+    name: build & test
+    runs-on:  ubuntu-latest
+
+    steps:
+      - name: disp_email
+        run: |
+          echo ${{ github.event.inputs.email }}
+
+      - name: Send GitHub Action trigger data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.16.0
+        with:
+          payload: |
+            {
+              "text": ":writing_hand: ビルド結果:"
+            }
+        env:
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
