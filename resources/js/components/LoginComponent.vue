@@ -1,19 +1,38 @@
 <template>
-    <div class="container">
-        <div>
-            <label for="userCode">ユーザーコード</label>
-            <input type="text" v-model="user.user_code">
+    <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-4">
+            <div class="card-group d-block d-md-flex row">
+              <div class="card p-4 mb-0">
+                <div class="card-body">
+                  <h1>Login</h1>
+                  <div class="input-group mb-3"><span class="input-group-text">
+                      <svg class="icon">
+                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+                      </svg></span>
+                    <input class="form-control" type="text" v-model="user.user_code" placeholder="ユーザーコード">
+                  </div>
+                  <div class="input-group mb-4"><span class="input-group-text">
+                      <svg class="icon">
+                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                      </svg></span>
+                    <input class="form-control" type="password" v-model="user.password" placeholder="パスワード">
+                  </div>
+                  <div class="text-danger mb-4" v-show="errorMessage !='' ">
+                    {{errorMessage}}
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <button class="btn btn-primary px-4" type="button" @click="doLogin">Login</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-            <label for="password">パスワード</label>
-            <input type="password" v-model="user.password">
-        </div>
-        <div class="text-danger" v-show="errorMessage !='' ">
-            {{errorMessage}}
-        </div>
-        <div>
-            <button @click="doLogin">Sign In</button>
-        </div>
+      </div>
     </div>
 </template>
 
