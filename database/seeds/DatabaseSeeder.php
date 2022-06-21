@@ -12,7 +12,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            CsvFieldTableSeeder::class
+            CsvFieldTableSeeder::class,
+            ScanTerminalTableSeeder::class
         ]);
     }
 }
