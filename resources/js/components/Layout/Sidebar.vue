@@ -5,7 +5,7 @@
         <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
             <li class="nav-title pt-0">Menu</li>
             <li class="nav-item"><router-link class="nav-link" to="/handy">
-                <img class="nav-icon" src="icons/svg/free/cil-home.svg" alt="home">
+                <img class="nav-icon" src="icons/svg/free/cil-tablet.svg" alt="home">
                 Handies</router-link></li>
             <li class="nav-item"><router-link class="nav-link" to="/csv">
                 <img class="nav-icon" src="icons/svg/free/cil-list.svg" alt="list">
