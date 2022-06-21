@@ -3,7 +3,7 @@ const user = {
     namespaced: true,
     state: {
       name: null,
-      isLogin : false
+      isLogin : true
     },
     getters:{
         getLoginInfo(state) {

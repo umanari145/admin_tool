@@ -8,20 +8,17 @@
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header">CSVリスト</div>
-                                <label for="" class="m-3">CSVカテゴリー</label>
-                                <select class="form-select m-3 w-auto" v-model = "csvCategory" @change = "getCsvList">
-                                    <option value = "" >未選択</option>
+                                <div class="card-header">ハンディリスト</div>
+
+                                <!--<select class="form-select m-3 w-auto" v-model = "csvCategory" @change = "getCsvList">
+                                    <option value="" >未選択</option>
                                     <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category">
                                         {{categoryName}}
                                     </option>
-                                </select>
+                                </select>-->
 
-                                <div>
-                                    <div class="d-flex justify-content-end" style="margin-top:10px;">
-                                        <button v-show = "csvCategory" type="button" class="btn btn-danger" @click="deleteCsvList" style="margin-right:10px;">削除</button>
-                                        <button type="button" class="btn btn-success mr-3" @click="bootModal">一括追加</button>
-                                    </div>
+                                <div class="d-flex justify-content-end" style="margin-top:10px;">
+                                    <button type="button" class="btn btn-success mr-3" @click="bootModal">ハンディ追加</button>
                                 </div>
 
                                 <div class="card-body">
@@ -31,46 +28,29 @@
                                                 <th>
                                                     <input type="checkbox" value="1" v-model="allDel" @change="allCheck">
                                                 </th>
-                                                <th>物理名</th>
-                                                <th>論理名</th>
-                                                <th>必須</th>
-                                                <th></th>
+                                                <th>ID</th>
+                                                <th>会社名</th>
+                                                <th>MACアドレス</th>
+                                                <th>メモ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for = "(eachCsv, index) in csvList">
+                                            <tr v-for = "(handy,index) in handies">
                                                 <td>
-                                                    <input type="checkbox" v-model="eachCsv.isDelete" value="1">
+                                                    <input type="checkbox" v-model="handy.isDelete" value="1">
                                                 </td>
                                                 <td>
-                                                    <span @click = "inputField(index)" v-show = "eachCsv.isView">
-                                                        {{eachCsv.field_name}}
-                                                    </span>
-                                                    <input v-model = "tmpVal.field_name" v-if = "eachCsv.isEdit">
+                                                    {{handy.id}}
                                                 </td>
                                                 <td>
-                                                    <span @click = "inputField(index)" v-show = "eachCsv.isView">
-                                                        {{eachCsv.field_disp_name}}
-                                                    </span>
-                                                    <input v-model = "tmpVal.field_disp_name" v-if = "eachCsv.isEdit">
+                                                    <span>{{handy.company}}</span>
                                                 </td>
                                                 <td>
-                                                    <span v-show = "eachCsv.isView" @click = "inputField(index)">
-                                                        {{masterConfig['is_required'][eachCsv.is_required]}} 
-                                                    </span>
-                                                    <div v-if = "eachCsv.isEdit">
-                                                        <input type="radio" v-model = "tmpVal.is_required" value="0" :id="`req_${index}_0`"><label :for="`req_${index}_0`">必須でない</label>
-                                                        <input type="radio" v-model = "tmpVal.is_required" value="1" :id="`req_${index}_1`"><label :for="`req_${index}_1`">必須</label>
-                                                    </div>
+                                                    <span>{{handy.mac_address}}</span>
                                                 </td>
                                                 <td>
-                                                    <span @click = "updateField(index)" v-show = "eachCsv.isEdit" style="margin-right:10px;">
-                                                        <img src="/img/save.png">
-                                                    </span>
-                                                    <span @click = "closeField(index)" v-show = "eachCsv.isEdit">
-                                                        <img src="/img/close.png">
-                                                    </span>
-                                                </td>
+                                                    <span>{{handy.note}}</span>
+                                                </td>                                                                                                                                           
                                             </tr>
                                         </tbody>
                                     </table>
@@ -90,14 +70,13 @@
 <script>
 
 import Modal from "../components/ModalComponent";
-import masterJson from "../config/master.json";
 import Loading from "../components/LoadingComponent";
 import Header from "../components/Layout/Header";
 import Sidebar from "../components/Layout/Sidebar";
 import Footer from "../components/Layout/Footer";
 
 export default {
-    name:'csvlist',
+    name:'handylist',
     components:{
         Loading,
         Modal,
@@ -109,8 +88,8 @@ export default {
         bootModal() {
             this.$modal.show('csv-add');
         },
-        getCsvList() {
-            let url = '/api/csv_category/' + this.csvCategory;
+        getHandyList() {
+            let url = '/api/handy/' + this.csvCategory;
             // 単純なメソッドの呼び出しはこれ
             this.$refs.child.loadingOn();
             axios.get(url)
@@ -140,7 +119,7 @@ export default {
             this.$set(this.tmpVal, 'field_disp_name', targetData['field_disp_name']);
             this.$set(this.tmpVal, 'is_required', targetData['is_required']);
         },
-        updateField(index) {
+        updateHandy(index) {
             this.$refs.child.loadingOn();
             let targetData = this.csvList[index];
 
@@ -178,7 +157,7 @@ export default {
             targetData['isView'] = 1;
         },
         allCheck() {
-            this.csvList.forEach((element) => {
+            this.handies.forEach((element) => {
                 element.isDelete = this.allDel;
             });
         },
@@ -220,14 +199,27 @@ export default {
         }
     },
     created() {
-        this.masterConfig = masterJson;       
+
     },
     data() {
         return {
             // CSVリスト
-            csvList:{},
-            masterConfig:{},
-            csvCategory:"",
+            handies:[
+                {
+                    'id':1,
+                    'company':"カプコン",
+                    'mac_address':"00-01-FC-0C-D6-05",
+                    'note':"testtest",
+                    'isDelete':0
+                },
+                {
+                    'id':2,
+                    'company':"ハドソン",
+                    'mac_address':"00-01-FC-0C-D6-04",
+                    'note':"testtest",
+                    'isDelete':0                    
+                }
+            ],
             allDel:0,
             tmpVal:{}
         }
