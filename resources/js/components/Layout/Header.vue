@@ -6,8 +6,8 @@
                 <img class="icon icon-lg" src="icons/svg/free/cil-menu.svg" alt="menu">
             </button>
             <ul class="header-nav d-none d-md-flex">
-                <li class="nav-item"><a class="nav-link" href="#">Companies</a></li>
-                <li class="nav-item"><router-link to="csvList" class="nav-link" href="#">CsvList</router-link></li>
+                <li class="nav-item"><a class="nav-link" href="#">Handies</a></li>
+                <li class="nav-item"><router-link to="csv" class="nav-link" href="#">CsvList</router-link></li>
             </ul>
         </div>
         

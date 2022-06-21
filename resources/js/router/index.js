@@ -3,6 +3,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 import home from '../components/HomeComponent.vue';
 import csvlist from '../components/CsvListComponent.vue';
+import handylist from '../components/HandyListComponent.vue';
 import login from '../components/LoginComponent.vue';
 import store from '../store';
 
@@ -23,8 +24,14 @@ routeList.push({
 });
 
 routeList.push({
-    path: '/csvlist',
+    path: '/csv',
     component:csvlist, 
+    meta:{requireAuth:true}
+});
+
+routeList.push({
+    path: '/handy',
+    component:handylist, 
     meta:{requireAuth:true}
 });
 
