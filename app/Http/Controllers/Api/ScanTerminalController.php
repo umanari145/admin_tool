@@ -27,51 +27,37 @@ class ScanTerminalController extends ApiBasicController
 
         return $this->retServiceResponse($res);
     }
-/*
-    public function create(string $csvCategory, Request $request)
+
+    public function create(Request $request)
     {
+        $formValid = new FormValid('scan_terminal/create.yaml');
         $requestData = $request->all();
-        $formValid = new FormValid('csv_category_regist.yaml');
 
-        $csvCategory = (int)$csvCategory;
-
-        if (empty($requestData)) {
-            $httpResponse = new HTTPResponse();
-            $httpResponse->httpStatusCode = Response::HTTP_BAD_REQUEST;
-            $errorMessage = 'データが入力されていません。';
-            $httpResponse->errorMessage = $errorMessage;
-            return response()->json($httpResponse->retResponse(), $httpResponse->httpStatusCode, [], JSON_UNESCAPED_UNICODE);
+        $validateResult =  Validator::make($requestData, $formValid->getValidRule());
+        if ($validateResult->fails()) {
+            return $this->retValidResponse($validateResult);
         }
 
-        foreach ($requestData as $eachData) {
-            $eachData2 = array_merge(['csv_category' => $csvCategory], $eachData);
-            $validateResult =  Validator::make($eachData2, $formValid->getValidRule());
-            if ($validateResult->fails()) {
-                return $this->retValidResponse($validateResult);
-            }
-        }
-
-        $csvService = new CsvService();
-        $res = $csvService->registCsvField($csvCategory, $requestData);
+        $scanTerminalService = new ScanTerminalService();
+        $res = $scanTerminalService->registScanTerminal($requestData);
 
         return $this->retServiceResponse($res);
     }
 
-
-    public function update(string $id, Request $request)
+    public function update(string $scan_terminal_id, Request $request)
     {
         $requestData = $request->all();
 
-        $httpResponse = new HTTPResponse();
-        $formValid = new FormValid('csv_field.yaml');
-        $validateResult =  Validator::make($requestData['updateData'], $formValid->getValidRule());
+        $formValid = new FormValid('scan_terminal/update.yaml');
+        $validRequestData = array_merge($requestData['updateData'], ['scan_terminal_id' => $scan_terminal_id]);
+        $validateResult =  Validator::make($validRequestData, $formValid->getValidRule());
 
         if ($validateResult->fails()) {
             return $this->retValidResponse($validateResult);
         }
 
-        $csvService = new CsvService();
-        $res = $csvService->updateCsvField($id, $requestData['updateData']);
+        $scanTerminalService = new ScanTerminalService();
+        $res = $scanTerminalService->updateScanTerminal($scan_terminal_id, $requestData['updateData']);
 
         return $this->retServiceResponse($res);
     }
@@ -79,17 +65,16 @@ class ScanTerminalController extends ApiBasicController
     public function delete(Request $request)
     {
         $requestData = $request->all();
-        $httpResponse = new HTTPResponse();
-        $formValid = new FormValid('csv_field_delete.yaml');
+        $formValid = new FormValid('scan_terminal/delete.yaml');
         $validateResult =  Validator::make($requestData, $formValid->getValidRule());
 
         if ($validateResult->fails()) {
             return $this->retValidResponse($validateResult);
         }
 
-        $csvService = new CsvService();
-        $res = $csvService->deleteCsvField($requestData['delete_ids']);
+        $csvService = new ScanTerminalService();
+        $res = $csvService->deleteScanTerminal($requestData['delete_ids']);
 
         return $this->retServiceResponse($res);
-    }*/
+    }
 }

@@ -5,3 +5,4 @@
 - name: delete_ids.*
   valid_rule: 
     - integer
+    - exists:scan_terminal,id
