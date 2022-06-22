@@ -6,7 +6,6 @@ use App\Models\ScanTerminal;
 use App\Models\Company;
 use Tests\TestCase;
 use App\Service\ScanTerminalService;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class ScanTerminalServiceTest extends TestCase
@@ -57,47 +56,18 @@ class ScanTerminalServiceTest extends TestCase
      *
      * @return void
      */
-    public function tesUpdateCsvField()
+    public function testRegistScanTerminalError()
     {
-        $csv_field = CsvField::factory()->create([
-            'field_name' => "aaaa",
-            'field_disp_name' => "ddddd",
-            'is_required' => 0
-        ])->toArray();
+        $company = Company::factory()->create()->toArray();
 
-        $data = [
-            'field_name' => "bbbb",
-            'field_disp_name' => "ccccc",
-            'is_required' => 0
+        $registData = [
+            'company_i' => $company['id'],
+            'mac_address' => 'aa-bb-cc-dd-ee-ff-gg',
+            'name' => 'サンプルhandy'
         ];
 
-        $csvService = new CsvService();
-        $res = $csvService->updateCsvField($csv_field['id'], $data);
-        $this->assertEquals($res['data']['field_name'], 'bbbb');
-        $this->assertEquals($res['result'], '1');
-    }
-
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function tesUpdateCsvFieldError()
-    {
-        $csv_field = CsvField::factory()->create([
-            'field_name' => "aaaa",
-            'field_disp_name' => "ddddd",
-            'is_required' => 0
-        ])->toArray();
-
-        // 存在しない項目でエラーを起こす
-        $data = [
-            'field_na' => null,
-            'field_disp_name' => null,
-            'is_required' => 0
-        ];
-        $csvService = new CsvService();
-        $res = $csvService->updateCsvField('1', $data);
+        $csvService = new ScanTerminalService();
+        $res = $csvService->registScanTerminal($registData);
         $this->assertEquals($res['result'], '99');
     }
 
@@ -106,13 +76,20 @@ class ScanTerminalServiceTest extends TestCase
      *
      * @return void
      */
-    public function tesDeleteCsvField()
+    public function testUpdateScanTerminal()
     {
-        $csv_field_ids = CsvField::factory(2)->create()->pluck('id')->toArray();
+        $terminal = ScanTerminal::factory()->create()->toArray();
 
-        $csvService = new CsvService();
-        $res = $csvService->deleteCsvField($csv_field_ids);
+        $registData = [
+            'mac_address' => 'aa-bb-cc-dd-ee-ff-hh',
+            'name' => 'サンプルhandy'
+        ];
+
+        $csvService = new ScanTerminalService();
+        $res = $csvService->updateScanTerminal($terminal['id'], $registData);
         $this->assertEquals($res['result'], '1');
+        $this->assertEquals($terminal['id'], $res['data']->id);
+        $this->assertEquals('aa-bb-cc-dd-ee-ff-hh', $res['data']->mac_address);
     }
 
     /**
@@ -120,28 +97,55 @@ class ScanTerminalServiceTest extends TestCase
      *
      * @return void
      */
-    public function tesRegistCsvField()
+    public function testUpdateTerminalError()
     {
-        $data = [];
+        $terminal = ScanTerminal::factory()->create()->toArray();
 
-        $updateData = [
-            'field_name' => 'code2',
-            'field_disp_name' => '元品番',
-            'is_required' => 0
+        $registData = [
+            'mac_address' => 'aa-bb-cc-dd-ee-ff-hh',
+            'name' => 'サンプルhandy'
         ];
 
-        $data[] = $updateData;
+        $scanTerminalService = new ScanTerminalService();
+        $res = $scanTerminalService->updateScanTerminal('100', $registData);
+        $this->assertEquals($res['errorMessage'], '存在しないハンディです。[id = 100]');
+        $this->assertEquals($res['result'], '99');
 
-        $updateData = [
-            'field_name' => 'code',
-            'field_disp_name' => '品番',
-            'is_required' => 1
-        ];
+        Schema::drop('scan_terminal');
+        $res = $scanTerminalService->updateScanTerminal($terminal['id'], $registData);
+        $this->assertEquals($res['result'], '99');
+    }
 
-        $data[] = $updateData;
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testDeleteScanTerminal()
+    {
+        $scan_terminal_ids = ScanTerminal::factory(2)->create()->pluck('id')->toArray();
 
-        $csvService = new CsvService();
-        $res = $csvService->registCsvField(10, $data);
+        $scanTerminalService = new ScanTerminalService();
+        $res = $scanTerminalService->deleteScanTerminal($scan_terminal_ids);
         $this->assertEquals($res['result'], '1');
+    }
+
+
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function testDeleteScanTerminalError()
+    {
+        $scan_terminal_ids = ScanTerminal::factory(2)->create()->pluck('id')->toArray();
+        $scanTerminalService = new ScanTerminalService();
+        $res = $scanTerminalService->deleteScanTerminal(['111', '222']);
+        $this->assertEquals($res['errorMessage'], 'ハンディが存在しません。');
+        $this->assertEquals($res['result'], '99');
+
+        $res = $scanTerminalService->deleteScanTerminal([$scan_terminal_ids[0], '999']);
+        $this->assertEquals($res['errorMessage'], '削除が失敗しました。IDの件数と削除の件数が一致しません。');
+        $this->assertEquals($res['result'], '99');
     }
 }

@@ -7,6 +7,7 @@ use Cache;
 use App\Constant\ConfigConst;
 use Exception;
 use Log;
+use DB;
 
 class ScanTerminalService
 {
@@ -43,31 +44,84 @@ class ScanTerminalService
     }
 
     /**
-     * CSVデータの更新
+     * ターミナルの更新
      *
-     * @param string $csvCategory CSVカテゴリー
-     * @param array $data データ
+     * @param　array $requestData ターミナルのデータ
      * @return レスポンス
      */
-    /*public function updateCsvField(string $id, array $data)
+    public function registScanTerminal(array $requestData): array
     {
         $res = [
             'result' => '',
             'data' => ''
         ];
 
+        DB::beginTransaction();
         try {
-            $dbRes = CsvField::where('id', $id)
-                ->update($data);
+            $scan_terminal = new ScanTerminal();
+            $scan_terminal->fill($requestData);
+            $scan_terminal->save();
 
-            $dbData = CsvField::find($id);
+            if (!$scan_terminal->id) {
+                throw new Exception("登録が失敗ました。");
+            }
+
+            $scan_terminal_obj = ScanTerminal::find($scan_terminal->id);
+
+            DB::commit();
+            $res = [
+                'data' => $scan_terminal_obj,
+                'result' => ConfigConst::SERVICE_SUCCESS
+            ];
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::critical('RollBackを行いました。');
+            Log::critical([$e->getMessage(), $e->getTraceAsString()]);
+
+            $res = [
+                'data' => null,
+                'errorMessage' => $e->getMessage(),
+                'result' => ConfigConst::SERVICE_ERROR
+            ];
+        }
+        return $res;
+    }
+
+    /**
+     * ターミナルデータの更新
+     *
+     * @param string $scan_terminal_id ターミナルID
+     * @param array $data データ
+     * @return レスポンス
+     */
+    public function updateScanTerminal(string $scan_terminal_id, array $data): array
+    {
+        $res = [
+            'result' => '',
+            'data' => ''
+        ];
+
+        DB::beginTransaction();
+        try {
+            $scan_terminal = ScanTerminal::find($scan_terminal_id);
+
+            if (is_null($scan_terminal)) {
+                throw new Exception(sprintf("存在しないハンディです。[id = %s]", $scan_terminal_id));
+            }
+            $scan_terminal->fill($data);
+            $scan_terminal->save();
+
+            $dbData = ScanTerminal::find($scan_terminal_id);
 
             $res = [
                 'data' => $dbData,
                 'result' => ConfigConst::SERVICE_SUCCESS
             ];
-        } catch (\Exception $e) {
-            \Log::critical([$e->getMessage(), $e->getTraceAsString()]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::critical('RollBackを行いました。');
+            Log::critical([$e->getMessage(), $e->getTraceAsString()]);
 
             $res = [
                 'data' => null,
@@ -76,40 +130,44 @@ class ScanTerminalService
             ];
         }
         return $res;
-    }*/
+    }
 
     /**
-     * CSVデータの削除
+     * ターミナルの削除
      *
-     * @param array $deleteIds 削除ID
+     * @param array $scan_terminal_ids 削除ID
      * @return レスポンス
      */
-    /*public function deleteCsvField(array $deleteIds)
+    public function deleteScanTerminal(array $scan_terminal_ids): array
     {
         $res = [
             'result' => '',
             'data' => ''
         ];
 
-        \DB::beginTransaction();
+        DB::beginTransaction();
         try {
+            $scan_terminals = ScanTerminal::whereIn('id', $scan_terminal_ids);
 
-            $res = CsvField::whereIn('id', $deleteIds)
-                ->delete();
-
-            if ($res !== count($deleteIds)) {
-                throw new \Exception("削除が失敗ました。IDの件数と削除の件数が一致しません。");
+            if ($scan_terminals->count() === 0) {
+                throw new Exception("ハンディが存在しません。");
             }
 
-            \DB::commit();
+            $res = $scan_terminals->delete();
+
+            if ($res !== count($scan_terminal_ids)) {
+                throw new Exception("削除が失敗しました。IDの件数と削除の件数が一致しません。");
+            }
+
+            DB::commit();
             $res = [
                 'data' => null,
                 'result' => ConfigConst::SERVICE_SUCCESS
             ];
-        } catch (\Exception $e) {
-            \DB::rollback();
-            \Log::critical('RollBackを行いました。');
-            \Log::critical([$e->getMessage(), $e->getTraceAsString()]);
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::critical('RollBackを行いました。');
+            Log::critical([$e->getMessage(), $e->getTraceAsString()]);
 
             $res = [
                 'data' => null,
@@ -118,52 +176,5 @@ class ScanTerminalService
             ];
         }
         return $res;
-    }*/
-
-    /**
-     * CSVフィールドの更新
-     *
-     * @param int $csvCategory CSVカテゴリー
-     * @param　array $requestData CSVFieldData
-     * @return レスポンス
-     */
-    /*public function registCsvField(int $csvCategory, array $updateData)
-    {
-        $res = [
-            'result' => '',
-            'data' => ''
-        ];
-
-        \DB::beginTransaction();
-        try {
-
-            $csvField = array_map(function ($v) use ($csvCategory) {
-                $v['csv_category'] = $csvCategory;
-                return $v;
-            }, $updateData);
-
-            $res = CsvField::insert($csvField);
-
-            if (!$res) {
-                throw new \Exception("登録が失敗ました。登録件数が入力の件数が一致しません。");
-            }
-
-            \DB::commit();
-            $res = [
-                'data' => null,
-                'result' => ConfigConst::SERVICE_SUCCESS
-            ];
-        } catch (\Exception $e) {
-            \DB::rollback();
-            \Log::critical('RollBackを行いました。');
-            \Log::critical([$e->getMessage(), $e->getTraceAsString()]);
-
-            $res = [
-                'data' => null,
-                'errorMessage' => $e->getMessage(),
-                'result' => ConfigConst::SERVICE_ERROR
-            ];
-        }
-        return $res;
-    }*/
+    }
 }
