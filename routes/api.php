@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware(['auth:api'])->group(function () {
     Route::group(['prefix' => '/scan_terminal'], function () {
         Route::get('/', "Api\ScanTerminalController@index")->name('indexScanTerminal');
-        Route::post('/{scan_terminal_id}', "Api\ScanTerminalController@create")->name('createScanTerminal');
+        Route::post('/', "Api\ScanTerminalController@create")->name('createScanTerminal');
         Route::put('/{scan_terminal_id}', "Api\ScanTerminalController@update")->name('updateScanTerminal');
         Route::delete('/', "Api\ScanTerminalController@delete")->name('deleteScanTerminal');
     });

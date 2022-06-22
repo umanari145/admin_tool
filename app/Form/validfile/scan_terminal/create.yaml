@@ -1,11 +1,14 @@
-- name: field_name
-  valid_rule: 
-    - present
+- name: company_id
+  valid_rule:
+    - required
+    - numeric
+    - exists:company,id
 
-- name: field_disp_name
+- name: mac_address
+  valid_rule: 
+    - required
+    - mac_address
+       
+- name: name
   valid_rule: 
     - present
-       
-- name: is_required
-  valid_rule: 
-    - boolean
