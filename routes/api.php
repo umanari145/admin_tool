@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware(['auth:api'])->group(function () {
+    Route::group(['prefix' => '/scan_terminal'], function () {
+        Route::get('/', "Api\ScanTerminalController@index")->name('indexScanTerminal');
+        Route::post('/{scan_terminal_id}', "Api\ScanTerminalController@create")->name('createScanTerminal');
+        Route::put('/{scan_terminal_id}', "Api\ScanTerminalController@update")->name('updateScanTerminal');
+        Route::delete('/', "Api\ScanTerminalController@delete")->name('deleteScanTerminal');
+    });
+//});

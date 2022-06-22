@@ -20,7 +20,6 @@ Route::group(['prefix' => 'api'], function () {
     Route::delete('csv_field', "Api\CsvController@deleteCsvField")->name('deleteCsvField');
 });
 
-
 // vue対策でどんなURLできてもwelcomeに行くように
 Route::get('/{any}', function () {
     return view('welcome');

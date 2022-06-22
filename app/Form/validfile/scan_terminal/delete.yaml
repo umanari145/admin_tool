@@ -1,0 +1,7 @@
+- name: delete_ids
+  valid_rule: 
+    - array
+
+- name: delete_ids.*
+  valid_rule: 
+    - integer

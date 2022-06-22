@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \DB::listen(
+        DB::listen(
             function ($query) {
                 $sql = $query->sql;
                 if (strlen($sql) <= env('SQL_LOG_LIMIT', 1000)) {
@@ -46,8 +46,7 @@ class AppServiceProvider extends ServiceProvider
                         }
                         $sql = preg_replace('/\\?/', $binding, $sql, 1);
                     }
-
-                    \Log::debug('SQL', ['sql' => $sql, 'time' => "{$query->time} ms"]);
+                    Log::debug('SQL', ['sql' => $sql, 'time' => "{$query->time} ms"]);
                 }
         });
     }
