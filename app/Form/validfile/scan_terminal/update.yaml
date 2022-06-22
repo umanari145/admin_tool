@@ -1,0 +1,17 @@
+- name: csv_category
+  valid_rule: 
+    - required
+    - numeric
+
+- name: field_name
+  valid_rule: 
+    - required
+
+- name: field_disp_name
+  valid_rule:
+    - required
+
+- name: is_required
+  valid_rule:
+    - required
+    - boolean    
