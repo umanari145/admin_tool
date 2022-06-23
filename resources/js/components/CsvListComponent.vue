@@ -110,7 +110,7 @@ export default {
                             return v
                         });
                     } else {
-                        alert("データの更新に失敗しました。");
+                        alert("データの取得に失敗しました。");
                     }
                 })
                 .finally(()=>{
