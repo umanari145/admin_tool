@@ -2150,6 +2150,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Layout/BasicHome */ "./resources/js/components/Layout/BasicHome.vue");
 /* harmony import */ var _components_ModalComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ModalComponent */ "./resources/js/components/ModalComponent.vue");
 /* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
+/* harmony import */ var _config_master_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../config/master.json */ "./resources/js/config/master.json");
+var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../config/master.json */ "./resources/js/config/master.json", 1);
 //
 //
 //
@@ -2223,6 +2225,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -2240,11 +2247,11 @@ __webpack_require__.r(__webpack_exports__);
     getHandyList: function getHandyList() {
       var _this = this;
 
-      var url = '/api/scan_terminal' + this.companyId;
+      var url = '/api/scan_terminal';
       var query = "";
 
-      if (this.companyId !== "") {
-        query = "/?company_id=" + this.companyId;
+      if (this.selectCompanyId !== "") {
+        query = "/?company_id=" + this.selectCompanyId;
       }
 
       url += query; // 単純なメソッドの呼び出しはこれ
@@ -2294,6 +2301,7 @@ __webpack_require__.r(__webpack_exports__);
         if (res['status'] === 200) {
           // 参照になっているのでここで値を変えるとcsvListもかわる
           var data = res['data']['data'];
+          _this2.handyList[index]['company_id'] = data['company_id'];
           _this2.handyList[index]['mac_address'] = data['mac_address'];
           _this2.handyList[index]['name'] = data['name'];
           _this2.handyList[index]['isEdit'] = 0;
@@ -2364,7 +2372,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  created: function created() {},
+  created: function created() {
+    this.masterConfig = _config_master_json__WEBPACK_IMPORTED_MODULE_3__;
+  },
   mounted: function mounted() {
     // createdだとDOMできてないからダメ
     this.getHandyList();
@@ -2373,7 +2383,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       // CSVリスト
       handyList: [],
-      companyId: "",
+      selectCompanyId: "",
+      masterConfig: {},
       allDel: 0,
       tmpVal: {}
     };
@@ -45584,13 +45595,17 @@ var render = function () {
                 _vm._l(
                   _vm.masterConfig.csv_category,
                   function (categoryName, categoryVal) {
-                    return _c("option", { domProps: { value: categoryVal } }, [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(categoryName) +
-                          "\n                    "
-                      ),
-                    ])
+                    return _c(
+                      "option",
+                      { key: categoryVal, domProps: { value: categoryVal } },
+                      [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(categoryName) +
+                            "\n                    "
+                        ),
+                      ]
+                    )
                   }
                 ),
               ],
@@ -45697,7 +45712,7 @@ var render = function () {
                 _c(
                   "tbody",
                   _vm._l(_vm.csvList, function (eachCsv, index) {
-                    return _c("tr", [
+                    return _c("tr", { key: index }, [
                       _c("td", [
                         _c("input", {
                           directives: [
@@ -46049,6 +46064,60 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.selectCompanyId,
+                    expression: "selectCompanyId",
+                  },
+                ],
+                staticClass: "form-select m-3 w-auto",
+                on: {
+                  change: [
+                    function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectCompanyId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.getHandyList,
+                  ],
+                },
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("未選択")]),
+                _vm._v(" "),
+                _vm._l(
+                  _vm.masterConfig.companies,
+                  function (companyName, companyId) {
+                    return _c(
+                      "option",
+                      { key: companyId, domProps: { value: companyId } },
+                      [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(companyName) +
+                            "\n                    "
+                        ),
+                      ]
+                    )
+                  }
+                ),
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
               "div",
               {
                 staticClass: "d-flex justify-content-end",
@@ -46140,7 +46209,7 @@ var render = function () {
                 _c(
                   "tbody",
                   _vm._l(_vm.handyList, function (handy, index) {
-                    return _c("tr", [
+                    return _c("tr", { key: index }, [
                       _c("td", [
                         _c("input", {
                           directives: [
@@ -46199,9 +46268,90 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        _c("span", [
-                          _vm._v(_vm._s(handy.company.company_name)),
-                        ]),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: handy.isView,
+                                expression: "handy.isView",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm.masterConfig.companies[handy.company_id]
+                              )
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        handy.isEdit
+                          ? _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.tmpVal.company_id,
+                                    expression: "tmpVal.company_id",
+                                  },
+                                ],
+                                on: {
+                                  change: function ($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call(
+                                        $event.target.options,
+                                        function (o) {
+                                          return o.selected
+                                        }
+                                      )
+                                      .map(function (o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.tmpVal,
+                                      "company_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                },
+                              },
+                              _vm._l(
+                                _vm.masterConfig.companies,
+                                function (companyName, companyId) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: companyId,
+                                      domProps: { value: companyId },
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(companyName) +
+                                          "\n                                        "
+                                      ),
+                                    ]
+                                  )
+                                }
+                              ),
+                              0
+                            )
+                          : _vm._e(),
                       ]),
                       _vm._v(" "),
                       _c("td", [
@@ -46483,7 +46633,18 @@ var render = function () {
         _vm._m(0),
         _vm._v(" "),
         _c("ul", { staticClass: "header-nav d-none d-md-flex" }, [
-          _vm._m(1),
+          _c(
+            "li",
+            { staticClass: "nav-item" },
+            [
+              _c(
+                "router-link",
+                { staticClass: "nav-link", attrs: { to: "handy", href: "#" } },
+                [_vm._v("Handies")]
+              ),
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "li",
@@ -46550,16 +46711,6 @@ var staticRenderFns = [
         }),
       ]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-        _vm._v("Handies"),
-      ]),
-    ])
   },
 ]
 render._withStripped = true
@@ -64587,10 +64738,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************!*\
   !*** ./resources/js/config/master.json ***!
   \*****************************************/
-/*! exports provided: is_required, csv_category, default */
+/*! exports provided: is_required, csv_category, companies, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"is_required\":[\"必須でない\",\"必須\"],\"csv_category\":{\"8\":\"商品マスタ:アップロード\",\"9\":\"商品マスタ:ダウンロード\",\"10\":\"商品SKUマスタ:アップロード\",\"11\":\"商品SKUマスタ:ダウンロード\",\"12\":\"SKU/SKU2:アップロード\",\"13\":\"品番SKU変更:アップロード\",\"20\":\"商品SKUマスタ一括:アップロード\",\"21\":\"商品SKUマスタ一括:ダウンロード\",\"30\":\"セット商品マスタ：アップロード\",\"31\":\"セット商品マスタ：ダウンロード\",\"40\":\"得意先マスタ：アップロード\",\"41\":\"得意先マスタ：ダウンロード\",\"45\":\"仕入先マスタ：アップロード\",\"46\":\"仕入先マスタ：ダウンロード\",\"47\":\"梱包マスタ：アップロード\",\"48\":\"梱包マスタ：ダウンロード\",\"50\":\"入荷伝票：アップロード\",\"51\":\"入荷伝票：ダウンロード\",\"52\":\"入荷商品タグCSV発行：ダウンロード\",\"54\":\"入荷実績：ダウンロード\",\"55\":\"入荷実績(CrossMall)：ダウンロード\",\"56\":\"返品伝票登録：アップロード\",\"59\":\"返品実績：ダウンロード\",\"60\":\"受注伝票登録：アップロード パターン1\",\"61\":\"受注伝票登録：アップロード パターン2\",\"62\":\"受注伝票登録：アップロード パターン3\",\"63\":\"受注伝票登録：アップロード パターン4\",\"64\":\"受注伝票登録：アップロード パターン5\",\"65\":\"受注伝票：ダウンロード\",\"71\":\"出荷伝票:ダウンロード\",\"75\":\"出荷実績:ダウンロード\",\"82\":\"在庫一覧：ダウンロード\",\"83\":\"在庫一覧：ダウンロード(集計)\",\"85\":\"在庫ロケ：ダウンロード\",\"87\":\"在庫管理番号：アップロード\",\"90\":\"ピッキング：ダウンロード\",\"100\":\"発注書：アップロード\",\"101\":\"発注書：ダウンロード\",\"102\":\"発注入庫実績：アップロード\",\"103\":\"発注入庫実績(受注連携システム向け)：ダウンロード\"}}");
+module.exports = JSON.parse("{\"is_required\":[\"必須でない\",\"必須\"],\"csv_category\":{\"8\":\"商品マスタ:アップロード\",\"9\":\"商品マスタ:ダウンロード\",\"10\":\"商品SKUマスタ:アップロード\",\"11\":\"商品SKUマスタ:ダウンロード\",\"12\":\"SKU/SKU2:アップロード\",\"13\":\"品番SKU変更:アップロード\",\"20\":\"商品SKUマスタ一括:アップロード\",\"21\":\"商品SKUマスタ一括:ダウンロード\",\"30\":\"セット商品マスタ：アップロード\",\"31\":\"セット商品マスタ：ダウンロード\",\"40\":\"得意先マスタ：アップロード\",\"41\":\"得意先マスタ：ダウンロード\",\"45\":\"仕入先マスタ：アップロード\",\"46\":\"仕入先マスタ：ダウンロード\",\"47\":\"梱包マスタ：アップロード\",\"48\":\"梱包マスタ：ダウンロード\",\"50\":\"入荷伝票：アップロード\",\"51\":\"入荷伝票：ダウンロード\",\"52\":\"入荷商品タグCSV発行：ダウンロード\",\"54\":\"入荷実績：ダウンロード\",\"55\":\"入荷実績(CrossMall)：ダウンロード\",\"56\":\"返品伝票登録：アップロード\",\"59\":\"返品実績：ダウンロード\",\"60\":\"受注伝票登録：アップロード パターン1\",\"61\":\"受注伝票登録：アップロード パターン2\",\"62\":\"受注伝票登録：アップロード パターン3\",\"63\":\"受注伝票登録：アップロード パターン4\",\"64\":\"受注伝票登録：アップロード パターン5\",\"65\":\"受注伝票：ダウンロード\",\"71\":\"出荷伝票:ダウンロード\",\"75\":\"出荷実績:ダウンロード\",\"82\":\"在庫一覧：ダウンロード\",\"83\":\"在庫一覧：ダウンロード(集計)\",\"85\":\"在庫ロケ：ダウンロード\",\"87\":\"在庫管理番号：アップロード\",\"90\":\"ピッキング：ダウンロード\",\"100\":\"発注書：アップロード\",\"101\":\"発注書：ダウンロード\",\"102\":\"発注入庫実績：アップロード\",\"103\":\"発注入庫実績(受注連携システム向け)：ダウンロード\"},\"companies\":{\"1\":\"有限会社 井高\",\"2\":\"株式会社 藤本\",\"3\":\"有限会社 村山\",\"4\":\"有限会社 井高\",\"5\":\"株式会社 小林\",\"6\":\"株式会社 青山\",\"7\":\"株式会社 吉本\",\"8\":\"株式会社 工藤\",\"9\":\"株式会社 井上\",\"10\":\"株式会社 村山\"}}");
 
 /***/ }),
 
