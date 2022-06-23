@@ -1,109 +1,96 @@
 <template>
-    <div>
-        <Sidebar></Sidebar>
-        <div class="wrapper main-wrapper d-flex flex-column min-vh-100 bg-light ">
-            <Header></Header>
-            <div class="body flex-grow-1 px-3">
-                <div class="container-lg">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">CSVリスト</div>
-                                <label for="" class="m-3">CSVカテゴリー</label>
-                                <select class="form-select m-3 w-auto" v-model = "csvCategory" @change = "getCsvList">
-                                    <option value = "" >未選択</option>
-                                    <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category">
-                                        {{categoryName}}
-                                    </option>
-                                </select>
+    <BasicHome>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">CSVリスト</div>
+                    <label for="" class="m-3">CSVカテゴリー</label>
+                    <select class="form-select m-3 w-auto" v-model = "csvCategory" @change = "getCsvList">
+                        <option value = "" >未選択</option>
+                        <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category">
+                            {{categoryName}}
+                        </option>
+                    </select>
 
-                                <div>
-                                    <div class="d-flex justify-content-end" style="margin-top:10px;">
-                                        <button v-show = "csvCategory" type="button" class="btn btn-danger" @click="deleteCsvList" style="margin-right:10px;">削除</button>
-                                        <button type="button" class="btn btn-success mr-3" @click="bootModal">一括追加</button>
-                                    </div>
-                                </div>
-
-                                <div class="card-body">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <input type="checkbox" value="1" v-model="allDel" @change="allCheck">
-                                                </th>
-                                                <th>物理名</th>
-                                                <th>論理名</th>
-                                                <th>必須</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for = "(eachCsv, index) in csvList">
-                                                <td>
-                                                    <input type="checkbox" v-model="eachCsv.isDelete" value="1">
-                                                </td>
-                                                <td>
-                                                    <span @click = "inputField(index)" v-show = "eachCsv.isView">
-                                                        {{eachCsv.field_name}}
-                                                    </span>
-                                                    <input v-model = "tmpVal.field_name" v-if = "eachCsv.isEdit">
-                                                </td>
-                                                <td>
-                                                    <span @click = "inputField(index)" v-show = "eachCsv.isView">
-                                                        {{eachCsv.field_disp_name}}
-                                                    </span>
-                                                    <input v-model = "tmpVal.field_disp_name" v-if = "eachCsv.isEdit">
-                                                </td>
-                                                <td>
-                                                    <span v-show = "eachCsv.isView" @click = "inputField(index)">
-                                                        {{masterConfig['is_required'][eachCsv.is_required]}} 
-                                                    </span>
-                                                    <div v-if = "eachCsv.isEdit">
-                                                        <input type="radio" v-model = "tmpVal.is_required" value="0" :id="`req_${index}_0`"><label :for="`req_${index}_0`">必須でない</label>
-                                                        <input type="radio" v-model = "tmpVal.is_required" value="1" :id="`req_${index}_1`"><label :for="`req_${index}_1`">必須</label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span @click = "updateField(index)" v-show = "eachCsv.isEdit" style="margin-right:10px;">
-                                                        <img src="/img/save.png">
-                                                    </span>
-                                                    <span @click = "closeField(index)" v-show = "eachCsv.isEdit">
-                                                        <img src="/img/close.png">
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                    <div>
+                        <div class="d-flex justify-content-end" style="margin-top:10px;">
+                            <button v-show = "csvCategory" type="button" class="btn btn-danger" @click="deleteCsvList" style="margin-right:10px;">削除</button>
+                            <button type="button" class="btn btn-success mr-3" @click="bootModal">一括追加</button>
                         </div>
                     </div>
-                    <Modal></Modal>
-                    <Loading ref="child"></Loading>
+
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" value="1" v-model="allDel" @change="allCheck">
+                                    </th>
+                                    <th>物理名</th>
+                                    <th>論理名</th>
+                                    <th>必須</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for = "(eachCsv, index) in csvList">
+                                    <td>
+                                        <input type="checkbox" v-model="eachCsv.isDelete" value="1">
+                                    </td>
+                                    <td>
+                                        <span @click = "inputField(index)" v-show = "eachCsv.isView">
+                                            {{eachCsv.field_name}}
+                                        </span>
+                                        <input v-model = "tmpVal.field_name" v-if = "eachCsv.isEdit">
+                                    </td>
+                                    <td>
+                                        <span @click = "inputField(index)" v-show = "eachCsv.isView">
+                                            {{eachCsv.field_disp_name}}
+                                        </span>
+                                        <input v-model = "tmpVal.field_disp_name" v-if = "eachCsv.isEdit">
+                                    </td>
+                                    <td>
+                                        <span v-show = "eachCsv.isView" @click = "inputField(index)">
+                                            {{masterConfig['is_required'][eachCsv.is_required]}} 
+                                        </span>
+                                        <div v-if = "eachCsv.isEdit">
+                                            <input type="radio" v-model = "tmpVal.is_required" value="0" :id="`req_${index}_0`"><label :for="`req_${index}_0`">必須でない</label>
+                                            <input type="radio" v-model = "tmpVal.is_required" value="1" :id="`req_${index}_1`"><label :for="`req_${index}_1`">必須</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span @click = "updateField(index)" v-show = "eachCsv.isEdit" style="margin-right:10px;">
+                                            <img src="/img/save.png">
+                                        </span>
+                                        <span @click = "closeField(index)" v-show = "eachCsv.isEdit">
+                                            <img src="/img/close.png">
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <Footer></Footer>
         </div>
-    </div>
+        <Modal></Modal>
+        <Loading ref="child"></Loading>
+    </BasicHome>            
 </template>
 
 <script>
 
+import BasicHome from "../components/Layout/BasicHome";
 import Modal from "../components/ModalComponent";
 import masterJson from "../config/master.json";
 import Loading from "../components/LoadingComponent";
-import Header from "../components/Layout/Header";
-import Sidebar from "../components/Layout/Sidebar";
-import Footer from "../components/Layout/Footer";
 
 export default {
     name:'csvlist',
     components:{
+        BasicHome,
         Loading,
-        Modal,
-        Header,
-        Sidebar,
-        Footer
+        Modal
     },
     methods:{
         bootModal() {
