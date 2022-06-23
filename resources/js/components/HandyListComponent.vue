@@ -5,12 +5,12 @@
                 <div class="card">
                     <div class="card-header">ハンディリスト</div>
 
-                    <!--<select class="form-select m-3 w-auto" v-model = "csvCategory" @change = "getCsvList">
+                    <select class="form-select m-3 w-auto" v-model = "selectCompanyId" @change = "getHandyList">
                         <option value="" >未選択</option>
-                        <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category">
-                            {{categoryName}}
+                        <option :value = "companyId" v-for = "(companyName,companyId) in masterConfig.companies" :key="companyId">
+                            {{companyName}}
                         </option>
-                    </select>-->
+                    </select>
 
                     <div class="d-flex justify-content-end" style="margin-top:10px;">
                         <button type="button" class="btn btn-danger" @click="deleteHandy" style="margin-right:10px;">削除</button>
@@ -32,7 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for = "(handy,index) in handyList">
+                                <tr v-for = "(handy,index) in handyList" :key="index">
                                     <td>
                                         <input type="checkbox" v-model="handy.isDelete" value="1">
                                     </td>
@@ -40,8 +40,12 @@
                                         {{handy.id}}
                                     </td>
                                     <td>
-                                        <span>{{handy.company.company_name}}</span>
-                                        
+                                        <span v-show="handy.isView" @click="inputField(index)">{{masterConfig.companies[handy.company_id]}}</span>
+                                        <select v-model = "tmpVal.company_id" v-if="handy.isEdit">
+                                            <option :value = "companyId" v-for = "(companyName,companyId) in masterConfig.companies" :key="companyId">
+                                                {{companyName}}
+                                            </option>
+                                        </select>
                                     </td>
                                     <td>
                                         <span v-show = "handy.isView" @click="inputField(index)">{{handy.mac_address}}</span>
@@ -76,6 +80,7 @@
 import BasicHome from "../components/Layout/BasicHome";
 import Modal from "../components/ModalComponent";
 import Loading from "../components/LoadingComponent";
+import masterJson from "../config/master.json";
 
 export default {
     name:'handylist',
@@ -89,10 +94,10 @@ export default {
             this.$modal.show('csv-add');
         },
         getHandyList() {
-            let url = '/api/scan_terminal' + this.companyId;
+            let url = '/api/scan_terminal';
             let query = "";
-            if (this.companyId !== "") {
-                query = "/?company_id=" + this.companyId;
+            if (this.selectCompanyId !== "") {
+                query = "/?company_id=" + this.selectCompanyId;
             }
             url += query;
             // 単純なメソッドの呼び出しはこれ
@@ -146,6 +151,7 @@ export default {
                     if (res['status'] === 200) {
                         // 参照になっているのでここで値を変えるとcsvListもかわる
                         let data = res['data']['data']
+                        this.handyList[index]['company_id'] = data['company_id'];
                         this.handyList[index]['mac_address'] = data['mac_address'];
                         this.handyList[index]['name'] = data['name'];
                         this.handyList[index]['isEdit'] = 0;
@@ -212,6 +218,7 @@ export default {
         }
     },
     created() {
+        this.masterConfig = masterJson;
     },
     mounted() {
         // createdだとDOMできてないからダメ
@@ -221,7 +228,8 @@ export default {
         return {
             // CSVリスト
             handyList:[],
-            companyId:"",
+            selectCompanyId:"",
+            masterConfig:{},
             allDel:0,
             tmpVal:{}
         }

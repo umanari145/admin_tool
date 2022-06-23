@@ -7,7 +7,7 @@
                     <label for="" class="m-3">CSVカテゴリー</label>
                     <select class="form-select m-3 w-auto" v-model = "csvCategory" @change = "getCsvList">
                         <option value = "" >未選択</option>
-                        <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category">
+                        <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category" :key="categoryVal">
                             {{categoryName}}
                         </option>
                     </select>
@@ -33,7 +33,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for = "(eachCsv, index) in csvList">
+                                <tr v-for = "(eachCsv, index) in csvList" :key="index">
                                     <td>
                                         <input type="checkbox" v-model="eachCsv.isDelete" value="1">
                                     </td>
