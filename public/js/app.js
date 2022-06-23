@@ -1908,13 +1908,11 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_ModalComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ModalComponent */ "./resources/js/components/ModalComponent.vue");
-/* harmony import */ var _config_master_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../config/master.json */ "./resources/js/config/master.json");
-var _config_master_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../config/master.json */ "./resources/js/config/master.json", 1);
-/* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
-/* harmony import */ var _components_Layout_Header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Layout/Header */ "./resources/js/components/Layout/Header.vue");
-/* harmony import */ var _components_Layout_Sidebar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Layout/Sidebar */ "./resources/js/components/Layout/Sidebar.vue");
-/* harmony import */ var _components_Layout_Footer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Layout/Footer */ "./resources/js/components/Layout/Footer.vue");
+/* harmony import */ var _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Layout/BasicHome */ "./resources/js/components/Layout/BasicHome.vue");
+/* harmony import */ var _components_ModalComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ModalComponent */ "./resources/js/components/ModalComponent.vue");
+/* harmony import */ var _config_master_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config/master.json */ "./resources/js/config/master.json");
+var _config_master_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../config/master.json */ "./resources/js/config/master.json", 1);
+/* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
 //
 //
 //
@@ -1995,17 +1993,6 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 
 
@@ -2013,11 +2000,9 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'csvlist',
   components: {
-    Loading: _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Modal: _components_ModalComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Header: _components_Layout_Header__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Sidebar: _components_Layout_Sidebar__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Footer: _components_Layout_Footer__WEBPACK_IMPORTED_MODULE_5__["default"]
+    BasicHome: _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Loading: _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Modal: _components_ModalComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
     bootModal: function bootModal() {
@@ -2038,7 +2023,7 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__
             return v;
           });
         } else {
-          alert("データの更新に失敗しました。");
+          alert("データの取得に失敗しました。");
         }
       })["finally"](function () {
         _this.$refs.child.loadingOff();
@@ -2137,7 +2122,7 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__
     }
   },
   created: function created() {
-    this.masterConfig = _config_master_json__WEBPACK_IMPORTED_MODULE_1__;
+    this.masterConfig = _config_master_json__WEBPACK_IMPORTED_MODULE_2__;
   },
   data: function data() {
     return {
@@ -2162,11 +2147,9 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_ModalComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ModalComponent */ "./resources/js/components/ModalComponent.vue");
-/* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
-/* harmony import */ var _components_Layout_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Layout/Header */ "./resources/js/components/Layout/Header.vue");
-/* harmony import */ var _components_Layout_Sidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Layout/Sidebar */ "./resources/js/components/Layout/Sidebar.vue");
-/* harmony import */ var _components_Layout_Footer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Layout/Footer */ "./resources/js/components/Layout/Footer.vue");
+/* harmony import */ var _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Layout/BasicHome */ "./resources/js/components/Layout/BasicHome.vue");
+/* harmony import */ var _components_ModalComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ModalComponent */ "./resources/js/components/ModalComponent.vue");
+/* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
 //
 //
 //
@@ -2236,19 +2219,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'handylist',
   components: {
-    Loading: _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Modal: _components_ModalComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Header: _components_Layout_Header__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Sidebar: _components_Layout_Sidebar__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Footer: _components_Layout_Footer__WEBPACK_IMPORTED_MODULE_4__["default"]
+    BasicHome: _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Loading: _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Modal: _components_ModalComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
     bootModal: function bootModal() {
@@ -2257,79 +2240,93 @@ __webpack_require__.r(__webpack_exports__);
     getHandyList: function getHandyList() {
       var _this = this;
 
-      var url = '/api/handy/' + this.csvCategory; // 単純なメソッドの呼び出しはこれ
+      var url = '/api/scan_terminal' + this.companyId;
+      var query = "";
+
+      if (this.companyId !== "") {
+        query = "/?company_id=" + this.companyId;
+      }
+
+      url += query; // 単純なメソッドの呼び出しはこれ
 
       this.$refs.child.loadingOn();
       axios.get(url).then(function (res) {
         if (res['status'] === 200) {
-          var csvData = res['data']['data'];
-          _this.csvList = csvData.map(function (v) {
-            v.isView = 1;
+          var handyData = res['data']['data'];
+          _this.handyList = handyData.map(function (v) {
+            v.isDelete = 0;
             v.isEdit = 0;
+            v.isView = 1;
             return v;
           });
         } else {
-          alert("データの更新に失敗しました。");
+          alert("データの取得に失敗しました。");
         }
       })["finally"](function () {
         _this.$refs.child.loadingOff();
       });
     },
     inputField: function inputField(index) {
-      var targetData = this.csvList[index]; // 参照になっているのでここで値を変えるとcsvListもかわる
+      var targetData = this.handyList[index]; // 参照になっているのでここで値を変えるとcsvListもかわる
 
       targetData['isEdit'] = 1;
       targetData['isView'] = 0; // 最初に表示された後でvueの監視下におきたい場合はsetメソッド this.tmpVal.field_name = targetData['field_name']とやっても画面が変わらない
 
-      this.$set(this.tmpVal, 'field_name', targetData['field_name']);
-      this.$set(this.tmpVal, 'field_disp_name', targetData['field_disp_name']);
-      this.$set(this.tmpVal, 'is_required', targetData['is_required']);
+      this.$set(this.tmpVal, 'company_id', targetData['company_id']);
+      this.$set(this.tmpVal, 'mac_address', targetData['mac_address']);
+      this.$set(this.tmpVal, 'name', targetData['name']);
     },
-    updateHandy: function updateHandy(index) {
+    updateField: function updateField(index) {
       var _this2 = this;
 
       this.$refs.child.loadingOn();
-      var targetData = this.csvList[index];
-      var url = '/api/csv_field/' + targetData['id'];
+      var targetData = this.handyList[index];
+      var url = '/api/scan_terminal/' + targetData['id'];
       var updateData = {
-        'field_name': this.tmpVal['field_name'],
-        'field_disp_name': this.tmpVal['field_disp_name'],
-        'is_required': this.tmpVal['is_required']
+        'company_id': this.tmpVal['company_id'],
+        'mac_address': this.tmpVal['mac_address'],
+        'name': this.tmpVal['name']
       };
       var postData = {
         'updateData': updateData
       };
       axios.put(url, postData).then(function (res) {
-        // 参照になっているのでここで値を変えるとcsvListもかわる
-        var data = res['data']['data'];
-        _this2.csvList[index]['field_name'] = data['field_name'];
-        _this2.csvList[index]['field_disp_name'] = data['field_disp_name'];
-        _this2.csvList[index]['is_required'] = data['is_required'];
-        _this2.csvList[index]['isEdit'] = 0;
-        _this2.csvList[index]['isView'] = 1;
+        if (res['status'] === 200) {
+          // 参照になっているのでここで値を変えるとcsvListもかわる
+          var data = res['data']['data'];
+          _this2.handyList[index]['mac_address'] = data['mac_address'];
+          _this2.handyList[index]['name'] = data['name'];
+          _this2.handyList[index]['isEdit'] = 0;
+          _this2.handyList[index]['isView'] = 1;
+        } else {
+          alert("更新に失敗しました。");
+          console.log(res);
+        }
       })["catch"](function (error) {
+        alert("更新に失敗しました。");
         console.log(error);
       })["finally"](function () {
         _this2.$refs.child.loadingOff();
       });
     },
     closeField: function closeField(index) {
-      var targetData = this.csvList[index];
+      // 参照渡し
+      var targetData = this.handyList[index];
       targetData['isEdit'] = 0;
       targetData['isView'] = 1;
     },
     allCheck: function allCheck() {
       var _this3 = this;
 
-      this.handies.forEach(function (element) {
+      this.handyList.forEach(function (element) {
         element.isDelete = _this3.allDel;
       });
     },
-    deleteCsvList: function deleteCsvList() {
+    deleteHandy: function deleteHandy() {
       var _this4 = this;
 
-      var url = '/api/csv_field';
-      var deleteIds = this.csvList.filter(function (v) {
+      var url = '/api/scan_terminal';
+      var deleteIds = this.handyList.filter(function (v) {
         return v.isDelete;
       }).map(function (v) {
         return v.id;
@@ -2354,11 +2351,11 @@ __webpack_require__.r(__webpack_exports__);
         if (res['status'] === 200) {
           alert("無事削除を行いました。");
 
-          var targetData = _this4.csvList.filter(function (v) {
+          var targetData = _this4.handyList.filter(function (v) {
             return !v.isDelete;
           });
 
-          _this4.csvList = targetData;
+          _this4.handyList = targetData;
         } else {
           alert("データの削除に失敗しました。");
         }
@@ -2368,22 +2365,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {},
+  mounted: function mounted() {
+    // createdだとDOMできてないからダメ
+    this.getHandyList();
+  },
   data: function data() {
     return {
       // CSVリスト
-      handies: [{
-        'id': 1,
-        'company': "カプコン",
-        'mac_address': "00-01-FC-0C-D6-05",
-        'note': "testtest",
-        'isDelete': 0
-      }, {
-        'id': 2,
-        'company': "ハドソン",
-        'mac_address': "00-01-FC-0C-D6-04",
-        'note': "testtest",
-        'isDelete': 0
-      }],
+      handyList: [],
+      companyId: "",
       allDel: 0,
       tmpVal: {}
     };
@@ -2401,9 +2391,38 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Layout_Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Layout/Header */ "./resources/js/components/Layout/Header.vue");
-/* harmony import */ var _components_Layout_Sidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Layout/Sidebar */ "./resources/js/components/Layout/Sidebar.vue");
-/* harmony import */ var _components_Layout_Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Layout/Footer */ "./resources/js/components/Layout/Footer.vue");
+/* harmony import */ var _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Layout/BasicHome */ "./resources/js/components/Layout/BasicHome.vue");
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'home',
+  components: {
+    BasicHome: _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  created: function created() {},
+  data: function data() {
+    return {};
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Layout/BasicHome.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Layout/BasicHome.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Header */ "./resources/js/components/Layout/Header.vue");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Sidebar */ "./resources/js/components/Layout/Sidebar.vue");
+/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Footer */ "./resources/js/components/Layout/Footer.vue");
+//
 //
 //
 //
@@ -2422,11 +2441,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'home',
+  name: 'BasicHome',
   components: {
-    Header: _components_Layout_Header__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Sidebar: _components_Layout_Sidebar__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Footer: _components_Layout_Footer__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Header: _Header__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Sidebar: _Sidebar__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Footer: _Footer__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   created: function created() {},
   data: function data() {
@@ -7234,14 +7253,14 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
@@ -38488,15 +38507,15 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./HomeComponent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css&");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./BasicHome.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -38510,7 +38529,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -45517,543 +45536,482 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "BasicHome",
     [
-      _c("Sidebar"),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "wrapper main-wrapper d-flex flex-column min-vh-100 bg-light ",
-        },
-        [
-          _c("Header"),
-          _vm._v(" "),
-          _c("div", { staticClass: "body flex-grow-1 px-3" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [_vm._v("CSVリスト")]),
+            _vm._v(" "),
+            _c("label", { staticClass: "m-3", attrs: { for: "" } }, [
+              _vm._v("CSVカテゴリー"),
+            ]),
+            _vm._v(" "),
             _c(
-              "div",
-              { staticClass: "container-lg" },
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.csvCategory,
+                    expression: "csvCategory",
+                  },
+                ],
+                staticClass: "form-select m-3 w-auto",
+                on: {
+                  change: [
+                    function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.csvCategory = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.getCsvList,
+                  ],
+                },
+              },
               [
-                _c("div", { staticClass: "row justify-content-center" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-header" }, [
-                        _vm._v("CSVリスト"),
-                      ]),
-                      _vm._v(" "),
-                      _c("label", { staticClass: "m-3", attrs: { for: "" } }, [
-                        _vm._v("CSVカテゴリー"),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
+                _c("option", { attrs: { value: "" } }, [_vm._v("未選択")]),
+                _vm._v(" "),
+                _vm._l(
+                  _vm.masterConfig.csv_category,
+                  function (categoryName, categoryVal) {
+                    return _c("option", { domProps: { value: categoryVal } }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(categoryName) +
+                          "\n                    "
+                      ),
+                    ])
+                  }
+                ),
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass: "d-flex justify-content-end",
+                  staticStyle: { "margin-top": "10px" },
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      directives: [
                         {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.csvCategory,
+                          expression: "csvCategory",
+                        },
+                      ],
+                      staticClass: "btn btn-danger",
+                      staticStyle: { "margin-right": "10px" },
+                      attrs: { type: "button" },
+                      on: { click: _vm.deleteCsvList },
+                    },
+                    [_vm._v("削除")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success mr-3",
+                      attrs: { type: "button" },
+                      on: { click: _vm.bootModal },
+                    },
+                    [_vm._v("一括追加")]
+                  ),
+                ]
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("table", { staticClass: "table table-hover" }, [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.allDel,
+                            expression: "allDel",
+                          },
+                        ],
+                        attrs: { type: "checkbox", value: "1" },
+                        domProps: {
+                          checked: Array.isArray(_vm.allDel)
+                            ? _vm._i(_vm.allDel, "1") > -1
+                            : _vm.allDel,
+                        },
+                        on: {
+                          change: [
+                            function ($event) {
+                              var $$a = _vm.allDel,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = "1",
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 && (_vm.allDel = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.allDel = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.allDel = $$c
+                              }
+                            },
+                            _vm.allCheck,
+                          ],
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("物理名")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("論理名")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("必須")]),
+                    _vm._v(" "),
+                    _c("th"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.csvList, function (eachCsv, index) {
+                    return _c("tr", [
+                      _c("td", [
+                        _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.csvCategory,
-                              expression: "csvCategory",
+                              value: eachCsv.isDelete,
+                              expression: "eachCsv.isDelete",
                             },
                           ],
-                          staticClass: "form-select m-3 w-auto",
-                          on: {
-                            change: [
-                              function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.csvCategory = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              },
-                              _vm.getCsvList,
-                            ],
+                          attrs: { type: "checkbox", value: "1" },
+                          domProps: {
+                            checked: Array.isArray(eachCsv.isDelete)
+                              ? _vm._i(eachCsv.isDelete, "1") > -1
+                              : eachCsv.isDelete,
                           },
-                        },
-                        [
-                          _c("option", { attrs: { value: "" } }, [
-                            _vm._v("未選択"),
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(
-                            _vm.masterConfig.csv_category,
-                            function (categoryName, categoryVal) {
-                              return _c(
-                                "option",
-                                { domProps: { value: categoryVal } },
-                                [
-                                  _vm._v(
-                                    "\n                                    " +
-                                      _vm._s(categoryName) +
-                                      "\n                                "
-                                  ),
-                                ]
-                              )
-                            }
-                          ),
-                        ],
-                        2
-                      ),
+                          on: {
+                            change: function ($event) {
+                              var $$a = eachCsv.isDelete,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = "1",
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      eachCsv,
+                                      "isDelete",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      eachCsv,
+                                      "isDelete",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(eachCsv, "isDelete", $$c)
+                              }
+                            },
+                          },
+                        }),
+                      ]),
                       _vm._v(" "),
-                      _c("div", [
+                      _c("td", [
                         _c(
-                          "div",
+                          "span",
                           {
-                            staticClass: "d-flex justify-content-end",
-                            staticStyle: { "margin-top": "10px" },
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isView,
+                                expression: "eachCsv.isView",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
                           },
                           [
-                            _c(
-                              "button",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.csvCategory,
-                                    expression: "csvCategory",
-                                  },
-                                ],
-                                staticClass: "btn btn-danger",
-                                staticStyle: { "margin-right": "10px" },
-                                attrs: { type: "button" },
-                                on: { click: _vm.deleteCsvList },
-                              },
-                              [_vm._v("削除")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-success mr-3",
-                                attrs: { type: "button" },
-                                on: { click: _vm.bootModal },
-                              },
-                              [_vm._v("一括追加")]
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(eachCsv.field_name) +
+                                "\n                                    "
                             ),
                           ]
                         ),
+                        _vm._v(" "),
+                        eachCsv.isEdit
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.tmpVal.field_name,
+                                  expression: "tmpVal.field_name",
+                                },
+                              ],
+                              domProps: { value: _vm.tmpVal.field_name },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.tmpVal,
+                                    "field_name",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            })
+                          : _vm._e(),
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("table", { staticClass: "table table-hover" }, [
-                          _c("thead", [
-                            _c("tr", [
-                              _c("th", [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.allDel,
-                                      expression: "allDel",
-                                    },
-                                  ],
-                                  attrs: { type: "checkbox", value: "1" },
-                                  domProps: {
-                                    checked: Array.isArray(_vm.allDel)
-                                      ? _vm._i(_vm.allDel, "1") > -1
-                                      : _vm.allDel,
-                                  },
-                                  on: {
-                                    change: [
-                                      function ($event) {
-                                        var $$a = _vm.allDel,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = "1",
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              (_vm.allDel = $$a.concat([$$v]))
-                                          } else {
-                                            $$i > -1 &&
-                                              (_vm.allDel = $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1)))
-                                          }
-                                        } else {
-                                          _vm.allDel = $$c
-                                        }
-                                      },
-                                      _vm.allCheck,
-                                    ],
-                                  },
-                                }),
-                              ]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("物理名")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("論理名")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("必須")]),
-                              _vm._v(" "),
-                              _c("th"),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.csvList, function (eachCsv, index) {
-                              return _c("tr", [
-                                _c("td", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: eachCsv.isDelete,
-                                        expression: "eachCsv.isDelete",
-                                      },
-                                    ],
-                                    attrs: { type: "checkbox", value: "1" },
-                                    domProps: {
-                                      checked: Array.isArray(eachCsv.isDelete)
-                                        ? _vm._i(eachCsv.isDelete, "1") > -1
-                                        : eachCsv.isDelete,
-                                    },
-                                    on: {
-                                      change: function ($event) {
-                                        var $$a = eachCsv.isDelete,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = "1",
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              _vm.$set(
-                                                eachCsv,
-                                                "isDelete",
-                                                $$a.concat([$$v])
-                                              )
-                                          } else {
-                                            $$i > -1 &&
-                                              _vm.$set(
-                                                eachCsv,
-                                                "isDelete",
-                                                $$a
-                                                  .slice(0, $$i)
-                                                  .concat($$a.slice($$i + 1))
-                                              )
-                                          }
-                                        } else {
-                                          _vm.$set(eachCsv, "isDelete", $$c)
-                                        }
-                                      },
-                                    },
-                                  }),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: eachCsv.isView,
-                                          expression: "eachCsv.isView",
-                                        },
-                                      ],
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.inputField(index)
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                                    " +
-                                          _vm._s(eachCsv.field_name) +
-                                          "\n                                                "
-                                      ),
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  eachCsv.isEdit
-                                    ? _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.tmpVal.field_name,
-                                            expression: "tmpVal.field_name",
-                                          },
-                                        ],
-                                        domProps: {
-                                          value: _vm.tmpVal.field_name,
-                                        },
-                                        on: {
-                                          input: function ($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.tmpVal,
-                                              "field_name",
-                                              $event.target.value
-                                            )
-                                          },
-                                        },
-                                      })
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: eachCsv.isView,
-                                          expression: "eachCsv.isView",
-                                        },
-                                      ],
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.inputField(index)
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                                    " +
-                                          _vm._s(eachCsv.field_disp_name) +
-                                          "\n                                                "
-                                      ),
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  eachCsv.isEdit
-                                    ? _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.tmpVal.field_disp_name,
-                                            expression:
-                                              "tmpVal.field_disp_name",
-                                          },
-                                        ],
-                                        domProps: {
-                                          value: _vm.tmpVal.field_disp_name,
-                                        },
-                                        on: {
-                                          input: function ($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.tmpVal,
-                                              "field_disp_name",
-                                              $event.target.value
-                                            )
-                                          },
-                                        },
-                                      })
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: eachCsv.isView,
-                                          expression: "eachCsv.isView",
-                                        },
-                                      ],
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.inputField(index)
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                                    " +
-                                          _vm._s(
-                                            _vm.masterConfig["is_required"][
-                                              eachCsv.is_required
-                                            ]
-                                          ) +
-                                          " \n                                                "
-                                      ),
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  eachCsv.isEdit
-                                    ? _c("div", [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.tmpVal.is_required,
-                                              expression: "tmpVal.is_required",
-                                            },
-                                          ],
-                                          attrs: {
-                                            type: "radio",
-                                            value: "0",
-                                            id: "req_" + index + "_0",
-                                          },
-                                          domProps: {
-                                            checked: _vm._q(
-                                              _vm.tmpVal.is_required,
-                                              "0"
-                                            ),
-                                          },
-                                          on: {
-                                            change: function ($event) {
-                                              return _vm.$set(
-                                                _vm.tmpVal,
-                                                "is_required",
-                                                "0"
-                                              )
-                                            },
-                                          },
-                                        }),
-                                        _c(
-                                          "label",
-                                          {
-                                            attrs: {
-                                              for: "req_" + index + "_0",
-                                            },
-                                          },
-                                          [_vm._v("必須でない")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.tmpVal.is_required,
-                                              expression: "tmpVal.is_required",
-                                            },
-                                          ],
-                                          attrs: {
-                                            type: "radio",
-                                            value: "1",
-                                            id: "req_" + index + "_1",
-                                          },
-                                          domProps: {
-                                            checked: _vm._q(
-                                              _vm.tmpVal.is_required,
-                                              "1"
-                                            ),
-                                          },
-                                          on: {
-                                            change: function ($event) {
-                                              return _vm.$set(
-                                                _vm.tmpVal,
-                                                "is_required",
-                                                "1"
-                                              )
-                                            },
-                                          },
-                                        }),
-                                        _c(
-                                          "label",
-                                          {
-                                            attrs: {
-                                              for: "req_" + index + "_1",
-                                            },
-                                          },
-                                          [_vm._v("必須")]
-                                        ),
-                                      ])
-                                    : _vm._e(),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "span",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: eachCsv.isEdit,
-                                          expression: "eachCsv.isEdit",
-                                        },
-                                      ],
-                                      staticStyle: { "margin-right": "10px" },
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.updateField(index)
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _c("img", {
-                                        attrs: { src: "/img/save.png" },
-                                      }),
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "show",
-                                          rawName: "v-show",
-                                          value: eachCsv.isEdit,
-                                          expression: "eachCsv.isEdit",
-                                        },
-                                      ],
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.closeField(index)
-                                        },
-                                      },
-                                    },
-                                    [
-                                      _c("img", {
-                                        attrs: { src: "/img/close.png" },
-                                      }),
-                                    ]
-                                  ),
-                                ]),
-                              ])
-                            }),
-                            0
-                          ),
-                        ]),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isView,
+                                expression: "eachCsv.isView",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(eachCsv.field_disp_name) +
+                                "\n                                    "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        eachCsv.isEdit
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.tmpVal.field_disp_name,
+                                  expression: "tmpVal.field_disp_name",
+                                },
+                              ],
+                              domProps: { value: _vm.tmpVal.field_disp_name },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.tmpVal,
+                                    "field_disp_name",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            })
+                          : _vm._e(),
                       ]),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("Modal"),
-                _vm._v(" "),
-                _c("Loading", { ref: "child" }),
-              ],
-              1
-            ),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isView,
+                                expression: "eachCsv.isView",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(
+                                  _vm.masterConfig["is_required"][
+                                    eachCsv.is_required
+                                  ]
+                                ) +
+                                " \n                                    "
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        eachCsv.isEdit
+                          ? _c("div", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.tmpVal.is_required,
+                                    expression: "tmpVal.is_required",
+                                  },
+                                ],
+                                attrs: {
+                                  type: "radio",
+                                  value: "0",
+                                  id: "req_" + index + "_0",
+                                },
+                                domProps: {
+                                  checked: _vm._q(_vm.tmpVal.is_required, "0"),
+                                },
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.$set(
+                                      _vm.tmpVal,
+                                      "is_required",
+                                      "0"
+                                    )
+                                  },
+                                },
+                              }),
+                              _c(
+                                "label",
+                                { attrs: { for: "req_" + index + "_0" } },
+                                [_vm._v("必須でない")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.tmpVal.is_required,
+                                    expression: "tmpVal.is_required",
+                                  },
+                                ],
+                                attrs: {
+                                  type: "radio",
+                                  value: "1",
+                                  id: "req_" + index + "_1",
+                                },
+                                domProps: {
+                                  checked: _vm._q(_vm.tmpVal.is_required, "1"),
+                                },
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.$set(
+                                      _vm.tmpVal,
+                                      "is_required",
+                                      "1"
+                                    )
+                                  },
+                                },
+                              }),
+                              _c(
+                                "label",
+                                { attrs: { for: "req_" + index + "_1" } },
+                                [_vm._v("必須")]
+                              ),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isEdit,
+                                expression: "eachCsv.isEdit",
+                              },
+                            ],
+                            staticStyle: { "margin-right": "10px" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.updateField(index)
+                              },
+                            },
+                          },
+                          [_c("img", { attrs: { src: "/img/save.png" } })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: eachCsv.isEdit,
+                                expression: "eachCsv.isEdit",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.closeField(index)
+                              },
+                            },
+                          },
+                          [_c("img", { attrs: { src: "/img/close.png" } })]
+                        ),
+                      ]),
+                    ])
+                  }),
+                  0
+                ),
+              ]),
+            ]),
           ]),
-          _vm._v(" "),
-          _c("Footer"),
-        ],
-        1
-      ),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("Modal"),
+      _vm._v(" "),
+      _c("Loading", { ref: "child" }),
     ],
     1
   )
@@ -46081,204 +46039,322 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "BasicHome",
     [
-      _c("Sidebar"),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "wrapper main-wrapper d-flex flex-column min-vh-100 bg-light ",
-        },
-        [
-          _c("Header"),
-          _vm._v(" "),
-          _c("div", { staticClass: "body flex-grow-1 px-3" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("ハンディリスト"),
+            ]),
+            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "container-lg" },
+              {
+                staticClass: "d-flex justify-content-end",
+                staticStyle: { "margin-top": "10px" },
+              },
               [
-                _c("div", { staticClass: "row justify-content-center" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-header" }, [
-                        _vm._v("ハンディリスト"),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "d-flex justify-content-end",
-                          staticStyle: { "margin-top": "10px" },
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    staticStyle: { "margin-right": "10px" },
+                    attrs: { type: "button" },
+                    on: { click: _vm.deleteHandy },
+                  },
+                  [_vm._v("削除")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success mr-3",
+                    attrs: { type: "button" },
+                    on: { click: _vm.bootModal },
+                  },
+                  [_vm._v("ハンディ追加")]
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("table", { staticClass: "table table-hover" }, [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.allDel,
+                            expression: "allDel",
+                          },
+                        ],
+                        attrs: { type: "checkbox", value: "1" },
+                        domProps: {
+                          checked: Array.isArray(_vm.allDel)
+                            ? _vm._i(_vm.allDel, "1") > -1
+                            : _vm.allDel,
                         },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-success mr-3",
-                              attrs: { type: "button" },
-                              on: { click: _vm.bootModal },
+                        on: {
+                          change: [
+                            function ($event) {
+                              var $$a = _vm.allDel,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = "1",
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 && (_vm.allDel = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.allDel = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.allDel = $$c
+                              }
                             },
-                            [_vm._v("ハンディ追加")]
-                          ),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("table", { staticClass: "table table-hover" }, [
-                          _c("thead", [
-                            _c("tr", [
-                              _c("th", [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.allDel,
-                                      expression: "allDel",
-                                    },
-                                  ],
-                                  attrs: { type: "checkbox", value: "1" },
-                                  domProps: {
-                                    checked: Array.isArray(_vm.allDel)
-                                      ? _vm._i(_vm.allDel, "1") > -1
-                                      : _vm.allDel,
-                                  },
-                                  on: {
-                                    change: [
-                                      function ($event) {
-                                        var $$a = _vm.allDel,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = "1",
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              (_vm.allDel = $$a.concat([$$v]))
-                                          } else {
-                                            $$i > -1 &&
-                                              (_vm.allDel = $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1)))
-                                          }
-                                        } else {
-                                          _vm.allDel = $$c
-                                        }
-                                      },
-                                      _vm.allCheck,
-                                    ],
-                                  },
-                                }),
-                              ]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("ID")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("会社名")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("MACアドレス")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("メモ")]),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.handies, function (handy, index) {
-                              return _c("tr", [
-                                _c("td", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: handy.isDelete,
-                                        expression: "handy.isDelete",
-                                      },
-                                    ],
-                                    attrs: { type: "checkbox", value: "1" },
-                                    domProps: {
-                                      checked: Array.isArray(handy.isDelete)
-                                        ? _vm._i(handy.isDelete, "1") > -1
-                                        : handy.isDelete,
-                                    },
-                                    on: {
-                                      change: function ($event) {
-                                        var $$a = handy.isDelete,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = "1",
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              _vm.$set(
-                                                handy,
-                                                "isDelete",
-                                                $$a.concat([$$v])
-                                              )
-                                          } else {
-                                            $$i > -1 &&
-                                              _vm.$set(
-                                                handy,
-                                                "isDelete",
-                                                $$a
-                                                  .slice(0, $$i)
-                                                  .concat($$a.slice($$i + 1))
-                                              )
-                                          }
-                                        } else {
-                                          _vm.$set(handy, "isDelete", $$c)
-                                        }
-                                      },
-                                    },
-                                  }),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    "\n                                                " +
-                                      _vm._s(handy.id) +
-                                      "\n                                            "
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("span", [_vm._v(_vm._s(handy.company))]),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("span", [
-                                    _vm._v(_vm._s(handy.mac_address)),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("span", [_vm._v(_vm._s(handy.note))]),
-                                ]),
-                              ])
-                            }),
-                            0
-                          ),
-                        ]),
-                      ]),
+                            _vm.allCheck,
+                          ],
+                        },
+                      }),
                     ]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("ID")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("会社名")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("MACアドレス")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("メモ")]),
+                    _vm._v(" "),
+                    _c("th"),
                   ]),
                 ]),
                 _vm._v(" "),
-                _c("Modal"),
-                _vm._v(" "),
-                _c("Loading", { ref: "child" }),
-              ],
-              1
-            ),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.handyList, function (handy, index) {
+                    return _c("tr", [
+                      _c("td", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: handy.isDelete,
+                              expression: "handy.isDelete",
+                            },
+                          ],
+                          attrs: { type: "checkbox", value: "1" },
+                          domProps: {
+                            checked: Array.isArray(handy.isDelete)
+                              ? _vm._i(handy.isDelete, "1") > -1
+                              : handy.isDelete,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = handy.isDelete,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = "1",
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      handy,
+                                      "isDelete",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      handy,
+                                      "isDelete",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(handy, "isDelete", $$c)
+                              }
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(handy.id) +
+                            "\n                                "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("span", [
+                          _vm._v(_vm._s(handy.company.company_name)),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: handy.isView,
+                                expression: "handy.isView",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
+                          },
+                          [_vm._v(_vm._s(handy.mac_address))]
+                        ),
+                        _vm._v(" "),
+                        handy.isEdit
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.tmpVal.mac_address,
+                                  expression: "tmpVal.mac_address",
+                                },
+                              ],
+                              domProps: { value: _vm.tmpVal.mac_address },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.tmpVal,
+                                    "mac_address",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            })
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: handy.isView,
+                                expression: "handy.isView",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.inputField(index)
+                              },
+                            },
+                          },
+                          [_vm._v(_vm._s(handy.name))]
+                        ),
+                        _vm._v(" "),
+                        handy.isEdit
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.tmpVal.name,
+                                  expression: "tmpVal.name",
+                                },
+                              ],
+                              domProps: { value: _vm.tmpVal.name },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.tmpVal,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                },
+                              },
+                            })
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: handy.isEdit,
+                                expression: "handy.isEdit",
+                              },
+                            ],
+                            staticStyle: { "margin-right": "10px" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.updateField(index)
+                              },
+                            },
+                          },
+                          [_c("img", { attrs: { src: "/img/save.png" } })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: handy.isEdit,
+                                expression: "handy.isEdit",
+                              },
+                            ],
+                            on: {
+                              click: function ($event) {
+                                return _vm.closeField(index)
+                              },
+                            },
+                          },
+                          [_c("img", { attrs: { src: "/img/close.png" } })]
+                        ),
+                      ]),
+                    ])
+                  }),
+                  0
+                ),
+              ]),
+            ]),
           ]),
-          _vm._v(" "),
-          _c("Footer"),
-        ],
-        1
-      ),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("Modal"),
+      _vm._v(" "),
+      _c("Loading", { ref: "child" }),
     ],
     1
   )
@@ -46305,6 +46381,30 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  return _c("BasicHome", [_vm._v("homeです")])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Layout/BasicHome.vue?vue&type=template&id=6ac4f05a&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Layout/BasicHome.vue?vue&type=template&id=6ac4f05a& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
   return _c(
     "div",
     [
@@ -46316,23 +46416,22 @@ var render = function () {
           staticClass:
             "wrapper main-wrapper d-flex flex-column min-vh-100 bg-light ",
         },
-        [_c("Header"), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("Footer")],
+        [
+          _c("Header"),
+          _vm._v(" "),
+          _c("div", { staticClass: "body flex-grow-1 px-3" }, [
+            _c("div", { staticClass: "container-lg" }, [_vm._t("default")], 2),
+          ]),
+          _vm._v(" "),
+          _c("Footer"),
+        ],
         1
       ),
     ],
     1
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "body flex-grow-1 px-3" }, [
-      _c("div", { staticClass: "container-lg" }),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -46512,7 +46611,10 @@ var render = function () {
                 [
                   _c("img", {
                     staticClass: "nav-icon",
-                    attrs: { src: "icons/svg/free/cil-home.svg", alt: "home" },
+                    attrs: {
+                      src: "icons/svg/free/cil-tablet.svg",
+                      alt: "home",
+                    },
                   }),
                   _vm._v("\n            Handies"),
                 ]
@@ -63904,9 +64006,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HomeComponent_vue_vue_type_template_id_782dcf83___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HomeComponent.vue?vue&type=template&id=782dcf83& */ "./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83&");
 /* harmony import */ var _HomeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomeComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/HomeComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _HomeComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HomeComponent.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -63914,7 +64014,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _HomeComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _HomeComponent_vue_vue_type_template_id_782dcf83___WEBPACK_IMPORTED_MODULE_0__["render"],
   _HomeComponent_vue_vue_type_template_id_782dcf83___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -63946,22 +64046,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css& ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./HomeComponent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HomeComponent.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
 /***/ "./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83&":
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83& ***!
@@ -63975,6 +64059,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_template_id_782dcf83___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_template_id_782dcf83___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Layout/BasicHome.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/Layout/BasicHome.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BasicHome_vue_vue_type_template_id_6ac4f05a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BasicHome.vue?vue&type=template&id=6ac4f05a& */ "./resources/js/components/Layout/BasicHome.vue?vue&type=template&id=6ac4f05a&");
+/* harmony import */ var _BasicHome_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasicHome.vue?vue&type=script&lang=js& */ "./resources/js/components/Layout/BasicHome.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _BasicHome_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BasicHome.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _BasicHome_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BasicHome_vue_vue_type_template_id_6ac4f05a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BasicHome_vue_vue_type_template_id_6ac4f05a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Layout/BasicHome.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Layout/BasicHome.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/Layout/BasicHome.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./BasicHome.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Layout/BasicHome.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./BasicHome.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Layout/BasicHome.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Layout/BasicHome.vue?vue&type=template&id=6ac4f05a&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/Layout/BasicHome.vue?vue&type=template&id=6ac4f05a& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_template_id_6ac4f05a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BasicHome.vue?vue&type=template&id=6ac4f05a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Layout/BasicHome.vue?vue&type=template&id=6ac4f05a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_template_id_6ac4f05a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BasicHome_vue_vue_type_template_id_6ac4f05a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
