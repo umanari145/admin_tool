@@ -20,4 +20,7 @@ use Illuminate\Support\Facades\Route;
         Route::put('/{scan_terminal_id}', "Api\ScanTerminalController@update")->name('updateScanTerminal');
         Route::delete('/', "Api\ScanTerminalController@delete")->name('deleteScanTerminal');
     });
+    Route::group(['prefix' => '/company'], function () {
+        Route::get('/', "Api\CompanyController@index")->name('indexCompany');
+    });
 //});
