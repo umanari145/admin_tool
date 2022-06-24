@@ -7,7 +7,7 @@
 
                     <select class="form-select m-3 w-auto" v-model = "selectCompanyId" @change = "getHandyList">
                         <option value="" >未選択</option>
-                        <option :value = "companyId" v-for = "(companyName,companyId) in masterConfig.companies" :key="companyId">
+                        <option :value = "companyId" v-for = "(companyName,companyId) in companies" :key="companyId">
                             {{companyName}}
                         </option>
                     </select>
@@ -40,9 +40,9 @@
                                         {{handy.id}}
                                     </td>
                                     <td>
-                                        <span v-show="handy.isView" @click="inputField(index)">{{masterConfig.companies[handy.company_id]}}</span>
+                                        <span v-show="handy.isView" @click="inputField(index)">{{companies[handy.company_id]}}</span>
                                         <select v-model = "tmpVal.company_id" v-if="handy.isEdit">
-                                            <option :value = "companyId" v-for = "(companyName,companyId) in masterConfig.companies" :key="companyId">
+                                            <option :value = "companyId" v-for = "(companyName,companyId) in companies" :key="companyId">
                                                 {{companyName}}
                                             </option>
                                         </select>
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <Modal></Modal>
+        <HandyModal></HandyModal>
         <Loading ref="child"></Loading>
     </BasicHome>
 </template>
@@ -78,20 +78,19 @@
 <script>
 
 import BasicHome from "../components/Layout/BasicHome";
-import Modal from "../components/ModalComponent";
+import HandyModal from "../components/HandyModalComponent";
 import Loading from "../components/LoadingComponent";
-import masterJson from "../config/master.json";
 
 export default {
     name:'handylist',
     components:{
         BasicHome,
         Loading,
-        Modal
+        HandyModal
     },
     methods:{
         bootModal() {
-            this.$modal.show('csv-add');
+            this.$modal.show('handy-add');
         },
         getHandyList() {
             let url = '/api/scan_terminal';
@@ -119,6 +118,24 @@ export default {
                 .finally(()=>{
                     this.$refs.child.loadingOff();
                 });
+        },
+        getComanyList() {
+            let url = '/api/company';
+            // 単純なメソッドの呼び出しはこれ
+            this.$refs.child.loadingOn();
+            axios.get(url)
+                .then((res) => {
+                    if (res['status'] === 200) {
+                        let companyData = res['data']['data'];
+                        this.companies = companyData; 
+                    } else {
+                        alert("データの取得に失敗しました。");
+                    }
+                })
+                .finally(() => {
+                    this.$refs.child.loadingOff();
+                })
+
         },
         inputField(index) {
             let targetData = this.handyList[index];
@@ -218,10 +235,10 @@ export default {
         }
     },
     created() {
-        this.masterConfig = masterJson;
     },
     mounted() {
         // createdだとDOMできてないからダメ
+        this.getComanyList();
         this.getHandyList();
     },
     data() {
@@ -229,7 +246,7 @@ export default {
             // CSVリスト
             handyList:[],
             selectCompanyId:"",
-            masterConfig:{},
+            companies:{},
             allDel:0,
             tmpVal:{}
         }

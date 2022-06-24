@@ -2148,10 +2148,8 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Layout/BasicHome */ "./resources/js/components/Layout/BasicHome.vue");
-/* harmony import */ var _components_ModalComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ModalComponent */ "./resources/js/components/ModalComponent.vue");
+/* harmony import */ var _components_HandyModalComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/HandyModalComponent */ "./resources/js/components/HandyModalComponent.vue");
 /* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
-/* harmony import */ var _config_master_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../config/master.json */ "./resources/js/config/master.json");
-var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../config/master.json */ "./resources/js/config/master.json", 1);
 //
 //
 //
@@ -2229,7 +2227,6 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
 //
 //
 //
-
 
 
 
@@ -2238,11 +2235,11 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
   components: {
     BasicHome: _components_Layout_BasicHome__WEBPACK_IMPORTED_MODULE_0__["default"],
     Loading: _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Modal: _components_ModalComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
+    HandyModal: _components_HandyModalComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
     bootModal: function bootModal() {
-      this.$modal.show('csv-add');
+      this.$modal.show('handy-add');
     },
     getHandyList: function getHandyList() {
       var _this = this;
@@ -2273,6 +2270,23 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
         _this.$refs.child.loadingOff();
       });
     },
+    getComanyList: function getComanyList() {
+      var _this2 = this;
+
+      var url = '/api/company'; // 単純なメソッドの呼び出しはこれ
+
+      this.$refs.child.loadingOn();
+      axios.get(url).then(function (res) {
+        if (res['status'] === 200) {
+          var companyData = res['data']['data'];
+          _this2.companies = companyData;
+        } else {
+          alert("データの取得に失敗しました。");
+        }
+      })["finally"](function () {
+        _this2.$refs.child.loadingOff();
+      });
+    },
     inputField: function inputField(index) {
       var targetData = this.handyList[index]; // 参照になっているのでここで値を変えるとcsvListもかわる
 
@@ -2284,7 +2298,7 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
       this.$set(this.tmpVal, 'name', targetData['name']);
     },
     updateField: function updateField(index) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$refs.child.loadingOn();
       var targetData = this.handyList[index];
@@ -2301,11 +2315,11 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
         if (res['status'] === 200) {
           // 参照になっているのでここで値を変えるとcsvListもかわる
           var data = res['data']['data'];
-          _this2.handyList[index]['company_id'] = data['company_id'];
-          _this2.handyList[index]['mac_address'] = data['mac_address'];
-          _this2.handyList[index]['name'] = data['name'];
-          _this2.handyList[index]['isEdit'] = 0;
-          _this2.handyList[index]['isView'] = 1;
+          _this3.handyList[index]['company_id'] = data['company_id'];
+          _this3.handyList[index]['mac_address'] = data['mac_address'];
+          _this3.handyList[index]['name'] = data['name'];
+          _this3.handyList[index]['isEdit'] = 0;
+          _this3.handyList[index]['isView'] = 1;
         } else {
           alert("更新に失敗しました。");
           console.log(res);
@@ -2314,7 +2328,7 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
         alert("更新に失敗しました。");
         console.log(error);
       })["finally"](function () {
-        _this2.$refs.child.loadingOff();
+        _this3.$refs.child.loadingOff();
       });
     },
     closeField: function closeField(index) {
@@ -2324,14 +2338,14 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
       targetData['isView'] = 1;
     },
     allCheck: function allCheck() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.handyList.forEach(function (element) {
-        element.isDelete = _this3.allDel;
+        element.isDelete = _this4.allDel;
       });
     },
     deleteHandy: function deleteHandy() {
-      var _this4 = this;
+      var _this5 = this;
 
       var url = '/api/scan_terminal';
       var deleteIds = this.handyList.filter(function (v) {
@@ -2359,24 +2373,23 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
         if (res['status'] === 200) {
           alert("無事削除を行いました。");
 
-          var targetData = _this4.handyList.filter(function (v) {
+          var targetData = _this5.handyList.filter(function (v) {
             return !v.isDelete;
           });
 
-          _this4.handyList = targetData;
+          _this5.handyList = targetData;
         } else {
           alert("データの削除に失敗しました。");
         }
       })["finally"](function () {
-        _this4.$refs.child.loadingOff();
+        _this5.$refs.child.loadingOff();
       });
     }
   },
-  created: function created() {
-    this.masterConfig = _config_master_json__WEBPACK_IMPORTED_MODULE_3__;
-  },
+  created: function created() {},
   mounted: function mounted() {
     // createdだとDOMできてないからダメ
+    this.getComanyList();
     this.getHandyList();
   },
   data: function data() {
@@ -2384,9 +2397,213 @@ var _config_master_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
       // CSVリスト
       handyList: [],
       selectCompanyId: "",
-      masterConfig: {},
+      companies: {},
       allDel: 0,
       tmpVal: {}
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HandyModalComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HandyModalComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/LoadingComponent */ "./resources/js/components/LoadingComponent.vue");
+/* harmony import */ var validatorjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! validatorjs */ "./node_modules/validatorjs/src/validator.js");
+/* harmony import */ var validatorjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(validatorjs__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'handyModal',
+  components: {
+    Loading: _components_LoadingComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    dataInit: function dataInit() {
+      this.errorMessage.companyId = "";
+      this.errorMessage.macAddress = "";
+      this.viewStatus = 1;
+      this.companyId = "";
+      this.companyName = "";
+      this.macAddress = "";
+      this.name = "";
+    },
+    confirmHandy: function confirmHandy() {
+      this.errorMessage.companyId = "";
+      this.errorMessage.macAddress = "";
+      var data = {
+        'companyId': this.companyId,
+        'macAddress': this.macAddress
+      };
+      var rules = {
+        'companyId': 'required',
+        'macAddress': 'required'
+      };
+      var error_msg = {
+        "required.companyId": "会社名が未入力です。",
+        "required.macAddress": "MACアドレスが未入力です。"
+      };
+      var validation = new validatorjs__WEBPACK_IMPORTED_MODULE_1___default.a(data, rules, error_msg);
+      validation.check();
+
+      if (validation.fails()) {
+        var errorMessage = validation.errors.all();
+
+        if (errorMessage['companyId'] !== undefined) {
+          this.errorMessage.companyId = errorMessage['companyId'][0];
+        }
+
+        if (errorMessage['macAddress'] !== undefined) {
+          this.errorMessage.macAddress = errorMessage['macAddress'][0];
+        }
+
+        return false;
+      }
+
+      this.viewStatus = 2;
+      this.companyName = this.companies[this.companyId];
+    },
+    backStatus: function backStatus() {
+      this.viewStatus = 1;
+    },
+    saveHandy: function saveHandy() {
+      var _this = this;
+
+      this.$refs.child.loadingOn();
+      var postData = {
+        'company_id': this.companyId,
+        'mac_address': this.macAddress,
+        'name': this.name
+      };
+      var url = '/api/scan_terminal';
+      axios.post(url, postData).then(function (res) {
+        if (res['data']['http_status_code'] === 200) {
+          alert('ハンディの登録に成功しました。');
+
+          _this.hide(); //                    location.href = "/handy";
+
+        } else {
+          alert('ハンディの登録に失敗しました。');
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        _this.$refs.child.loadingOff();
+      });
+    },
+    hide: function hide() {
+      this.$modal.hide('handy-add');
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    var url = '/api/company'; // 単純なメソッドの呼び出しはこれ
+
+    this.$refs.child.loadingOn();
+    axios.get(url).then(function (res) {
+      if (res['status'] === 200) {
+        var companyData = res['data']['data'];
+        _this2.companies = companyData;
+      } else {
+        alert("データの取得に失敗しました。");
+      }
+    })["finally"](function () {
+      _this2.$refs.child.loadingOff();
+    });
+  },
+  data: function data() {
+    return {
+      companies: {},
+      companyId: "",
+      companyName: "",
+      macAddress: "",
+      name: "",
+      errorMessage: {
+        'companyId': '',
+        'macAddress': ''
+      },
+      viewStatus: 1
     };
   }
 });
@@ -46097,22 +46314,19 @@ var render = function () {
               [
                 _c("option", { attrs: { value: "" } }, [_vm._v("未選択")]),
                 _vm._v(" "),
-                _vm._l(
-                  _vm.masterConfig.companies,
-                  function (companyName, companyId) {
-                    return _c(
-                      "option",
-                      { key: companyId, domProps: { value: companyId } },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(companyName) +
-                            "\n                    "
-                        ),
-                      ]
-                    )
-                  }
-                ),
+                _vm._l(_vm.companies, function (companyName, companyId) {
+                  return _c(
+                    "option",
+                    { key: companyId, domProps: { value: companyId } },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(companyName) +
+                          "\n                    "
+                      ),
+                    ]
+                  )
+                }),
               ],
               2
             ),
@@ -46285,13 +46499,7 @@ var render = function () {
                               },
                             },
                           },
-                          [
-                            _vm._v(
-                              _vm._s(
-                                _vm.masterConfig.companies[handy.company_id]
-                              )
-                            ),
-                          ]
+                          [_vm._v(_vm._s(_vm.companies[handy.company_id]))]
                         ),
                         _vm._v(" "),
                         handy.isEdit
@@ -46331,7 +46539,7 @@ var render = function () {
                                 },
                               },
                               _vm._l(
-                                _vm.masterConfig.companies,
+                                _vm.companies,
                                 function (companyName, companyId) {
                                   return _c(
                                     "option",
@@ -46502,7 +46710,295 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("Modal"),
+      _c("HandyModal"),
+      _vm._v(" "),
+      _c("Loading", { ref: "child" }),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HandyModalComponent.vue?vue&type=template&id=a17ee382&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HandyModalComponent.vue?vue&type=template&id=a17ee382& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c(
+        "modal",
+        {
+          attrs: {
+            name: "handy-add",
+            draggable: true,
+            resizable: true,
+            width: "60%",
+            height: "60%",
+          },
+          on: { "before-open": _vm.dataInit, "before-close": _vm.dataInit },
+        },
+        [
+          _c("div", { staticClass: "modal-header" }, [
+            _c("h2", [_vm._v("項目追加")]),
+            _vm._v(" "),
+            _c("button", { on: { click: _vm.hide } }, [
+              _c("img", { attrs: { src: "/img/close.png" } }),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.viewStatus == 1,
+                  expression: "viewStatus == 1",
+                },
+              ],
+              staticClass: "modal-body",
+            },
+            [
+              _c("div", [
+                _c("div", [_vm._v("会社")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.companyId,
+                        expression: "companyId",
+                      },
+                    ],
+                    staticClass: "form-select",
+                    staticStyle: { "margin-top": "10px" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.companyId = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                    },
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [_vm._v("未選択")]),
+                    _vm._v(" "),
+                    _vm._l(_vm.companies, function (companyName, companyId) {
+                      return _c(
+                        "option",
+                        { key: companyId, domProps: { value: companyId } },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(companyName) +
+                              "\n                    "
+                          ),
+                        ]
+                      )
+                    }),
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", { staticClass: "text-danger" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.errorMessage.companyId) +
+                        "\n                    "
+                    ),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticStyle: { "margin-top": "10px" } }, [
+                _c("div", { staticClass: "mt-3" }, [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("MACアドレス"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.macAddress,
+                        expression: "macAddress",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    domProps: { value: _vm.macAddress },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.macAddress = $event.target.value
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(_vm.errorMessage.macAddress) +
+                          "\n                        "
+                      ),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-3" }, [
+                  _c("label", { staticClass: "form-label" }, [_vm._v("メモ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.name,
+                        expression: "name",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    domProps: { value: _vm.name },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.name = $event.target.value
+                      },
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticStyle: {
+                      "text-align": "right",
+                      "margin-top": "15px",
+                    },
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        staticStyle: { "margin-right": "10px" },
+                        attrs: { type: "button" },
+                        on: { click: _vm.confirmHandy },
+                      },
+                      [_vm._v("追加")]
+                    ),
+                  ]
+                ),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.viewStatus == 2,
+                  expression: "viewStatus == 2",
+                },
+              ],
+              staticClass: "modal-body",
+            },
+            [
+              _c("div", { staticClass: "mb-4" }, [
+                _c("div", { staticClass: "mb-1" }, [_vm._v("ハンディ")]),
+                _vm._v(" "),
+                _c("div", [_vm._v(_vm._s(_vm.companyName))]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-4" }, [
+                _c("div", { staticClass: "mb-1" }, [_vm._v("MACアドレス")]),
+                _vm._v(" "),
+                _c("div", [_vm._v(_vm._s(_vm.macAddress))]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-4" }, [
+                _c("div", { staticClass: "mb-1" }, [_vm._v("メモ")]),
+                _vm._v(" "),
+                _c("div", [_vm._v(_vm._s(_vm.name))]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticStyle: { "margin-top": "10px" } }, [
+                _c(
+                  "div",
+                  {
+                    staticStyle: {
+                      "text-align": "right",
+                      "margin-top": "15px",
+                    },
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        staticStyle: { "margin-right": "10px" },
+                        attrs: { type: "button" },
+                        on: { click: _vm.backStatus },
+                      },
+                      [_vm._v("戻る")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        staticStyle: { "margin-right": "10px" },
+                        attrs: { type: "button" },
+                        on: { click: _vm.saveHandy },
+                      },
+                      [_vm._v("確定")]
+                    ),
+                  ]
+                ),
+              ]),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("Loading", { ref: "child" }),
     ],
@@ -64146,6 +64642,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/HandyModalComponent.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/HandyModalComponent.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HandyModalComponent_vue_vue_type_template_id_a17ee382___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HandyModalComponent.vue?vue&type=template&id=a17ee382& */ "./resources/js/components/HandyModalComponent.vue?vue&type=template&id=a17ee382&");
+/* harmony import */ var _HandyModalComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HandyModalComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/HandyModalComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _HandyModalComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _HandyModalComponent_vue_vue_type_template_id_a17ee382___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _HandyModalComponent_vue_vue_type_template_id_a17ee382___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/HandyModalComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/HandyModalComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/HandyModalComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HandyModalComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./HandyModalComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HandyModalComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HandyModalComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/HandyModalComponent.vue?vue&type=template&id=a17ee382&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/HandyModalComponent.vue?vue&type=template&id=a17ee382& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HandyModalComponent_vue_vue_type_template_id_a17ee382___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./HandyModalComponent.vue?vue&type=template&id=a17ee382& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HandyModalComponent.vue?vue&type=template&id=a17ee382&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HandyModalComponent_vue_vue_type_template_id_a17ee382___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HandyModalComponent_vue_vue_type_template_id_a17ee382___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/HomeComponent.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/HomeComponent.vue ***!
@@ -64738,10 +65303,10 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************!*\
   !*** ./resources/js/config/master.json ***!
   \*****************************************/
-/*! exports provided: is_required, csv_category, companies, default */
+/*! exports provided: is_required, csv_category, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"is_required\":[\"必須でない\",\"必須\"],\"csv_category\":{\"8\":\"商品マスタ:アップロード\",\"9\":\"商品マスタ:ダウンロード\",\"10\":\"商品SKUマスタ:アップロード\",\"11\":\"商品SKUマスタ:ダウンロード\",\"12\":\"SKU/SKU2:アップロード\",\"13\":\"品番SKU変更:アップロード\",\"20\":\"商品SKUマスタ一括:アップロード\",\"21\":\"商品SKUマスタ一括:ダウンロード\",\"30\":\"セット商品マスタ：アップロード\",\"31\":\"セット商品マスタ：ダウンロード\",\"40\":\"得意先マスタ：アップロード\",\"41\":\"得意先マスタ：ダウンロード\",\"45\":\"仕入先マスタ：アップロード\",\"46\":\"仕入先マスタ：ダウンロード\",\"47\":\"梱包マスタ：アップロード\",\"48\":\"梱包マスタ：ダウンロード\",\"50\":\"入荷伝票：アップロード\",\"51\":\"入荷伝票：ダウンロード\",\"52\":\"入荷商品タグCSV発行：ダウンロード\",\"54\":\"入荷実績：ダウンロード\",\"55\":\"入荷実績(CrossMall)：ダウンロード\",\"56\":\"返品伝票登録：アップロード\",\"59\":\"返品実績：ダウンロード\",\"60\":\"受注伝票登録：アップロード パターン1\",\"61\":\"受注伝票登録：アップロード パターン2\",\"62\":\"受注伝票登録：アップロード パターン3\",\"63\":\"受注伝票登録：アップロード パターン4\",\"64\":\"受注伝票登録：アップロード パターン5\",\"65\":\"受注伝票：ダウンロード\",\"71\":\"出荷伝票:ダウンロード\",\"75\":\"出荷実績:ダウンロード\",\"82\":\"在庫一覧：ダウンロード\",\"83\":\"在庫一覧：ダウンロード(集計)\",\"85\":\"在庫ロケ：ダウンロード\",\"87\":\"在庫管理番号：アップロード\",\"90\":\"ピッキング：ダウンロード\",\"100\":\"発注書：アップロード\",\"101\":\"発注書：ダウンロード\",\"102\":\"発注入庫実績：アップロード\",\"103\":\"発注入庫実績(受注連携システム向け)：ダウンロード\"},\"companies\":{\"1\":\"有限会社 井高\",\"2\":\"株式会社 藤本\",\"3\":\"有限会社 村山\",\"4\":\"有限会社 井高\",\"5\":\"株式会社 小林\",\"6\":\"株式会社 青山\",\"7\":\"株式会社 吉本\",\"8\":\"株式会社 工藤\",\"9\":\"株式会社 井上\",\"10\":\"株式会社 村山\"}}");
+module.exports = JSON.parse("{\"is_required\":[\"必須でない\",\"必須\"],\"csv_category\":{\"8\":\"商品マスタ:アップロード\",\"9\":\"商品マスタ:ダウンロード\",\"10\":\"商品SKUマスタ:アップロード\",\"11\":\"商品SKUマスタ:ダウンロード\",\"12\":\"SKU/SKU2:アップロード\",\"13\":\"品番SKU変更:アップロード\",\"20\":\"商品SKUマスタ一括:アップロード\",\"21\":\"商品SKUマスタ一括:ダウンロード\",\"30\":\"セット商品マスタ：アップロード\",\"31\":\"セット商品マスタ：ダウンロード\",\"40\":\"得意先マスタ：アップロード\",\"41\":\"得意先マスタ：ダウンロード\",\"45\":\"仕入先マスタ：アップロード\",\"46\":\"仕入先マスタ：ダウンロード\",\"47\":\"梱包マスタ：アップロード\",\"48\":\"梱包マスタ：ダウンロード\",\"50\":\"入荷伝票：アップロード\",\"51\":\"入荷伝票：ダウンロード\",\"52\":\"入荷商品タグCSV発行：ダウンロード\",\"54\":\"入荷実績：ダウンロード\",\"55\":\"入荷実績(CrossMall)：ダウンロード\",\"56\":\"返品伝票登録：アップロード\",\"59\":\"返品実績：ダウンロード\",\"60\":\"受注伝票登録：アップロード パターン1\",\"61\":\"受注伝票登録：アップロード パターン2\",\"62\":\"受注伝票登録：アップロード パターン3\",\"63\":\"受注伝票登録：アップロード パターン4\",\"64\":\"受注伝票登録：アップロード パターン5\",\"65\":\"受注伝票：ダウンロード\",\"71\":\"出荷伝票:ダウンロード\",\"75\":\"出荷実績:ダウンロード\",\"82\":\"在庫一覧：ダウンロード\",\"83\":\"在庫一覧：ダウンロード(集計)\",\"85\":\"在庫ロケ：ダウンロード\",\"87\":\"在庫管理番号：アップロード\",\"90\":\"ピッキング：ダウンロード\",\"100\":\"発注書：アップロード\",\"101\":\"発注書：ダウンロード\",\"102\":\"発注入庫実績：アップロード\",\"103\":\"発注入庫実績(受注連携システム向け)：ダウンロード\"}}");
 
 /***/ }),
 
