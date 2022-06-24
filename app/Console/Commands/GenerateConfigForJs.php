@@ -41,12 +41,6 @@ class GenerateConfigForJs extends Command
         $configFilePath = sprintf('%s/config/custom.php', base_path());
         require_once $configFilePath;
         $customConfig = loadCustomConfig();
-
-        $companies = [];
-        Company::all()->map(function ($v) use (&$companies) {
-            $companies[$v->id] = $v->company_name;
-        });
-        $customConfig['companies'] = $companies;
         $this->makeJsFile($customConfig);
     }
 
