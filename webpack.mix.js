@@ -15,4 +15,5 @@ mix.js('resources/js/app.js', 'public/js')
     // watchには使わない
     //.copy('node_modules/@coreui/icons/svg', 'public/icons/svg')
     .sass('resources/sass/app.scss', 'public/css')
+    .sourceMaps('true')
     .version();

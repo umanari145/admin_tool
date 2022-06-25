@@ -12,6 +12,10 @@
                         </option>
                     </select>
 
+                    <div class="d-flex">
+                    </div>
+
+
                     <div class="d-flex justify-content-end" style="margin-top:10px;">
                         <button type="button" class="btn btn-danger" @click="deleteHandy" style="margin-right:10px;">削除</button>
                         <button type="button" class="btn btn-success mr-3" @click="bootModal">ハンディ追加</button>
@@ -66,6 +70,17 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <!-- ページネーションの表示 -->
+                        <ul class="pagination justify-content-center">
+                            <li v-for="(link,index) in pagerMeta.links" class="page-item" :key="index">
+                                <a class="page-link"
+                                    :disabled="link.url === null" 
+                                    @click="getHandyList(link.url)" 
+                                    v-html="link.label"                                    
+                                >
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -92,8 +107,10 @@ export default {
         bootModal() {
             this.$modal.show('handy-add');
         },
-        getHandyList() {
-            let url = '/api/scan_terminal';
+        getHandyList(url) {
+            if (url === undefined) {
+                url = '/api/scan_terminal';
+            }
             let query = "";
             if (this.selectCompanyId !== "") {
                 query = "/?company_id=" + this.selectCompanyId;
@@ -105,6 +122,7 @@ export default {
                 .then((res) => {
                     if (res['status'] === 200) {
                         let handyData = res['data']['data'];
+                        this.pagerMeta = res['data']['meta'];
                         this.handyList = handyData.map((v) => {
                             v.isDelete = 0;
                             v.isEdit = 0;
@@ -245,6 +263,7 @@ export default {
         return {
             // CSVリスト
             handyList:[],
+            pagerMeta:{},
             selectCompanyId:"",
             companies:{},
             allDel:0,
