@@ -20,6 +20,8 @@ class CompanyControllerTest extends TestCase
         $companies_collection = collect($companies)->pluck('company_name', 'id')->toArray();
 
         $response = $this->get('/api/company');
+        // debug
+        //$retJson = $response->json();
         $response->assertStatus(200);
         /*  レスポンスの形を完全に整えるのが面倒・・・  
             ->assertJson([
@@ -32,7 +34,7 @@ class CompanyControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-        /**
+    /**
      * A basic test example.
      *
      * @return void

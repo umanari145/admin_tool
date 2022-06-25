@@ -25,10 +25,9 @@ class ScanTerminalService
         ];
 
         try {
-            $csvFieldData = ScanTerminal::getScanTerminalList($requestData);
-
+            $terminals = ScanTerminal::getScanTerminalList($requestData);
             $res = [
-                'data' => $csvFieldData,
+                'data' => $terminals,
                 'result' => ConfigConst::SERVICE_SUCCESS
             ];
         } catch (Exception $e) {

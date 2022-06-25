@@ -17,9 +17,14 @@ class ScanTerminalControllerTest extends TestCase
      */
     public function testScanTerminalTest()
     {
-        ScanTerminal::factory()->create()->toArray();
+        ScanTerminal::factory(20)->create()->toArray();
         $response = $this->get('api/scan_terminal');
         $response->assertStatus(200);
+
+        $response = $this->get('api/scan_terminal?page=2');
+        $retJson = $response->json();
+        $response->assertStatus(200);
+        $this->assertSame(11, $retJson['meta']['from']);
 
         $response = $this->get('api/scan_terminal?company_id=1');
         $response->assertStatus(200);

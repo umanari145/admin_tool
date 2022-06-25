@@ -24,7 +24,7 @@ class ScanTerminalController extends ApiBasicController
 
         $scanTerminalService = new ScanTerminalService();
         $res = $scanTerminalService->getScanTerminalList($requestData);
-
+        $this->convertPaginateData($res);
         return $this->retServiceResponse($res);
     }
 
