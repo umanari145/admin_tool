@@ -106,3 +106,27 @@ az resource list
 ```
 az webapp deploy --type zip --resource-group {{リソースグループ}} --name {{サービス名}} --src-path {{ファイル名}}
 ```
+
+### herokuへの連携
+
+APIKEYで連携できる
+```
+git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APPNAME.git
+```
+#### Procfile
+heroku上で使われるコンテナを選べる。なくても自動的に決まるのであえて書かなくても動かないことはない。
+releaseの部分はデプロイ時に動かしたいshellを記載できる(migrationなど)
+```
+release: ./release.sh
+web: vendor/bin/heroku-php-apache2
+
+```
+
+#### Buildpacks
+
+言語ごとのプラットフォーム。<br>
+大抵の場合はソースをpushした時点で自動的にきまる。<br>
+phpソースを配置すると自動的に`heroku/php`が選択されるが、npmのライブラリインストールしたい場合は,管理画面から
+`heroku/nodejs`を追加する必要がある。<br>
+ルートディレクトリにpackage.jsonがあると自動的にinstall,さらに自動的に`npm run build`が実行される。<br>
+よってnpmコマンドをheroku環境で動かしたいときはnpm bun buildを生成する必要がある。

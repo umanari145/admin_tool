@@ -22,6 +22,7 @@ class ScanTerminalServiceTest extends TestCase
 
         $csvService = new ScanTerminalService();
         $res = $csvService->getScanTerminalList();
+        $res['data'] = $res['data']->get();
         $this->assertSame($company->company_name, $res['data'][0]->company->company_name);
         $this->assertSame($terminal['mac_address'], $res['data'][0]->mac_address);
         $this->assertSame(1, $res['result']);
@@ -42,13 +43,15 @@ class ScanTerminalServiceTest extends TestCase
             'company_id' => $terminals[0]['company_id']
         ];
         $res = $csvService->getScanTerminalList($requestParam);
+        $res['data'] = $res['data']->get();
         $this->assertSame($company->company_name, $res['data'][0]->company->company_name);
         $this->assertSame($terminals[0]['mac_address'], $res['data'][0]->mac_address);
         $this->assertSame(1, $res['result']);
 
+        /*getをController側で対処するためお蔵入り
         Schema::drop('scan_terminal');
         $res = $csvService->getScanTerminalList($requestParam);
-        $this->assertSame(99, $res['result']);
+        $this->assertSame(99, $res['result']);*/
     }
 
     /**

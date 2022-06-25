@@ -13,6 +13,7 @@ use Validator;
 
 class ApiBasicController extends Controller
 {
+
     protected function retValidResponse($validateResult)
     {
         $httpResponse = new HTTPResponse();
@@ -24,9 +25,21 @@ class ApiBasicController extends Controller
         $errorMessage2 =  array_map(function ($v) {
             return implode("\n", $v);
         }, $errorMessage);
-        $httpResponse->errorMessage = $errorMessage;
+        $httpResponse->errorMessage = $errorMessage2;
 
         return response()->json($httpResponse->retResponse(), $httpResponse->httpStatusCode, [], JSON_UNESCAPED_UNICODE);
+    }
+
+    protected function convertPaginateData(array &$res, $paginate_count = 10): void
+    {
+        $res['data'] = $res['data']->paginate($paginate_count)->toArray();
+        foreach ($res['data'] as $k => $v) {
+            if ($k === 'data') {
+                $res['data'] = $v;
+            } else {
+                $res['meta'][$k] = $v;
+            }
+        }
     }
 
     protected function retServiceResponse(array $res)
@@ -35,11 +48,19 @@ class ApiBasicController extends Controller
         if ($res['result'] === ConfigConst::SERVICE_SUCCESS) {
             $httpResponse->httpStatusCode = Response::HTTP_OK;
             $httpResponse->data = $res['data'];
+            if (isset($res['meta'])) {
+                $httpResponse->meta = $res['meta'];
+            }
         } else {
             $httpResponse->httpStatusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
             $httpResponse->errorMessage = $res['errorMessage'];
         }
 
-        return response()->json($httpResponse->retResponse(), $httpResponse->httpStatusCode, [], JSON_UNESCAPED_UNICODE);
+        return response()->json(
+            $httpResponse->retResponse(),
+            $httpResponse->httpStatusCode,
+            [],
+            JSON_UNESCAPED_UNICODE
+        );
     }
 }

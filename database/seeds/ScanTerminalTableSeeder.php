@@ -12,6 +12,6 @@ class ScanTerminalTableSeeder extends Seeder
      */
     public function run()
     {
-        ScanTerminal::factory(10)->create();
+        ScanTerminal::factory(100)->create();
     }
 }

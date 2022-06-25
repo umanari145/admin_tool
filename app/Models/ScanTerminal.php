@@ -33,6 +33,6 @@ class ScanTerminal extends Model
             $scan_terminals->where('company_id', $requestData['company_id']);
         }
 
-        return $scan_terminals->get();
+        return $scan_terminals;
     }
 }
