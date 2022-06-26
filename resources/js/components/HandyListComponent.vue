@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header">ハンディリスト</div>
 
-                    <select class="form-select m-3 w-auto" v-model = "selectCompanyId" @change = "getHandyList">
+                    <select class="form-select m-3 w-auto" v-model = "selectCompanyId" @change = "getHandyList()">
                         <option value="" >未選択</option>
                         <option :value = "companyId" v-for = "(companyName,companyId) in companies" :key="companyId">
                             {{companyName}}
@@ -74,7 +74,7 @@
                         <ul class="pagination justify-content-center">
                             <li v-for="(link,index) in pagerMeta.links" class="page-item" :key="index">
                                 <a class="page-link"
-                                    :disabled="link.url === null" 
+                                    :class="{disabled_link:link.url === null}"
                                     @click="getHandyList(link.url)" 
                                     v-html="link.label"                                    
                                 >
@@ -108,12 +108,16 @@ export default {
             this.$modal.show('handy-add');
         },
         getHandyList(url) {
+            let query = "";
             if (url === undefined) {
                 url = '/api/scan_terminal';
-            }
-            let query = "";
-            if (this.selectCompanyId !== "") {
-                query = "/?company_id=" + this.selectCompanyId;
+                if (this.selectCompanyId !== "") {
+                    query = "?company_id=" + this.selectCompanyId;
+                }
+            } else {
+                if (this.selectCompanyId !== "") {
+                    query = "&company_id=" + this.selectCompanyId;
+                }
             }
             url += query;
             // 単純なメソッドの呼び出しはこれ
@@ -273,5 +277,8 @@ export default {
 }
 </script>
 <style type="text/css">
-
+.disabled_link{
+    pointer-events:none;
+    cursor:none;
+}
 </style>

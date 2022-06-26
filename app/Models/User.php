@@ -1,14 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    use HasFactory;
+
+    protected $table = 'user';
 
     /**
      * The attributes that are mass assignable.
@@ -36,4 +40,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // JWT の sub に含める値。主キーを使う
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    // JWT のクレームに追加する値。今回は特になし
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

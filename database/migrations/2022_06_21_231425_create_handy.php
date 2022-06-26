@@ -18,7 +18,7 @@ class CreateHandy extends Migration
             $table->integer('company_id');
             $table->string('mac_address', 200);
             $table->string('name', 50)->nullable();
-            $table->tinyInteger('meta_deleted')->nullable();
+            $table->tinyInteger('meta_deleted')->default(0);
             $table->integer('meta_createuser')->nullable();
             $table->integer('meta_updateuser')->nullable();
             $table->string('meta_createdt', 20)->nullable();
@@ -33,6 +33,6 @@ class CreateHandy extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('handy');
+        Schema::dropIfExists('scan_terminal');
     }
 }

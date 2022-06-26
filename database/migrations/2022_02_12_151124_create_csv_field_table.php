@@ -23,7 +23,7 @@ class CreateCSVFieldTable extends Migration
             $table->string('param', 50)->nullable();
 
             $table->integer('serial')->nullable();
-            $table->tinyInteger('meta_deleted')->nullable();
+            $table->tinyInteger('meta_deleted')->default(0);
             $table->integer('meta_createuser')->nullable();
             $table->integer('meta_updateuser')->nullable();
             $table->string('meta_createdt', 20)->nullable();

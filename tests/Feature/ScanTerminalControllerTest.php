@@ -6,10 +6,17 @@ use Tests\TestCase;
 use App\Models\ScanTerminal;
 use App\Models\Company;
 use Illuminate\Support\Facades\Schema;
-use Log;
+use Tests\TestKit;
 
 class ScanTerminalControllerTest extends TestCase
 {
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->test_kit = new TestKit();
+    }
+
     /**
      * A basic test example.
      *
