@@ -31,7 +31,7 @@ class CreateCompanyTable extends Migration
             $table->string('invitor_name', 50)->nullable();
 
             $table->string('status', 10)->nullable();
-            $table->tinyInteger('meta_deleted')->nullable();
+            $table->tinyInteger('meta_deleted')->default(0);
             $table->integer('meta_createuser')->nullable();
             $table->integer('meta_updateuser')->nullable();
             $table->string('meta_createdt', 20)->nullable();

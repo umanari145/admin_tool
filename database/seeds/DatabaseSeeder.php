@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CsvFieldTableSeeder::class,
-            ScanTerminalTableSeeder::class
+            ScanTerminalTableSeeder::class,
+            UserTableSeeder::class
         ]);
     }
 }

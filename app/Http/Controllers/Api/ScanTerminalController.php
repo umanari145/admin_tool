@@ -10,7 +10,6 @@ use Validator;
 
 class ScanTerminalController extends ApiBasicController
 {
-
     public function index(Request $request)
     {
         $formValid = new FormValid('scan_terminal/index.yaml');

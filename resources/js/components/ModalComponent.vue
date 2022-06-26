@@ -16,7 +16,7 @@
                     <div>CSVカテゴリー</div>
                     <select class="form-select" v-model = "csvCategory" style="margin-top:10px;">
                         <option value = "" >未選択</option>
-                        <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category">
+                        <option :value = "categoryVal" v-for = "(categoryName,categoryVal) in masterConfig.csv_category" :key="categoryVal">
                             {{categoryName}}
                         </option>
                     </select>
