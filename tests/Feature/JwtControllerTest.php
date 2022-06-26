@@ -12,6 +12,7 @@ class JwtControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $users = User::factory()->create()->toArray();
         $this->test_kit = new TestKit();
     }
 
@@ -22,12 +23,9 @@ class JwtControllerTest extends TestCase
      */
     public function testJwtLogin()
     {
-        $this->markTestSkipped('認証系が完全に片付くまで一旦スキップ');
-        $users = User::factory()->create()->toArray();
         Company::factory(10)->create();
-
+        // tokenなしの場合401が普通に返ってくる
         $response = $this->getJson('/api/company', $this->test_kit->getHeaders());
-        // debug
         $response->assertStatus(401);
         //$retJson = $response->json();
 

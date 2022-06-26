@@ -4,17 +4,19 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\ScanTerminal;
-use App\Models\Company;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestKit;
 
 class ScanTerminalControllerTest extends TestCase
 {
-
     public function setUp(): void
     {
         parent::setUp();
-        $this->test_kit = new TestKit();
+        $users = User::factory()->create()->toArray();
+        $test_kit = new TestKit();
+        $access_token = $test_kit->getToken();
+        $this->headers = $test_kit->getHeadersIncToken($access_token);
     }
 
     /**
@@ -25,15 +27,15 @@ class ScanTerminalControllerTest extends TestCase
     public function testScanTerminalTest()
     {
         ScanTerminal::factory(20)->create()->toArray();
-        $response = $this->get('api/scan_terminal');
+        $response = $this->getJson('api/scan_terminal', $this->headers);
         $response->assertStatus(200);
 
-        $response = $this->get('api/scan_terminal?page=2');
+        $response = $this->getJson('api/scan_terminal?page=2', $this->headers);
         $retJson = $response->json();
         $response->assertStatus(200);
         $this->assertSame(11, $retJson['meta']['from']);
 
-        $response = $this->get('api/scan_terminal?company_id=1');
+        $response = $this->getJson('api/scan_terminal?company_id=1', $this->headers);
         $response->assertStatus(200);
     }
 
@@ -45,11 +47,11 @@ class ScanTerminalControllerTest extends TestCase
     public function testScanTerminalError()
     {
         ScanTerminal::factory()->create()->toArray();
-        $response = $this->get('api/scan_terminal?company_id=aaa');
+        $response = $this->getJson('api/scan_terminal?company_id=aaa', $this->headers);
         $response->assertStatus(400);
 
         Schema::drop('scan_terminal');
-        $response = $this->get('api/scan_terminal?company_id=1');
+        $response = $this->getJson('api/scan_terminal?company_id=1', $this->headers);
         $response->assertStatus(500);
     }
 
@@ -61,7 +63,7 @@ class ScanTerminalControllerTest extends TestCase
     public function testRegistScanTerminalTest()
     {
         $scan_terminal = ScanTerminal::factory()->make()->toArray();
-        $response = $this->post('/api/scan_terminal', $scan_terminal);
+        $response = $this->postJson('/api/scan_terminal', $scan_terminal, $this->headers);
         $res_data = (array)$response['data'];
         $response->assertStatus(200);
         $this->assertSame($scan_terminal['mac_address'], $res_data['mac_address']);
@@ -72,9 +74,9 @@ class ScanTerminalControllerTest extends TestCase
      *
      * @return void
      */
-    public function testRegistCsvFieldError400()
+    public function testRegistScanTerminalError400()
     {
-        $response = $this->post('/api/scan_terminal', []);
+        $response = $this->postJson('/api/scan_terminal', [], $this->headers);
         $error_message = (array) $response['errorMessage'];
         // ない場合errorになるので以下を定義
         $error_message['company_id'];
@@ -91,7 +93,7 @@ class ScanTerminalControllerTest extends TestCase
     private function validateCheck(array $scan_terminal, string $column_name, string $value)
     {
         $scan_terminal[$column_name] = $value;
-        $response = $this->post('/api/scan_terminal', $scan_terminal);
+        $response = $this->postJson('/api/scan_terminal', $scan_terminal, $this->headers);
         $error_message = (array) $response['errorMessage'];
         // ない場合errorになるので以下を定義
         $error_message[$column_name];
@@ -107,7 +109,7 @@ class ScanTerminalControllerTest extends TestCase
     {
         $scan_terminal = ScanTerminal::factory()->make()->toArray();
         Schema::drop('scan_terminal');
-        $response = $this->post('/api/scan_terminal', $scan_terminal);
+        $response = $this->postJson('/api/scan_terminal', $scan_terminal, $this->headers);
         // ない場合errorになるので以下を定義
         $response->assertStatus(500);
     }
@@ -125,7 +127,7 @@ class ScanTerminalControllerTest extends TestCase
             'updateData' => $scan_terminal_update
         ];
 
-        $response = $this->put('/api/scan_terminal/' . $scan_terminal['id'], $data);
+        $response = $this->putJson('/api/scan_terminal/' . $scan_terminal['id'], $data, $this->headers);
         $response->assertStatus(200);
     }
 
@@ -136,7 +138,7 @@ class ScanTerminalControllerTest extends TestCase
      */
     public function testUpdateScanTerminalError400()
     {
-        $response = $this->put('/api/scan_terminal/1', ['updateData' => []]);
+        $response = $this->putJson('/api/scan_terminal/1', ['updateData' => []], $this->headers);
         $error_message = (array) $response['errorMessage'];
         // ない場合errorになるので以下を定義
         $error_message['scan_terminal_id'];
@@ -157,7 +159,11 @@ class ScanTerminalControllerTest extends TestCase
     private function validateCheck2(array $scan_terminal, string $column_name, string $value)
     {
         $scan_terminal[$column_name] = $value;
-        $response = $this->put('/api/scan_terminal/' . $scan_terminal['scan_terminal_id'], ['updateData' => $scan_terminal]);
+        $response = $this->putJson(
+            '/api/scan_terminal/' . $scan_terminal['scan_terminal_id'], 
+            ['updateData' => $scan_terminal],
+            $this->headers
+        );
         $error_message = (array) $response['errorMessage'];
         // ない場合errorになるので以下を定義
         $error_message[$column_name];
@@ -177,7 +183,11 @@ class ScanTerminalControllerTest extends TestCase
             'updateData' => $scan_terminal_update
         ];
         Schema::drop('scan_terminal');
-        $response = $this->put('/api/scan_terminal/' . $scan_terminal['id'], $data);
+        $response = $this->putJson(
+            '/api/scan_terminal/' . $scan_terminal['id'],
+            $data,
+            $this->headers
+        );
         $response->assertStatus(500);
     }
 
@@ -194,7 +204,11 @@ class ScanTerminalControllerTest extends TestCase
             'delete_ids' => $scan_terminal_ids
         ];
 
-        $response = $this->delete('/api/scan_terminal', $data);
+        $response = $this->deleteJson(
+            '/api/scan_terminal',
+            $data,
+            $this->headers
+        );
         $response->assertStatus(200);
     }
 
@@ -208,7 +222,11 @@ class ScanTerminalControllerTest extends TestCase
             'delete_ids' => 'aaaaa'
         ];
 
-        $response = $this->delete('/api/scan_terminal', $data);
+        $response = $this->deleteJson(
+            '/api/scan_terminal',
+            $data,
+            $this->headers
+        );
         $error_message = (array) $response['errorMessage'];
         // ない場合errorになるので以下を定義
         $error_message['delete_ids'];
@@ -218,7 +236,11 @@ class ScanTerminalControllerTest extends TestCase
             'delete_ids' => ['aaaa', '1111']
         ];
 
-        $response = $this->delete('/api/scan_terminal', $data);
+        $response = $this->deleteJson(
+            '/api/scan_terminal',
+            $data,
+            $this->headers
+        );
         $error_message = (array) $response['errorMessage'];
         // ない場合errorになるので以下を定義
         $error_message['delete_ids.0'];
@@ -240,7 +262,11 @@ class ScanTerminalControllerTest extends TestCase
         ];
 
         Schema::drop('scan_terminal');
-        $response = $this->delete('/api/scan_terminal', $data);
+        $response = $this->deleteJson(
+            '/api/scan_terminal',
+            $data,
+            $this->headers
+        );
         $response->assertStatus(500);
     }
 }
