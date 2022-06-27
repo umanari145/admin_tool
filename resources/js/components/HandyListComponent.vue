@@ -95,6 +95,7 @@
 import BasicHome from "../components/Layout/BasicHome";
 import HandyModal from "../components/HandyModalComponent";
 import Loading from "../components/LoadingComponent";
+import {headers} from "../components/const.js";
 
 export default {
     name:'handylist',
@@ -122,7 +123,7 @@ export default {
             url += query;
             // 単純なメソッドの呼び出しはこれ
             this.$refs.child.loadingOn();
-            axios.get(url)
+            axios.get(url, {headers: this.getHeaderIncToken(headers)})
                 .then((res) => {
                     if (res['status'] === 200) {
                         let handyData = res['data']['data'];
@@ -140,6 +141,11 @@ export default {
                 .finally(()=>{
                     this.$refs.child.loadingOff();
                 });
+        },
+        getHeaderIncToken(headers) {
+            headers['Authorization'] = 'Bearer ' + this.$store.getters['user/getAccessToken'];
+
+            return headers;
         },
         getComanyList() {
             let url = '/api/company';

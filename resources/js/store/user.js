@@ -3,19 +3,19 @@ const user = {
     namespaced: true,
     state: {
       name: null,
+      access_token:null,
       isLogin : true
     },
     getters:{
-        getLoginInfo(state) {
-            return state.isLogin;
+        getAccessToken(state) {
+            return state.access_token;
         }
     },
     //setter
     mutations: {
-        setLogin(state, user_info){
-            if (user_info['user_code'] === 'aaaa' &&
-            user_info['password'] === '0000'
-            ) {
+        setToken(state, access_token){
+            if (access_token !== undefined) {
+                state.access_token = access_token
                 state.isLogin = true;
             }
         },
