@@ -3,6 +3,8 @@
 namespace Tests;
 
 use Illuminate\Support\Facades\Http;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TestKit
 {
@@ -22,12 +24,15 @@ class TestKit
         ];
 
         // 80番ポートはnginxなので以下のようなAPIを叩くことになる
-        $response = Http::withHeaders($this->getHeaders())
-            ->post('http://nginx/api/login', $data);
+        //$response = Http::withHeaders($this->getHeaders())
+        //    ->post('http://nginx/api/login', $data);
+        //$retJson =  $response->json();
+        // CIで使えないためボツ
 
-        $retJson =  $response->json();
-        if (!empty($retJson['access_token'])) {
-            return $retJson['access_token'];
+        $token = auth('api')->attempt($data);
+
+        if (!empty($token)) {
+            return $token;
         } else {
             return null;
         }
