@@ -20,9 +20,21 @@ Route::middleware(['jwt.auth'])->group(function () {
         Route::put('/{scan_terminal_id}', "Api\ScanTerminalController@update")->name('updateScanTerminal');
         Route::delete('/', "Api\ScanTerminalController@delete")->name('deleteScanTerminal');
     });
+
     Route::group(['prefix' => '/company'], function () {
         Route::get('/', "Api\CompanyController@index")->name('indexCompany');
     });
+
+    Route::group(['prefix' => '/csv_category'], function () {
+        Route::get('/{csv_category}', "Api\CsvController@getCsvField")->name('getCsvField');
+        Route::post('/{csv_category}', "Api\CsvController@registCsvField")->name('registCsvField');
+    });
+
+    Route::group(['prefix' => '/csv_field'], function () {
+        Route::put('/{csv_id}', "Api\CsvController@updateCsvField")->name('updateCsvField');
+        Route::delete('', "Api\CsvController@deleteCsvField")->name('deleteCsvField');
+    });
+
     // logout
     Route::post('logout', 'Api\JwtController@logout')->name('logout');
 });

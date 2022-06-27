@@ -75,6 +75,7 @@
 
 import Loading from "../components/LoadingComponent";
 import Validator from 'validatorjs';
+import HttpHelper from './Repository/HttpHelper';
 
 export default {
     name:'handyModal',
@@ -137,8 +138,8 @@ export default {
             };
 
             let url = '/api/scan_terminal';
-
-            axios.post(url, postData)
+            const httpHelper = new HttpHelper();
+            httpHelper.post(url, postData)
             .then((res) => {
                 if (res['data']['http_status_code'] === 200) {
                     alert('ハンディの登録に成功しました。');
@@ -159,23 +160,9 @@ export default {
             this.$modal.hide('handy-add');
         }
     },
-    mounted() {
-        let url = '/api/company';
-        // 単純なメソッドの呼び出しはこれ
-        this.$refs.child.loadingOn();
-        axios.get(url)
-            .then((res) => {
-                if (res['status'] === 200) {
-                    let companyData = res['data']['data'];
-                    this.companies = companyData; 
-                } else {
-                    alert("データの取得に失敗しました。");
-                }
-            })
-            .finally(() => {
-                this.$refs.child.loadingOff();
-            })
-
+    created() {
+        let master = this.$store.getters['master/getMaster'];
+        this.companies = master.company
     },
     data() {
         return {

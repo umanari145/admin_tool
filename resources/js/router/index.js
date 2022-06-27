@@ -43,7 +43,7 @@ const router = new VueRouter({
 
 // routing
 router.beforeEach((to, from, next) => {
-    let isLogin = store.getters['user/getLoginInfo'];
+    let isLogin = store.getters['user/getAccessToken'];
 
     // 認証が必要なページ
     if (to.matched.some(record => record.meta.requireAuth)) {

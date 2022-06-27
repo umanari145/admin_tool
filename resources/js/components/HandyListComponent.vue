@@ -95,6 +95,9 @@
 import BasicHome from "../components/Layout/BasicHome";
 import HandyModal from "../components/HandyModalComponent";
 import Loading from "../components/LoadingComponent";
+import HttpHelper from './Repository/HttpHelper';
+
+const httpHelper = new HttpHelper();
 
 export default {
     name:'handylist',
@@ -122,7 +125,8 @@ export default {
             url += query;
             // 単純なメソッドの呼び出しはこれ
             this.$refs.child.loadingOn();
-            axios.get(url)
+            
+            httpHelper.get(url)
                 .then((res) => {
                     if (res['status'] === 200) {
                         let handyData = res['data']['data'];
@@ -140,24 +144,6 @@ export default {
                 .finally(()=>{
                     this.$refs.child.loadingOff();
                 });
-        },
-        getComanyList() {
-            let url = '/api/company';
-            // 単純なメソッドの呼び出しはこれ
-            this.$refs.child.loadingOn();
-            axios.get(url)
-                .then((res) => {
-                    if (res['status'] === 200) {
-                        let companyData = res['data']['data'];
-                        this.companies = companyData; 
-                    } else {
-                        alert("データの取得に失敗しました。");
-                    }
-                })
-                .finally(() => {
-                    this.$refs.child.loadingOff();
-                })
-
         },
         inputField(index) {
             let targetData = this.handyList[index];
@@ -185,7 +171,7 @@ export default {
                 'updateData':updateData,
             };
 
-            axios.put(url, postData)
+            httpHelper.put(url, postData)
                 .then((res) => {
                     if (res['status'] === 200) {
                         // 参照になっているのでここで値を変えるとcsvListもかわる
@@ -238,10 +224,7 @@ export default {
                 'delete_ids':deleteIds
             };
             this.$refs.child.loadingOn();
-
-            axios.delete(url, {
-                'data': deleteIdData
-            })
+            httpHelper.delete(url, deleteIdData)
             .then((res) => {
                 if (res['status'] === 200) {
                     alert("無事削除を行いました。");
@@ -251,17 +234,24 @@ export default {
                     alert("データの削除に失敗しました。");
                 }
             })
+            .catch((err) => {
+                console.log(err);
+                alert("データの削除に失敗しました。");
+            })
             .finally(()=>{
                 this.$refs.child.loadingOff();
             });
         }
     },
     created() {
+        
     },
     mounted() {
         // createdだとDOMできてないからダメ
-        this.getComanyList();
         this.getHandyList();
+        let master = this.$store.getters['master/getMaster'];
+        this.companies = master.company
+
     },
     data() {
         return {

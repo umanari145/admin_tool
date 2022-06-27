@@ -4,10 +4,21 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\CsvField;
+use App\Models\User;
+use Tests\TestKit;
 use Log;
 
 class CsvControllerTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+        $users = User::factory()->create()->toArray();
+        $test_kit = new TestKit();
+        $access_token = $test_kit->getToken();
+        $this->headers = $test_kit->getHeadersIncToken($access_token);
+    }
+
     /**
      * A basic test example.
      *
@@ -15,7 +26,10 @@ class CsvControllerTest extends TestCase
      */
     public function testCsvTest()
     {
-        $response = $this->get('/api/csv_category/10');
+        $response = $this->getJson('/api/csv_category/10');
+        $response->assertStatus(401);
+
+        $response = $this->getJson('/api/csv_category/10', $this->headers);
         //Log::debug((array)$response['data']);
         $response->assertStatus(200);
     }
@@ -45,7 +59,10 @@ class CsvControllerTest extends TestCase
 
         $data[] = $updateData;
 
-        $response = $this->post('/api/csv_category/10', $data);
+        $response = $this->postJson('/api/csv_category/10', $data);
+        $response->assertStatus(401);
+
+        $response = $this->postJson('/api/csv_category/10', $data, $this->headers);
         Log::debug((array)$response['data']);
         $response->assertStatus(200);
     }
@@ -62,7 +79,10 @@ class CsvControllerTest extends TestCase
         $updateData = [
         ];
 
-        $response = $this->post('/api/csv_category/10', $data);
+        $response = $this->postJson('/api/csv_category/10', $data);
+        $response->assertStatus(401);
+
+        $response = $this->postJson('/api/csv_category/10', $data, $this->headers);
         $response->assertStatus(400);
 
         $data[] = $updateData;
@@ -72,7 +92,7 @@ class CsvControllerTest extends TestCase
             'field_disp_name' => 'aaaaa',
             'is_required' => 'aaaaa'
         ];
-        $response = $this->post('/api/csv_category/10', $data);
+        $response = $this->postJson('/api/csv_category/10', $data, $this->headers);
         $response->assertStatus(400);
     }
 
@@ -98,7 +118,15 @@ class CsvControllerTest extends TestCase
             'updateData' => $updateData
         ];
 
-        $response = $this->put('/api/csv_field/' . $csv_field['id'], $data);
+        $response = $this->putJson('/api/csv_field/' . $csv_field['id'], $data);
+        $response->assertStatus(401);
+
+        $response = $this->putJson(
+            '/api/csv_field/' . $csv_field['id'],
+            $data,
+            $this->headers
+        );
+
         $response->assertStatus(200);
 
         $updateData = [
@@ -111,7 +139,11 @@ class CsvControllerTest extends TestCase
             'updateData' => $updateData
         ];
 
-        $response = $this->put('/api/csv_field/' . $csv_field['id'], $data);
+        $response = $this->putJson(
+            '/api/csv_field/' . $csv_field['id'],
+            $data,
+            $this->headers
+        );
         $response->assertStatus(200);
     }
 
@@ -137,7 +169,20 @@ class CsvControllerTest extends TestCase
         $data = [
             'updateData' => $updateData
         ];
-        $response = $this->put('/api/csv_field/' . $csv_field['id'], $data);
+
+        $response = $this->putJson(
+            '/api/csv_field/' . $csv_field['id'],
+            $data
+        );
+
+        $response->assertStatus(401);
+
+        $response = $this->putJson(
+            '/api/csv_field/' . $csv_field['id'],
+            $data,
+            $this->headers
+        );
+
         $response->assertStatus(400);
     }
 
@@ -152,14 +197,17 @@ class CsvControllerTest extends TestCase
             'delete_ids' => '1'
         ];
 
-        $response = $this->delete('/api/csv_field', $data);
+        $response = $this->deleteJson('/api/csv_field', $data);
+        $response->assertStatus(401);
+
+        $response = $this->deleteJson('/api/csv_field', $data, $this->headers);
         $response->assertStatus(400);
 
         $data = [
             'delete_ids' => ['aaaa', 'bbbb']
         ];
 
-        $response = $this->delete('/api/csv_field', $data);
+        $response = $this->deleteJson('/api/csv_field', $data, $this->headers);
         $response->assertStatus(400);
     }
 
@@ -180,8 +228,10 @@ class CsvControllerTest extends TestCase
             'delete_ids' => $csv_field_ids
         ];
 
-        $response = $this->delete('/api/csv_field', $data);
+        $response = $this->deleteJson('/api/csv_field', $data);
+        $response->assertStatus(401);
+
+        $response = $this->deleteJson('/api/csv_field', $data, $this->headers);
         $response->assertStatus(200);
     }
-
 }

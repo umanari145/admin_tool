@@ -30,6 +30,7 @@
             </div>
           </div>
         </div>
+        <Loading ref="child"></Loading>
       </div>
     </div>
 </template>
@@ -45,18 +46,35 @@ export default {
     },
     methods:{
         doLogin() {
+            this.$refs.child.loadingOn();
             this.errorMessage = '';
+            let url = '/api/login';
+            const headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            };
 
-            this.$store.commit("user/setLogin", {
-                'user_code':this.user.user_code,
-                'password':this.user.password                
-            })
+            let postData = {
+                'email': this.user.user_code,
+                'password': this.user.password
+            };
 
-            if (this.$store.getters['user/getLoginInfo'] === true) {
-                this.$router.push('/');
-            } else {
-                this.errorMessage = 'ユーザーかパスワードが間違っています。';
-            }
+            axios.post(url, postData, {headers:headers})
+                .then((res) => {
+                    if (res['status'] === 200) {  
+                        this.$store.commit("user/setToken", res['data']['access_token']);
+                        this.$router.push('/')
+                    }
+                })
+                .catch((error) =>{
+                    console.log('not success');
+                    console.log(error);
+                    this.errorMessage = 'ユーザーかパスワードが間違っています。';
+
+                })
+                .finally(() => {
+                    this.$refs.child.loadingOff();
+                });
         }
     },
     created() {

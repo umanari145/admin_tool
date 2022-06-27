@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import user from './user.js';
+import master from './master.js';
 
 Vue.use(Vuex);
 
 const  module = {
     modules:{
-        user
+        user,
+        master
     }
 }
 

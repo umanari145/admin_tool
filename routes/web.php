@@ -13,13 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'api'], function () {
-    Route::get('csv_category/{csv_category}', "Api\CsvController@getCsvField")->name('getCsvField');
-    Route::post('csv_category/{csv_category}', "Api\CsvController@registCsvField")->name('registCsvField');
-    Route::put('csv_field/{csv_id}', "Api\CsvController@updateCsvField")->name('updateCsvField');
-    Route::delete('csv_field', "Api\CsvController@deleteCsvField")->name('deleteCsvField');
-});
-
 // vue対策でどんなURLできてもwelcomeに行くように
 Route::get('/{any}', function () {
     return view('welcome');
