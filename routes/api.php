@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//Route::middleware(['jwt.auth'])->group(function () {
+Route::middleware(['jwt.auth'])->group(function () {
     Route::group(['prefix' => '/scan_terminal'], function () {
         Route::get('/', "Api\ScanTerminalController@index")->name('indexScanTerminal');
         Route::post('/', "Api\ScanTerminalController@create")->name('createScanTerminal');
@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
     });
     // logout
     Route::post('logout', 'Api\JwtController@logout')->name('logout');
-//});
+});
 
 // login
 Route::post('login', 'Api\JwtController@login')->name('login');
