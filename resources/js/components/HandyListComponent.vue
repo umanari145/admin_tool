@@ -144,26 +144,7 @@ export default {
         },
         getHeaderIncToken(headers) {
             headers['Authorization'] = 'Bearer ' + this.$store.getters['user/getAccessToken'];
-
             return headers;
-        },
-        getComanyList() {
-            let url = '/api/company';
-            // 単純なメソッドの呼び出しはこれ
-            this.$refs.child.loadingOn();
-            axios.get(url)
-                .then((res) => {
-                    if (res['status'] === 200) {
-                        let companyData = res['data']['data'];
-                        this.companies = companyData; 
-                    } else {
-                        alert("データの取得に失敗しました。");
-                    }
-                })
-                .finally(() => {
-                    this.$refs.child.loadingOff();
-                })
-
         },
         inputField(index) {
             let targetData = this.handyList[index];
@@ -266,8 +247,10 @@ export default {
     },
     mounted() {
         // createdだとDOMできてないからダメ
-        this.getComanyList();
         this.getHandyList();
+        let master = this.$store.getters['master/getMaster'];
+        this.companies = master.company
+
     },
     data() {
         return {
