@@ -7,9 +7,9 @@
 
 <script>
 import BasicHome from "../components/Layout/BasicHome";
-import {headers} from "../components/const.js";
-import Loading from "../components/LoadingComponent";
 import masterJson from "../config/master.json";
+import Loading from "../components/LoadingComponent";
+import HttpHelper from "./Repository/HttpHelper";
 
 export default {
     name:'home',
@@ -22,7 +22,8 @@ export default {
             let url = '/api/company';
             // 単純なメソッドの呼び出しはこれ
             this.$refs.child.loadingOn();
-            axios.get(url, {headers: this.getHeaderIncToken(headers)})
+            const httpHelper = new HttpHelper();
+            httpHelper.get(url)
                 .then((res) => {
                     if (res['status'] === 200) {
                         let companyData = res['data']['data'];
@@ -34,10 +35,6 @@ export default {
                 .finally(() => {
                     this.$refs.child.loadingOff();
                 })
-        },
-        getHeaderIncToken(headers) {
-            headers['Authorization'] = 'Bearer ' + this.$store.getters['user/getAccessToken'];
-            return headers;
         },
         getMasterJson(){
             for(let key in masterJson) {
