@@ -48,4 +48,23 @@ class JwtControllerTest extends TestCase
         $response = $this->getJson('/api/company', $this->test_kit->getHeadersIncToken($access_token));
         $response->assertStatus(401);
     }
+
+    public function testAuthCheck()
+    {
+        // userの確認
+        $access_token = $this->test_kit->getToken();
+        $response = $this->getJson('/api/check', $this->test_kit->getHeadersIncToken($access_token));
+        $retJson = $response->json();
+        $this->assertSame("0000", $retJson['email']);
+        $response->assertStatus(200);
+
+        // tokenずれ
+        $response = $this->getJson('/api/check', $this->test_kit->getHeadersIncToken($access_token . "aaaa"));
+        $response->assertStatus(401);
+
+        // logout
+        $response = $this->postJson('/api/logout', [], $this->test_kit->getHeadersIncToken($access_token));
+        $response = $this->getJson('/api/check', $this->test_kit->getHeadersIncToken($access_token));
+        $response->assertStatus(401);
+    }
 }
