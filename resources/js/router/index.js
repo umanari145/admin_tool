@@ -6,6 +6,7 @@ import csvlist from '../components/CsvListComponent.vue';
 import handylist from '../components/HandyListComponent.vue';
 import login from '../components/LoginComponent.vue';
 import store from '../store';
+import AuthCheck from '../components/Repository/authCheck';
 
 const routeList = [];
 
@@ -44,14 +45,16 @@ const router = new VueRouter({
 // routing
 router.beforeEach((to, from, next) => {
 
+    const authCheck = new AuthCheck();
+
     // 認証が必要なページ
     if (to.matched.some(record => record.meta.requireAuth)) {
-        let authCheck = store.getters['user/getAuthCheck'];
-        authCheck.then((res) => {
+        
+        authCheck.check().then((res) => {
             next();
         }).catch((err) => {
             alert('認可されていないユーザーです。');
-            next('/login')
+            next('/login');
         })
     } else {
         // 認証が必要じゃないページ場合はそのまま
