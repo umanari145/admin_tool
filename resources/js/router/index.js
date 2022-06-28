@@ -6,7 +6,7 @@ import csvlist from '../components/CsvListComponent.vue';
 import handylist from '../components/HandyListComponent.vue';
 import login from '../components/LoginComponent.vue';
 import store from '../store';
-import AuthCheck from '../components/Repository/authCheck';
+import AuthCheck from '../components/Repository/AuthCheck.js';
 
 const routeList = [];
 
