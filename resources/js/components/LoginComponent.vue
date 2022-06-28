@@ -38,7 +38,6 @@
 <script>
 
 import Loading from "../components/LoadingComponent";
-
 export default {
     name:'login',
     components:{
@@ -78,6 +77,7 @@ export default {
         }
     },
     created() {
+
     },
     data() {
         return {

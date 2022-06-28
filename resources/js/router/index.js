@@ -43,20 +43,22 @@ const router = new VueRouter({
 
 // routing
 router.beforeEach((to, from, next) => {
-    let isLogin = store.getters['user/getAccessToken'];
 
     // 認証が必要なページ
     if (to.matched.some(record => record.meta.requireAuth)) {
-        if (!isLogin) {
-            // 未ログインならログインページへ
+        let authCheck = store.getters['user/getAuthCheck'];
+        authCheck.then((res) => {
+            next();
+        }).catch((err) => {
+            alert('認可されていないユーザーです。');
             next('/login')
-        } else {
-            next() // ログインしている場合はそのまま
-        }
+        })
     } else {
         // 認証が必要じゃないページ場合はそのまま
         next()
     }
+
+
 })  
 
 export default router;
