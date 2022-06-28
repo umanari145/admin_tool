@@ -10,14 +10,6 @@ const user = {
     getters:{
         getAccessToken(state) {
             return state.access_token;;
-        },
-        getAuthCheck(state) {
-            const headers = {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + state.access_token
-            };
-            return axios.get('api/check', {headers:headers});
         }
     },
     //setter
