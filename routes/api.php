@@ -36,6 +36,7 @@ Route::middleware(['jwt.auth'])->group(function () {
     });
 
     // logout
+    Route::get('check', 'Api\JwtController@check')->name('check');
     Route::post('logout', 'Api\JwtController@logout')->name('logout');
 });
 

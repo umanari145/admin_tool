@@ -28,7 +28,6 @@ export default class HttpHelper {
     }
 
     delete(url, data) {
-        console.log(data);
         return axios.delete(
             url, 
             {
@@ -36,5 +35,15 @@ export default class HttpHelper {
                 data:data
             }
         );
+    }
+
+    errorHandling(err) {
+        if (err.response.status === 401) {
+            alert("認可されていないユーザーです。")
+            location.href = "/";
+        } else {
+            alert("データの取得に失敗しました。");
+        }
+        console.log(err.response.data.message)
     }
 }

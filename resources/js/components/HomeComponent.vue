@@ -31,6 +31,9 @@ export default {
                     } else {
                         alert("データの取得に失敗しました。");
                     }
+                }).
+                catch((err) => {
+                    httpHelper.errorHandling(err);
                 })
                 .finally(() => {
                     this.$refs.child.loadingOff();

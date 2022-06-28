@@ -140,6 +140,8 @@ export default {
                     } else {
                         alert("データの取得に失敗しました。");
                     }
+                }).catch((err) => {
+                    //if(err.response.data.message === )
                 })
                 .finally(()=>{
                     this.$refs.child.loadingOff();
