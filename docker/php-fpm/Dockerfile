@@ -19,4 +19,5 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY --from=node:14.2 /usr/local/bin /usr/local/bin
 COPY --from=node:14.2 /usr/local/lib /usr/local/lib
 
+RUN npm install -g npm-check-updates
 WORKDIR /var/www/html

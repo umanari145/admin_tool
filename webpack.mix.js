@@ -11,7 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js('resources/js/app.js', 'public/js').vue()
     // watchには使わない
     //.copy('node_modules/@coreui/icons/svg', 'public/icons/svg')
     .sass('resources/sass/app.scss', 'public/css')
