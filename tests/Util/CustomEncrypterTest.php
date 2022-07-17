@@ -3,7 +3,7 @@
 namespace Tests\Service;
 
 use Tests\TestCase;
-use App\Form\FormValid;
+use App\CustomUtil\CustomEncrypter;
 
 class CustomEncrypterTest extends TestCase
 {
@@ -12,8 +12,11 @@ class CustomEncrypterTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testCustomeEncryptTest()
     {
-
+        $customer_encrypter = app()->make(CustomEncrypter::class);
+        $encrypted = $customer_encrypter->encrypt('hello world');
+        $original = $customer_encrypter->decrypt($encrypted);
+        $this->assertSame('hello world', $original);
     }
 }
