@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\CustomUtil\CustomEncrypter;
 use Illuminate\Support\ServiceProvider;
 use DB;
 use Log;
@@ -15,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(CustomEncrypter::class, function () {
+            $custom_encrypt_key = env('CUSTOM_ENCRYPT_KEY');
+            return new CustomEncrypter($custom_encrypt_key);
+        });
     }
 
     /**
