@@ -35,9 +35,7 @@ class CsvControllerTest extends TestCase
     }
 
     /**
-     * A basic test example.
      *
-     * @return void
      */
     public function testRegistCsvFieldTest()
     {
@@ -97,11 +95,11 @@ class CsvControllerTest extends TestCase
     }
 
     /**
-     * CSVフィールドの更新
+     * @dataProvider updateDataProvider
      *
      * @return void
      */
-    public function testCsvField()
+    public function testCsvFieldCorrect(?string $field_name, ?string $field_disp_name, int $is_required)
     {
         $csv_field = CsvField::factory()->create([
             'field_name' => "aaaa",
@@ -109,13 +107,12 @@ class CsvControllerTest extends TestCase
             'is_required' => 0
         ])->toArray();
 
-        $updateData = [
-            'field_name' => 'testtest',
-            'field_disp_name' => 'aaaaa',
-            'is_required' => 1
-        ];
         $data = [
-            'updateData' => $updateData
+            'updateData' => [
+                'field_name' => $field_name,
+                'field_disp_name' => $field_disp_name,
+                'is_required' => $is_required
+            ]
         ];
 
         $response = $this->putJson('/api/csv_field/' . $csv_field['id'], $data);
@@ -128,23 +125,14 @@ class CsvControllerTest extends TestCase
         );
 
         $response->assertStatus(200);
+    }
 
-        $updateData = [
-            'field_name' => null,
-            'field_disp_name' => null,
-            'is_required' => 0
+    public function updateDataProvider()
+    {
+        return [
+            ['testtest', 'aaaaa', 1],
+            [null, null, 0],
         ];
-
-        $data = [
-            'updateData' => $updateData
-        ];
-
-        $response = $this->putJson(
-            '/api/csv_field/' . $csv_field['id'],
-            $data,
-            $this->headers
-        );
-        $response->assertStatus(200);
     }
 
     /**
