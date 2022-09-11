@@ -2,7 +2,9 @@
 
 namespace App\Constant;
 
-class ConfigConst
+use BenSampo\Enum\Enum;
+
+class ConfigConst extends Enum
 {
     /** SERVICE のレスポンスコード **/
     public const SERVICE_SUCCESS = 1;
