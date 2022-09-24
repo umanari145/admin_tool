@@ -25,7 +25,7 @@ class ScanTerminalService
         ];
 
         try {
-            $terminals = ScanTerminal::getScanTerminalList($requestData);
+            $terminals = ScanTerminal::ScanTerminal($requestData);
             $res = [
                 'data' => $terminals,
                 'result' => ConfigConst::SERVICE_SUCCESS
