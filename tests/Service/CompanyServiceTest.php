@@ -2,6 +2,7 @@
 
 namespace Tests\Service;
 
+use App\Exceptions\CustomException;
 use App\Models\Company;
 use Tests\TestCase;
 use App\Service\CompanyService;
@@ -44,8 +45,8 @@ class CompanyServiceTest extends TestCase
         Schema::drop('company');
         Cache::store('file')->forget('company_list');
         $companyService = new CompanyService();
+        // 独自のExceptionが発生していることを確認
+        $this->expectException(CustomException::class);
         $res = $companyService->getCompanyList();
-        //デバッグ
-        $this->assertEquals($res['result'], '99');
     }
 }

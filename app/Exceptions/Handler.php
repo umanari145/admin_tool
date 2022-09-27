@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,6 +37,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        if ($this->shouldReport($exception)) {
+            //何らかのerror-reportに ex sentryなど
+        }
+
         parent::report($exception);
     }
 
@@ -50,6 +55,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        return parent::render($request, $exception);
+        if (!$request->is('api/*')) {
+            // API以外は何もしない(通常通り画面に出す)
+            return parent::render($request, $exception);
+        } else if ($exception instanceof NotFoundHttpException) {
+            // Route が存在しない
+            return response()->json(['error' => 'Not found'], 404);
+        } else if ($exception instanceof CustomException) {
+            return response()->json(['error' => 'ServerError'], 500);
+        } else {
+            return parent::render($request, $exception);
+        }
     }
 }
