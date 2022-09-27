@@ -11,7 +11,7 @@ use Validator;
 
 class CsvController extends ApiBasicController
 {
-    public function getCsvField(string $csvCategory)
+    public function show(string $csvCategory)
     {
         $formValid = new FormValid('csv_category.yaml');
         $validateResult =  Validator::make([
@@ -28,7 +28,7 @@ class CsvController extends ApiBasicController
         return $this->retServiceResponse($res);
     }
 
-    public function registCsvField(string $csvCategory, Request $request)
+    public function store(string $csvCategory, Request $request)
     {
         $requestData = $request->all();
         $formValid = new FormValid('csv_category_regist.yaml');
@@ -58,7 +58,7 @@ class CsvController extends ApiBasicController
     }
 
 
-    public function updateCsvField(string $id, Request $request)
+    public function update(string $id, Request $request)
     {
         $requestData = $request->all();
 
@@ -76,7 +76,7 @@ class CsvController extends ApiBasicController
         return $this->retServiceResponse($res);
     }
 
-    public function deleteCsvField(Request $request)
+    public function delete(Request $request)
     {
         $requestData = $request->all();
         $httpResponse = new HTTPResponse();

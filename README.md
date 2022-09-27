@@ -122,6 +122,16 @@ web: vendor/bin/heroku-php-apache2
 
 ```
 
+### 命名に関して
+
+controllerに関してなるべくCRUDの基本となる動詞のみを使う
+```
+index(一覧)、 show(詳細) 、 store(新規登録) 、 update(更新) 、 destroy(削除)
+```
+* ControllerやService名と重複した命名を行わない
+→companyControllerでshowCompanyとは書かず、companyControllerなのだからshowのみにすべき
+
+
 #### Buildpacks
 
 言語ごとのプラットフォーム。<br>
