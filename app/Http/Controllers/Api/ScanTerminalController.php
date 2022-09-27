@@ -27,7 +27,7 @@ class ScanTerminalController extends ApiBasicController
         return $this->retServiceResponse($res);
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $formValid = new FormValid('scan_terminal/create.yaml');
         $requestData = $request->all();
