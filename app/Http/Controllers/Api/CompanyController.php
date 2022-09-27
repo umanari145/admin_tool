@@ -20,9 +20,10 @@ class CompanyController extends ApiBasicController
 
     public function index(Request $request)
     {
+        // ここでtry{}catchがない場合、
+        // app/Exceptions/Handler.phpで処理される
         $scanTerminalService = new CompanyService();
         $res = $scanTerminalService->getCompanyList();
-
         return $this->retServiceResponse($res);
     }
 }

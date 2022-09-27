@@ -131,6 +131,17 @@ index(一覧)、 show(詳細) 、 store(新規登録) 、 update(更新) 、 des
 * ControllerやService名と重複した命名を行わない
 →companyControllerでshowCompanyとは書かず、companyControllerなのだからshowのみにすべき
 
+### エラーハンドリング
+
+controller内でcatchできなかった(throwされたまま)時のエラーの処理
+`app/Exceptions/Handler.php`
+
+独自のException
+`app/Exceptions/*****Exception.php`
+
+参考<br>
+https://qiita.com/wim/items/80406ecc23658896241d<br>
+https://zenn.dev/nrikiji/articles/d5b991402ea89c
 
 #### Buildpacks
 

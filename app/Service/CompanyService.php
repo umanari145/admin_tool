@@ -6,6 +6,7 @@ use App\Models\ScanTerminal;
 use App\Models\Company;
 use Cache;
 use App\Constant\ConfigConst;
+use App\Exceptions\CustomException;
 use Exception;
 use Log;
 use DB;
@@ -42,14 +43,9 @@ class CompanyService
                 'result' => ConfigConst::SERVICE_SUCCESS
             ];
         } catch (Exception $e) {
-            Log::critical([$e->getMessage(), $e->getTraceAsString()]);
-
-            $res = [
-                'data' => null,
-                'errorMessage' => $e->getMessage(),
-                'result' => ConfigConst::SERVICE_ERROR
-            ];
+            throw new CustomException("custom-error発生", 500, $e);
         }
+
         return $res;
     }
 }
