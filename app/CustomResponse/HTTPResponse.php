@@ -17,10 +17,10 @@ class HTTPResponse
 
     public function __construct()
     {
-        $httpStatusCode = null;
-        $data = null;
-        $errorMessage = null;
-        $meta = null;
+        $this->httpStatusCode = null;
+        $this->data = null;
+        $this->errorMessage = null;
+        $this->meta = null;
     }
 
     public function retResponse(): array
