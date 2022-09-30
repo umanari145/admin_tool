@@ -60,8 +60,10 @@ class Handler extends ExceptionHandler
             return parent::render($request, $exception);
         } else if ($exception instanceof NotFoundHttpException) {
             // Route が存在しない
+            // 画面を出すのではなくJSONを出す
             return response()->json(['error' => 'Not found'], 404);
         } else if ($exception instanceof CustomException) {
+            // 画面を出すのではなくJSONを出す(customizeしたい場合のレスポンス)
             return response()->json(['error' => 'ServerError'], 500);
         } else {
             return parent::render($request, $exception);
