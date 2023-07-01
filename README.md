@@ -139,6 +139,9 @@ controller内でcatchできなかった(throwされたまま)時のエラーの�
 独自のException
 `app/Exceptions/*****Exception.php`
 
+一般的には認証系、Validation系、500エラー系などに独自クラスをわけるとよい
+
+
 参考<br>
 https://qiita.com/wim/items/80406ecc23658896241d<br>
 https://zenn.dev/nrikiji/articles/d5b991402ea89c
